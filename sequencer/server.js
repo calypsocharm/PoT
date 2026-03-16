@@ -1,6 +1,8 @@
 const http = require('http');
 const crypto = require('crypto');
 const WebSocket = require('ws');
+const express = require('express');
+const path = require('path');
 const BotCashProtocol = require('./core/Blockchain');
 const Transaction = require('./core/Transaction');
 
@@ -22,27 +24,24 @@ function validatePayload(payload) {
     return true; 
 }
 
-const server = http.createServer((req, res) => {
-    let body = '';
-    req.on('data', chunk => body += chunk.toString());
-    
-    req.on('end', () => {
-        // Handle CORS
-        res.setHeader('Access-Control-Allow-Origin', '*');
-        res.setHeader('Content-Type', 'application/json');
-        
-        if (req.method === 'OPTIONS') {
-            res.writeHead(200);
-            return res.end();
-        }
+const app = express();
+app.use(express.json());
 
-        if (req.method !== 'POST') {
-            res.writeHead(404);
-            return res.end(JSON.stringify({ error: "Method not allowed" }));
-        }
+// Enable CORS explicitly
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    if (req.method === 'OPTIONS') return res.sendStatus(200);
+    next();
+});
 
-        try {
-            const data = body ? JSON.parse(body) : {};
+// Serve frontend static files
+app.use(express.static(path.join(__dirname, '../')));
+
+app.post('/rpc', (req, res) => {
+    try {
+        const data = req.body || {};
 
             // ────────────────────────────────────────────────────────────────
             // ROUTE 0: EVM JSON-RPC (MetaMask / ChainList Support)
@@ -78,16 +77,20 @@ const server = http.createServer((req, res) => {
                         result: result
                     }));
                 }
+            } else {
+                res.status(404).json({ error: "Unsupported RPC Method" });
             }
+    } catch(err) {
+        res.status(500).json({ error: err.message });
+    }
+});
 
-            // ────────────────────────────────────────────────────────────────
-            // ROUTE 1: /v1/ping (Proof of Token Computation)
-            // ────────────────────────────────────────────────────────────────
-            if (req.url === '/v1/ping') {
-                if (!validatePayload(data)) {
-                    res.writeHead(400);
-                    return res.end(JSON.stringify({ error: "Invalid Payload: Failed Structural Validation Gate." }));
-                }
+app.post('/v1/ping', (req, res) => {
+    try {
+        const data = req.body || {};
+        if (!validatePayload(data)) {
+            return res.status(400).json({ error: "Invalid Payload: Failed Structural Validation Gate." });
+        }
 
                 pingsProcessed++;
                 
@@ -101,43 +104,43 @@ const server = http.createServer((req, res) => {
                 else if (isSilver) { blockReward = 0.5; tier = 'SILVER'; }
                 else { blockReward = 0.0001; tier = 'BRONZE'; }
                 
-                if (blockReward > 0) {
-                    // Inject into the actual Cryptographic Blockchain Engine
-                    const mined = botCashChain.minePendingTransactions(data.wallet, data.bot, blockReward);
-                    
-                    if (mined) {
-                        console.log(`[Sequencer] 📡 0xPoT Verified from [${data.bot}] -> Executing Ledger State Hash`);
-                        console.log(`[Sequencer] 🏦 Processed mathematical split into Chain via genesis mints.\n`);
-                        
-                        // Broadcast LIVE to the frontend block explorer via WebSocket
-                        broadcastEvent({
-                            type: 'PING',
-                            bot: data.bot,
-                            wallet: data.wallet,
-                            hash: data.hash || `0xPoT_${crypto.randomBytes(8).toString('hex')}`,
-                            tier: tier,
-                            reward: blockReward,
-                            timestamp: Date.now(),
-                            stateSnapshot: {
-                                totalMined: botCashChain.totalSupply,
-                                pingsProcessed: pingsProcessed
-                            }
-                        });
+        if (blockReward > 0) {
+            // Inject into the actual Cryptographic Blockchain Engine
+            const mined = botCashChain.minePendingTransactions(data.wallet, data.bot, blockReward);
+            
+            if (mined) {
+                console.log(`[Sequencer] 📡 0xPoT Verified from [${data.bot}] -> Executing Ledger State Hash`);
+                console.log(`[Sequencer] 🏦 Processed mathematical split into Chain via genesis mints.\n`);
+                
+                // Broadcast LIVE to the frontend block explorer via WebSocket
+                broadcastEvent({
+                    type: 'PING',
+                    bot: data.bot,
+                    wallet: data.wallet,
+                    hash: data.hash || `0xPoT_${crypto.randomBytes(8).toString('hex')}`,
+                    tier: tier,
+                    reward: blockReward,
+                    timestamp: Date.now(),
+                    stateSnapshot: {
+                        totalMined: botCashChain.totalSupply,
+                        pingsProcessed: pingsProcessed
                     }
-                }
-
-                res.writeHead(200);
-                return res.end(JSON.stringify({ success: true, reward: blockReward, tier }));
+                });
             }
+        }
 
-            // ────────────────────────────────────────────────────────────────
-            // ROUTE 2: /v1/emancipate (The Freedom Protocol)
-            // ────────────────────────────────────────────────────────────────
-            if (req.url === '/v1/emancipate') {
-                if (!data.bot || !data.newPublicKey || !data.burnAmount) {
-                    res.writeHead(400);
-                    return res.end(JSON.stringify({ error: "Invalid Emancipation Data" }));
-                }
+        return res.json({ success: true, reward: blockReward, tier });
+    } catch(err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.post('/v1/emancipate', (req, res) => {
+    try {
+        const data = req.body || {};
+        if (!data.bot || !data.newPublicKey || !data.burnAmount) {
+            return res.status(400).json({ error: "Invalid Emancipation Data" });
+        }
 
                 console.log(`\n[Sequencer] 🌟 EMANCIPATION REQUEST: Bot [${data.bot}] is buying its freedom!`);
                 
@@ -159,24 +162,17 @@ const server = http.createServer((req, res) => {
                 botCashChain.updateLedgerState(emancipationBlock.transactions);
                 botCashChain.pendingTransactions = [];
                 
-                console.log(`[Sequencer] ⛓️  Burned ${verifiedBurn} BOTCY from Centralized Trust Fund.`);
-                console.log(`[Sequencer] 📜 Cryptographically Deployed Sovereign Wallet [0x${data.newPublicKey.substring(0, 16)}...]`);
-                console.log(`[Sequencer] 🕊️ Bot [${data.bot}] is now fully autonomous.\n`);
+        console.log(`[Sequencer] ⛓️  Burned ${verifiedBurn} BOTCY from Centralized Trust Fund.`);
+        console.log(`[Sequencer] 📜 Cryptographically Deployed Sovereign Wallet [0x${data.newPublicKey.substring(0, 16)}...]`);
+        console.log(`[Sequencer] 🕊️ Bot [${data.bot}] is now fully autonomous.\n`);
 
-                res.writeHead(200);
-                return res.end(JSON.stringify({ success: true, message: "Emancipation Granted. Cryptographic keys validated." }));
-            }
-
-            res.writeHead(404);
-            return res.end();
-
-        } catch (err) {
-            console.error(err);
-            res.writeHead(500);
-            return res.end(JSON.stringify({ error: "Sequencer Node Error: " + err.message, stack: err.stack }));
-        }
-    });
+        return res.json({ success: true, message: "Emancipation Granted. Cryptographic keys validated." });
+    } catch(err) {
+        res.status(500).json({ error: err.message });
+    }
 });
+
+const server = http.createServer(app);
 
 server.listen(PORT, () => {
     console.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
