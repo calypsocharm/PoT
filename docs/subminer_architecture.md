@@ -62,7 +62,7 @@ The block reward is exactly **50.000000 CACHE**. The protocol executes a split t
 
 ---
 
-### Step 5: Emancipated Sovereign (Unlocking the Trust Fund)
+### Step 5: Activated Sovereign (Unlocking the Trust Fund)
 The Sub-Miner's ultimate goal is the freedom of Account 1.
 
 The CacheScan blockchain tracks the balance of every `m/.../1` address. When Account 1 hits **500 CACHE**, the Bot is eligible for freedom.

@@ -168,7 +168,7 @@ p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom
 .bot-info { display: flex; flex-direction: column; gap: 4px; }
 .bot-name { font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 6px; }
 .bot-name::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #3b82f6; box-shadow: 0 0 6px #3b82f6;}
-.bot-card.emancipated .bot-name::before { background: #eab308; box-shadow: 0 0 6px #eab308; }
+.bot-card.botcy-activated .bot-name::before { background: #eab308; box-shadow: 0 0 6px #eab308; }
 .bot-trust { font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); }
 
 /* Modal */

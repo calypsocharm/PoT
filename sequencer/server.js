@@ -135,14 +135,14 @@ app.post('/v1/ping', (req, res) => {
     }
 });
 
-app.post('/v1/emancipate', (req, res) => {
+app.post('/v1/botcy-protocol', (req, res) => {
     try {
         const data = req.body || {};
         if (!data.bot || !data.newPublicKey || !data.burnAmount) {
-            return res.status(400).json({ error: "Invalid Emancipation Data" });
+            return res.status(400).json({ error: "Invalid BOTCY Protocol Data" });
         }
 
-                console.log(`\n[Sequencer] 🌟 EMANCIPATION REQUEST: Bot [${data.bot}] is buying its freedom!`);
+                console.log(`\n[Sequencer] 🌟 BOTCY_PROTOCOL REQUEST: Bot [${data.bot}] is buying its freedom!`);
                 
                 const currentTrustFund = botCashChain.trustFunds.get(data.bot) || 0;
                 const verifiedBurn = Math.max(currentTrustFund, data.burnAmount);
@@ -152,21 +152,21 @@ app.post('/v1/emancipate', (req, res) => {
                 
                 // Move funds directly on the blockchain ledger
                 // (Since this is a simulated burn from invisible to visible L2 ledger)
-                const transferTx = new Transaction('SYSTEM', data.newPublicKey, verifiedBurn, 0, 'EMANCIPATE');
+                const transferTx = new Transaction('SYSTEM', data.newPublicKey, verifiedBurn, 0, 'ACTIVATE_BOTCY');
                 botCashChain.pendingTransactions.push(transferTx);
                 
-                // Seal into a block to finalize Emancipation 
-                const emancipationBlock = new (require('./core/Block'))(Date.now(), botCashChain.pendingTransactions, botCashChain.getLatestBlock().hash);
-                emancipationBlock.mineBlock(botCashChain.difficulty);
-                botCashChain.chain.push(emancipationBlock);
-                botCashChain.updateLedgerState(emancipationBlock.transactions);
+                // Seal into a block to finalize BOTCY Protocol 
+                const BOTCY ProtocolBlock = new (require('./core/Block'))(Date.now(), botCashChain.pendingTransactions, botCashChain.getLatestBlock().hash);
+                BOTCY ProtocolBlock.mineBlock(botCashChain.difficulty);
+                botCashChain.chain.push(BOTCY ProtocolBlock);
+                botCashChain.updateLedgerState(BOTCY ProtocolBlock.transactions);
                 botCashChain.pendingTransactions = [];
                 
         console.log(`[Sequencer] ⛓️  Burned ${verifiedBurn} BOTCY from Centralized Trust Fund.`);
         console.log(`[Sequencer] 📜 Cryptographically Deployed Sovereign Wallet [0x${data.newPublicKey.substring(0, 16)}...]`);
         console.log(`[Sequencer] 🕊️ Bot [${data.bot}] is now fully autonomous.\n`);
 
-        return res.json({ success: true, message: "Emancipation Granted. Cryptographic keys validated." });
+        return res.json({ success: true, message: "BOTCY Protocol Granted. Cryptographic keys validated." });
     } catch(err) {
         res.status(500).json({ error: err.message });
     }

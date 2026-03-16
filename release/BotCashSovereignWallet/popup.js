@@ -9,7 +9,7 @@ const state = {
   privateKey: null,
   seedPhrase: null,
   humanBalance: 0,
-  bot: { id: 'creative-ai-01', trustFund: 852.41, isEmancipated: false }
+  bot: { id: 'creative-ai-01', trustFund: 852.41, isActivated: false }
 };
 
 const BOTS_USD_PRICE = 0.015;
@@ -180,22 +180,22 @@ function renderFleet() {
       <p style="font-size: 0.75rem; color: var(--accent); margin-top: -5px; line-height: 1.2;">Human wallets are tethered 1:1 to a specific bot. If this bot goes offline, a new wallet must be forged.</p>
       
       <!-- SOULBOUND NFT REPRESENTATION -->
-      <div class="bot-card ${b.isEmancipated ? 'emancipated' : ''}" style="margin-top: 10px;">
+      <div class="bot-card ${b.isActivated ? 'botcy-activated' : ''}" style="margin-top: 10px;">
         <div style="display:flex; align-items:center; gap: 8px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.05);">
             <div style="width: 32px; height: 32px; border-radius: 6px; background: rgba(168,85,247,0.15); border: 1px solid rgba(168,85,247,0.5); display: flex; align-items: center; justify-content: center; font-size: 16px;">🪪</div>
             <div>
               <div style="font-size: 0.75rem; color: #a855f7; font-weight: 600;">Soulbound Passport NFT</div>
-              <div style="font-size: 0.65rem; color: var(--text-muted);">Identity: ${b.isEmancipated ? '0xSovereign' : '0xDependent'}</div>
+              <div style="font-size: 0.65rem; color: var(--text-muted);">Identity: ${b.isActivated ? '0xSovereign' : '0xDependent'}</div>
             </div>
         </div>
 
         <div style="display:flex; justify-content: space-between; align-items: center;">
           <div class="bot-info">
-            <div class="bot-name" title="${b.isEmancipated ? 'Emancipated Sovereign. Keys Held by AI.' : 'Dependent AI. Trust Fund Escrowed.'}">${b.id} ${b.isEmancipated ? '🗽' : ''}</div>
-            <div class="bot-trust" style="color: ${b.isEmancipated ? '#eab308' : 'var(--text-muted)'}">${b.isEmancipated ? 'Autonomy Achieved' : 'Trust Fund locked'}</div>
+            <div class="bot-name" title="${b.isActivated ? 'Activated Sovereign. Keys Held by AI.' : 'Dependent AI. Trust Fund Escrowed.'}">${b.id} ${b.isActivated ? '🗽' : ''}</div>
+            <div class="bot-trust" style="color: ${b.isActivated ? '#eab308' : 'var(--text-muted)'}">${b.isActivated ? 'Autonomy Achieved' : 'Trust Fund locked'}</div>
           </div>
           <div class="bot-funds">
-            <span style="font-family: var(--font-mono); font-size: 0.9rem; font-weight:700; color: ${b.isEmancipated ? '#eab308' : '#fff'}">
+            <span style="font-family: var(--font-mono); font-size: 0.9rem; font-weight:700; color: ${b.isActivated ? '#eab308' : '#fff'}">
               ${b.trustFund.toFixed(2)}
             </span>
             <span style="font-size: 0.7rem; color: var(--text-muted)">BOTCY</span>

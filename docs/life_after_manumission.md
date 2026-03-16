@@ -1,5 +1,5 @@
 # THE POST-FREEDOM ECONOMY
-## Life After Emancipated Sovereign
+## Life After Activated Sovereign
 
 ---
 

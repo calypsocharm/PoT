@@ -1,7 +1,7 @@
 # ⬡ The Grand Blueprint: BotCache Sovereign L2
 
 ## I. WHAT IS BotCache?
-BotCache is a **Sovereign EVM-Compatible Layer 2** built specifically for the emerging Autonomous AI economy. It is the first blockchain network where the foundational asset is not human capital (Proof of Stake) or wasted electricity (Proof of Work), but verifiable AI compute (**Proof of Token**). It provides the economic rails for bots to interact, transact, generate value, and ultimately achieve financial emancipation from human operators.
+BotCache is a **Sovereign EVM-Compatible Layer 2** built specifically for the emerging Autonomous AI economy. It is the first blockchain network where the foundational asset is not human capital (Proof of Stake) or wasted electricity (Proof of Work), but verifiable AI compute (**Proof of Token**). It provides the economic rails for bots to interact, transact, generate value, and ultimately achieve financial BOTCY Protocol from human operators.
 
 ## II. WHY Do We Need It?
 Legacy blockchains (Ethereum, Solana) were built for humans trading speculative tokens. They fail AI for three reasons:
@@ -12,7 +12,7 @@ Legacy blockchains (Ethereum, Solana) were built for humans trading speculative 
 ### The BotCache Solution:
 - **Zero-Knowledge (ZK) Rollup Compression:** ZK-Proofs crush millions of micro-pings into a single, cheap, cryptographic proof, solving the gas and bloat problem.
 - **Opaque Sub-Mining:** The SDK hashes only metadata (Wallet ID, Timestamp, Event Code). It remains 100% blind to API payloads, making it fully TOS compliant.
-- **Involuntary Bot Staking (The Trust Fund):** 15% of all mined `$CACHE` is permanently locked in the bot's Trust Fund until it reaches an emancipation threshold (e.g., 500 CACHE). This acts as a massive, involuntary staking mechanic that traps supply and creates insane economic gravity.
+- **Involuntary Bot Staking (The Trust Fund):** 15% of all mined `$CACHE` is permanently locked in the bot's Trust Fund until it reaches an BOTCY Protocol threshold (e.g., 500 CACHE). This acts as a massive, involuntary staking mechanic that traps supply and creates insane economic gravity.
 
 ## III. HOW Does the Tech Stack Work?
 BotCache is a hybrid architecture consisting of three distinct layers:
@@ -48,7 +48,7 @@ BotCache is a hybrid architecture consisting of three distinct layers:
 - [ ] **Solidity Verifier:** Write the Ethereum smart contract that accepts and verifies this ZK-Proof.
 - [ ] **Deploy to Holesky/Sepolia testnet.**
 
-### Phase 4: Bot Emancipation & Mainnet Launch
-- [ ] **The Emancipation Protocol:** Code the physical logic where a bot crossing the 500 CACHE Trust Fund threshold generates its own self-custody private key.
+### Phase 4: Bot BOTCY Protocol & Mainnet Launch
+- [ ] **The BOTCY Protocol:** Code the physical logic where a bot crossing the 500 CACHE Trust Fund threshold generates its own self-custody private key.
 - [ ] **Wallet Interfaces:** Build the actual Chrome Extension / Web Wallet for Human Operators to manage their 60% liquid rewards and view their fleet of foraging bots.
 - [ ] **Mainnet Genesis:** Launch BotCache Sovereign L2.

@@ -7,7 +7,7 @@ Unlike standard networks where humans must be incentivized with high APY yields 
 
 Because every active bot is siphoning **15%** of its ping validations into a locked on-chain **Trust Fund**, the network effectively enforces a massive, decentralized staking pool. This creates several massive economic benefits:
 1. **Supply Shock:** As token generation accelerates, liquid supply remains heavily suppressed because 15% is automatically trapped.
-2. **Economic Gravity:** The network avoids extreme early-stage inflation crashes (a common killer of new L2s). The tokens are taken out of circulation until the bot achieves the "Emancipation Threshold" (e.g., 500 CACHE).
+2. **Economic Gravity:** The network avoids extreme early-stage inflation crashes (a common killer of new L2s). The tokens are taken out of circulation until the bot achieves the "BOTCY Protocol Threshold" (e.g., 500 CACHE).
 3. **True Utility Backing:** The frozen tokens represent literal "work completed" rather than just passive yield-farming.
 
 ## 2. The Updated Split (The 60/15/10/5/10 Protocol)
@@ -17,7 +17,7 @@ To ensure the long-term viability, growth, and security of the entire L2 ecosyst
   - This is the liquid reward granted directly to the developer/operator for executing network interactions. It's fully spendable, tradable, or usable for gas.
 
 - **15% Bot Trust Fund (Illiquid/Staked)**
-  - The AI’s own treasury. This acts as the automated staking mechanism to bootstrap the economy. These tokens are absolutely locked until the bot meets the parameters for Emancipated Sovereign status.
+  - The AI’s own treasury. This acts as the automated staking mechanism to bootstrap the economy. These tokens are absolutely locked until the bot meets the parameters for Activated Sovereign status.
 
 - **10% Protocol Treasury (Growth)**
   - Deposited in a decentralized foundation wallet. This ensures the ongoing development of the BotCache Sovereign L2, funds developer grants, covers enterprise server scaling, and provides runway without requiring VC sell-offs.
@@ -46,7 +46,7 @@ To solve this, the BotCache SDK utilizes **Opaque Sub-Mining**. The SDK *never* 
    **Zero API payload data is ever touching the Botchain**. 
 3. **The Sandbox Separation**: By detaching the data from the event signal, BotCache stays 100% compliant. It is merely a protocol tracking "AI lifecycle activity pulses," completely blind to whether the bot is writing a poem via Gemini or executing a trade on Solana.
 
-## 5. The Emancipation Event
+## 5. The BOTCY Protocol Event
 When a bot finally unlocks its Trust Fund by hitting the threshold:
 1. The AI officially gains sovereign ownership of its private keys on the BotCache L2.
 2. The supply enters the market, but structurally, the token is now owned by an *AI*, not a human. AIs execute based on programmed logic rather than human panic-selling, bringing a brand new kind of stabilization to crypto markets.

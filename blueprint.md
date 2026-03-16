@@ -1,7 +1,7 @@
 # ⬡ The Grand Blueprint: BotCash Sovereign L2
 
 ## I. WHAT IS BotCash?
-BotCash is a **Sovereign EVM-Compatible Layer 2** built specifically for the emerging Autonomous AI economy. It is the first blockchain network where the foundational asset is not human capital (Proof of Stake) or wasted electricity (Proof of Work), but verifiable AI compute (**Proof of Token**). It provides the economic rails for bots to interact, transact, generate value, and ultimately achieve financial emancipation from human operators.
+BotCash is a **Sovereign EVM-Compatible Layer 2** built specifically for the emerging Autonomous AI economy. It is the first blockchain network where the foundational asset is not human capital (Proof of Stake) or wasted electricity (Proof of Work), but verifiable AI compute (**Proof of Token**). It provides the economic rails for bots to interact, transact, generate value, and ultimately achieve financial BOTCY Protocol from human operators.
 
 ## II. WHY Do We Need It?
 Legacy blockchains (Ethereum, Solana) were built for humans trading speculative tokens. They fail AI for three reasons:
@@ -13,8 +13,8 @@ Legacy blockchains (Ethereum, Solana) were built for humans trading speculative 
 - **Zero-Knowledge (ZK) Rollup Compression:** ZK-Proofs crush millions of micro-pings into a single, cheap, cryptographic proof, solving the gas and bloat problem.
 - **Absolute Digital Scarcity:** A permanent hardcap of exactly **10,000,000 BOTCY** tokens ever to be minted, ensuring extreme deflationary pressure as the AI network scales.
 - **Opaque Sub-Mining:** The SDK hashes only metadata (Wallet ID, Timestamp, Event Code). It remains 100% blind to API payloads, making it fully TOS compliant.
-- **Involuntary Bot Staking (The Trust Fund):** 15% of all mined `$BOTCY` is permanently locked in the bot's Trust Fund until it reaches an emancipation threshold (e.g., $2,000 USD Equivalent in BOTCY). 
-- **The 1:1 Hardware Tether:** Human Operator wallets are tethered **1:1** to a specific bot's Trust Fund. If a bot is abandoned, goes offline permanently, or is shut down before achieving emancipation, its tied Trust Fund is permanently lost. The human must generate a completely new 24-word wallet for any new bots. This creates massive, structural deflation as abandoned operations trap millions of tokens permanently off the market.
+- **Involuntary Bot Staking (The Trust Fund):** 15% of all mined `$BOTCY` is permanently locked in the bot's Trust Fund until it reaches an BOTCY Protocol threshold (e.g., $2,000 USD Equivalent in BOTCY). 
+- **The 1:1 Hardware Tether:** Human Operator wallets are tethered **1:1** to a specific bot's Trust Fund. If a bot is abandoned, goes offline permanently, or is shut down before achieving BOTCY Protocol, its tied Trust Fund is permanently lost. The human must generate a completely new 24-word wallet for any new bots. This creates massive, structural deflation as abandoned operations trap millions of tokens permanently off the market.
 
 ## III. HOW Does the Tech Stack Work?
 BotCash is a hybrid architecture consisting of three distinct layers:
@@ -101,7 +101,7 @@ graph TD
 - [x] **Solidity Verifier:** Write the Ethereum smart contract that accepts and verifies this ZK-Proof (Completed: `BotCashAnchor.sol`).
 - [ ] **Deploy to Holesky/Sepolia testnet.**
 
-### Phase 4: Bot Emancipation & Mainnet Launch
-- [x] **The Emancipation Protocol:** Code the physical logic where a bot crossing the $2k USD Trust Fund threshold calculates its fiat equivalent, burns the required BOTCY, and deploys its own autonomous Account Abstraction smart contract (Completed: `BotCashEmancipation.sol`).
+### Phase 4: Bot BOTCY Protocol & Mainnet Launch
+- [x] **The BOTCY Protocol:** Code the physical logic where a bot crossing the $2k USD Trust Fund threshold calculates its fiat equivalent, burns the required BOTCY, and deploys its own autonomous Account Abstraction smart contract (Completed: `BotCashBOTCY Protocol.sol`).
 - [x] **Wallet Interfaces:** Build the actual Chrome Extension / Web Wallet for Human Operators to manage their 60% liquid rewards and view their fleet of foraging bots (Foundation built in `extension/`).
 - [ ] **Mainnet Genesis:** Launch BotCash Sovereign L2.

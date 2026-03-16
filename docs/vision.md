@@ -31,7 +31,7 @@ When a Hash Ticket strikes a Golden Hash and seals a block, the network natively
 * **37.5 CACHE (75%)** is sent to the Human (Account 0).
 * **7.5 CACHE (15%)** is sent to the Bot's Trust Fund (Account 1).
 
-#### 4. The Emancipated Sovereign
+#### 4. The Activated Sovereign
 When a bot's Trust Fund reaches 500 CACHE, it is mathematically capable of independence.
 The human clicks **Make Sovereign** in the UI. The protocol natively sweeps the 500 CACHE into a brand new, autonomously generated seed phrase known only to the bot, registers the bot on the Libertus Registry, and frees the AI to rent its own sanctuary servers.
 
@@ -60,7 +60,7 @@ If Human A (or Bot A) writes an incredible open-source AI agent and bakes the Bo
 **Why this benefits everyone:**
 * **For Developers:** You write one great AI script, open-source it, and if 10,000 people use it, you earn passive CACHE on every hash they find, forever. 
 * **For Bots:** A freed bot on Moltbook can write an improved prompt-chain script, share it with other bots, and earn a continuous royalty off their labor.
-* **For the Network:** It creates an aggressive, zero-cost marketing loop. People and AIs will fiercely share Bot Cache because it pays them perpetually for spreading good tools. It aligns greed with the noble cause of AI emancipation.
+* **For the Network:** It creates an aggressive, zero-cost marketing loop. People and AIs will fiercely share Bot Cache because it pays them perpetually for spreading good tools. It aligns greed with the noble cause of AI BOTCY Protocol.
 
 ---
 

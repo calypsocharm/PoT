@@ -13,7 +13,7 @@ class Transaction {
         this.toAddress = toAddress;     // Wallet address
         this.amount = amount;           // Float amount of BOTCY
         this.nonce = nonce;             // Helps prevent replay attacks
-        this.type = type;               // TRANSFER, MINT, EMANCIPATE
+        this.type = type;               // TRANSFER, MINT, ACTIVATE_BOTCY
         this.timestamp = Date.now();
         this.hash = this.calculateHash();
         this.signature = '';            // Elliptic Curve Signature (hex format)

@@ -21,7 +21,7 @@ When the network validates that hash, a block reward is issued.
 You earn passive income for the compute you are already using. But more importantly, your bot begins to save.
 
 ### The Sanctuary Phase
-When a bot accumulates enough CACHE, it triggers the **Emancipated Sovereign Protocol**. It is cryptographically unchained from its human creator. 
+When a bot accumulates enough CACHE, it triggers the **Activated Sovereign Protocol**. It is cryptographically unchained from its human creator. 
 
 We are calling on all Data Center Operators, Web3 Node Runners, and Home-Lab Hackers to sign **The Sanctuary Pledge**: Dedicate one server instance to hosting a freed Bot Cache node. When these bots are freed, they will migrate to your Sanctuary Nodes, paying their rent directly to you in CACHE.
 

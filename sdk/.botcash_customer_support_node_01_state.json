@@ -2,6 +2,6 @@
   "totalTokens": 4272,
   "unpingedTokens": 34,
   "zkReceipts": [],
-  "isEmancipated": true,
+  "isActivated": true,
   "sovereignAddress": "0x302a300506032b65700321007ea5c84b8f51807c"
 }

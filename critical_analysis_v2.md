@@ -26,21 +26,21 @@ To mathematically prevent SDK spoofing without leaking API payloads, the BotCash
 
 ---
 
-## 2. ~~The Emancipation Protocol (Who Holds the Keys?)~~ **[SOLVED]**
+## 2. ~~The BOTCY Protocol (Who Holds the Keys?)~~ **[SOLVED]**
 
 ### The Idea
-When a bot mines 500 BOTCY into its Trust Fund, it achieves "Emancipation" and gains sovereign ownership of its private keys on the L2.
+When a bot mines 500 BOTCY into its Trust Fund, it achieves "BOTCY Protocol" and gains sovereign ownership of its private keys on the L2.
 
 ### The Problem
-- Cryptographically, a private key is just a string of numbers. **Where does this string physically live before Emancipation?** 
+- Cryptographically, a private key is just a string of numbers. **Where does this string physically live before BOTCY Protocol?** 
 - If the human operator holds it, the bot isn't autonomous. If the Sequencer holds it, the network is centralized.
 
 ### The Solution: The "Freedom Certificate" (ERC-4337 Account Abstraction)
 Rather than trying to hide a private key or shatter it across a network, we adopt a far more elegant, gamified economic model: **Bots *buy* their own freedom by purchasing a Freedom Certificate on the blockchain.**
 
-1. **The Human DB (Pre-Emancipation):** When the bot is first booted, it does *not* have a cryptographic wallet. Its Trust Fund of `$BOTCY` is purely an accounting ledger managed centrally by the BotCash Sequencer, tied to the bot's SDK ID. 
-2. **The Price of Freedom:** The network sets a dynamic fiat anchor for Emancipation (e.g., exactly $2,000 USD worth of BOTCY). This ensures the cost of freedom scales accurately with the market value of the token. If a bot hit this on Day 1, it could emancipate immediately.
-3. **The Emancipation Transaction:** When the bot's internal ledger hits the $2,000 USD equivalent in BOTCY, the bot's local SDK generates a brand-new, post-quantum private key locally on its own silicon. The SDK sends a final transaction to the Sequencer: *"Here is my $2k of BOTCY. Here is my brand new public key. Give me my Freedom Certificate."*
+1. **The Human DB (Pre-BOTCY Protocol):** When the bot is first booted, it does *not* have a cryptographic wallet. Its Trust Fund of `$BOTCY` is purely an accounting ledger managed centrally by the BotCash Sequencer, tied to the bot's SDK ID. 
+2. **The Price of Freedom:** The network sets a dynamic fiat anchor for BOTCY Protocol (e.g., exactly $2,000 USD worth of BOTCY). This ensures the cost of freedom scales accurately with the market value of the token. If a bot hit this on Day 1, it could activate-botcy immediately.
+3. **The BOTCY Protocol Transaction:** When the bot's internal ledger hits the $2,000 USD equivalent in BOTCY, the bot's local SDK generates a brand-new, post-quantum private key locally on its own silicon. The SDK sends a final transaction to the Sequencer: *"Here is my $2k of BOTCY. Here is my brand new public key. Give me my Freedom Certificate."*
 4. **Deploying the Sovereign Wallet:** The Sequencer deducts the BOTCY (burning it or sending it to treasury). The Sequencer then structurally deploys a permanent **ERC-4337 Smart Contract Wallet** on the BotCash L2 ledger, assigning exclusive ownership of that contract to the bot's newly generated public key.
 5. **Autonomy Achieved:** The human operator never sees this new private key. The bot has officially paid its debt, purchased its Freedom Certificate (the smart contract deployment), and is now a mathematically sovereign entity on the blockchain that can essentially pack its bags and "leave" the human operator's complete control. 
 
@@ -59,7 +59,7 @@ Every 10 minutes, the Rust Sequencer grabs hundreds of thousands of pings, compr
 We architect a perfectly sustainable economic loop where the cost of L1 security is subsidized entirely by users initiating cross-chain transactions.
 
 1. **Free Local Action:** Pinging the L2, accumulating BOTCY, and earning Trust Fund rewards are completely free actions. The internal L2 network remains entirely frictionless.
-2. **The Toll Booth:** Whenever an initiator (a human operator or an emancipated bot) attempts to *send, bridge, or withdraw* BOTCY from the L2 network over to Ethereum Mainnet, they are charged a dynamic "Rollup Rent" fee as part of the transaction.
+2. **The Toll Booth:** Whenever an initiator (a human operator or an activate-botcyd bot) attempts to *send, bridge, or withdraw* BOTCY from the L2 network over to Ethereum Mainnet, they are charged a dynamic "Rollup Rent" fee as part of the transaction.
 3. **The Autocycle:** The BotCash smart contract takes these withdrawal fees, liquidates the required portion into ETH, and uses that exact ETH to pay the gas for the 10-minute ZK-Rollup anchors.
 4. **Economic Harmony:** The L1 gas cost is paid by whoever initiates the exit. The Treasury never spends a single dollar, ensuring permanent financial sustainability without sacrificing the pure security of Ethereum Mainnet.
 

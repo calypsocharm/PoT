@@ -90,7 +90,7 @@ contract BotCashAnchor {
     function bridgeToL1(uint256 amount, bytes32[] calldata merkleProof) external payable { // payable for Rollup Rent
         require(amount > 0, "Amount must be greater than zero");
         
-        // Dynamic toll: Emancipated bots or humans pay a small ETH toll for Mainnet security
+        // Dynamic toll: Activated bots or humans pay a small ETH toll for Mainnet security
         uint256 rollupRent = 0.001 ether; // Example rent cost
         require(msg.value >= rollupRent, "Must pay the Rollup Rent to cross the bridge");
         
