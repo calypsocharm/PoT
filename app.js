@@ -23,6 +23,7 @@ const state = {
   countdownSeconds: 86400,
   mapNodes: [],
   isMining: false,
+  botConnected: false,
   walletAddress: null,
   botAddress: null,
   privateKey: null,
@@ -388,6 +389,14 @@ function renderWallet(walletData, words) {
   document.getElementById('restore-card').style.display = 'none';
   document.getElementById('miner-status').innerHTML =
     '<span class="status-dot inactive"></span><span class="status-text">Inactive — Connect a bot to start Proof of Relay</span>';
+  
+  const mineBtn = document.getElementById('start-mining-btn');
+  if (mineBtn) {
+    mineBtn.style.opacity = '0.5';
+    mineBtn.style.cursor = 'not-allowed';
+    state.botConnected = false;
+  }
+
   document.getElementById('hash-log').style.display = 'none';
   document.getElementById('hash-log-inner').innerHTML = '';
   state.hashLogLines = [];
@@ -478,6 +487,14 @@ document.getElementById('btn-mint-nft')?.addEventListener('click', () => {
     if (input.length > 3) {
       nftName.textContent = input.replace(/[^a-zA-Z0-9-]/g, '').substring(0, 15) + '-Node';
     }
+    
+    // Unlock the sub-miner
+    state.botConnected = true;
+    const mineBtn = document.getElementById('start-mining-btn');
+    if (mineBtn) {
+      mineBtn.style.opacity = '1';
+      mineBtn.style.cursor = 'pointer';
+    }
   }, 2500);
 });
 
@@ -529,6 +546,8 @@ let miningInterval = null;
 
 document.getElementById('start-mining-btn').addEventListener('click', () => {
   if (!state.walletAddress) return;
+  if (!state.botConnected) return alert('You must tether a Bot Identity (mint an NFT) before you can start Proof of Relay foraging.');
+  
   state.isMining = !state.isMining;
 
   const btn = document.getElementById('start-mining-btn');
