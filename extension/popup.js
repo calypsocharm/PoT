@@ -19,24 +19,20 @@ const splashView = document.getElementById('splash-view');
 const dashboardView = document.getElementById('dashboard-view');
 const modal = document.getElementById('seed-modal');
 
-// Basic Crypto Mock for Prototype
+// True Cryptography via Ethers.js
 function generateFakeSeed() {
-  const dictionary = ['apple', 'matrix', 'secure', 'quantum', 'sovereign', 'chain', 'trust', 'layer', 'compute', 'block', 'future', 'cash', 'node', 'network', 'hash', 'verify', 'wallet', 'token', 'crypt', 'protocol', 'ledger', 'system', 'agent', 'auth', 'logic', 'data', 'yield'];
-  const words = [];
-  for (let i = 0; i < 24; i++) {
-    words.push(dictionary[Math.floor(Math.random() * dictionary.length)]);
-  }
-  return words;
+  const entropy = ethers.utils.randomBytes(32);
+  const mnemonic = ethers.utils.entropyToMnemonic(entropy);
+  return mnemonic.split(' ');
 }
 
 function wordsToAddress(words) {
-  // Deterministic fake hex
-  let hash = 0;
-  for (let i = 0; i < words.join('').length; i++) hash = Math.imul(31, hash) + words.join('').charCodeAt(i) | 0;
+  const mnemonicPhrase = words.join(' ');
+  const wallet = ethers.Wallet.fromMnemonic(mnemonicPhrase);
   
-  const address = 'botc:0x' + Math.abs(hash).toString(16).padStart(8, '0') + 'c4sh9a';
-  const privateKey = '0x' + Math.abs(hash * 2).toString(16).padStart(8, '0') + 'pk3y9';
-  return { address, privateKey };
+  const address = wallet.address;
+  const privateKey = wallet.privateKey;
+  return { address, privateKey, wallet };
 }
 
 // Event Listeners

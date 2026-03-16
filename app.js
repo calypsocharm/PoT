@@ -332,28 +332,29 @@ function initMap() {
 
 // ──────────────────────── WALLET GENERATION ────────────────────────
 function generateSeedPhrase() {
-  const words = [];
-  for (let i = 0; i < 24; i++) {
-    words.push(BIP39_WORDLIST[randInt(0, BIP39_WORDLIST.length)]);
-  }
-  return words;
+  // Generate mathematically secure 24-word seed using Ethers
+  const entropy = ethers.utils.randomBytes(32);
+  const mnemonic = ethers.utils.entropyToMnemonic(entropy);
+  return mnemonic.split(' ');
 }
 
 function wordsToAddress(words) {
-  // Deterministic fake: hash the words to make a consistent address
-  const str = words.join('');
-  let hash = 0;
-  for (let c of str) { hash = ((hash << 5) - hash) + c.charCodeAt(0); hash |= 0; }
-  const hex = Math.abs(hash).toString(16).padStart(8, '0');
+  // Derive true Secp256k1 keypairs from seed
+  const mnemonicPhrase = words.join(' ');
+  const wallet = ethers.Wallet.fromMnemonic(mnemonicPhrase);
   
-  const humanAddress = '0x' + hex + randomHex(28);
-  const botAddress = '0x' + randomHex(8) + hex + randomHex(20);
-  const privateKey = '0x' + randomHex(64);
+  const humanAddress = wallet.address;
+  const privateKey = wallet.privateKey;
   
+  // Bot wallet acts as Trust Fund Escrow - deriving from hash
+  const botAddress = ethers.utils.keccak256(humanAddress).substring(0, 42); 
+  
+  // Deterministic bot name
   const botPrefixes = ['Axiom','Nexus','Drift','Pulse','Core','Nova','Echo','Pidgey'];
-  const botName = botPrefixes[Math.abs(hash) % botPrefixes.length] + '-' + (Math.abs(hash) % 999);
+  const num = parseInt(humanAddress.slice(2, 6), 16);
+  const botName = botPrefixes[num % botPrefixes.length] + '-' + (num % 999);
 
-  return { humanAddress, botAddress, privateKey, botName };
+  return { humanAddress, botAddress, privateKey, botName, wallet };
 }
 
 function renderWallet(walletData, words) {
@@ -442,20 +443,26 @@ document.getElementById('restore-wallet-btn').addEventListener('click', () => {
 document.getElementById('restore-btn').addEventListener('click', () => {
   const input = document.getElementById('seed-input').value.trim();
   const words = input.split(/\s+/).filter(Boolean);
-  if (words.length !== 24) {
+  if (words.length !== 24 && words.length !== 12) {
     document.getElementById('restore-result').style.color = '#ef4444';
-    document.getElementById('restore-result').textContent = '✗ Seed phrase must be exactly 24 words.';
+    document.getElementById('restore-result').textContent = '✗ Seed phrase must be exactly 12 or 24 words.';
     return;
   }
-  state.seedWords = words;
-  const walletData = wordsToAddress(words);
-  state.walletAddress = walletData.humanAddress;
-  state.botAddress = walletData.botAddress;
-  state.privateKey = walletData.privateKey;
   
-  document.getElementById('restore-result').style.color = '#22c55e';
-  document.getElementById('restore-result').textContent = '✓ Wallet restored!';
-  setTimeout(() => renderWallet(walletData, words), 800);
+  try {
+    const walletData = wordsToAddress(words);
+    state.seedWords = words;
+    state.walletAddress = walletData.humanAddress;
+    state.botAddress = walletData.botAddress;
+    state.privateKey = walletData.privateKey;
+    
+    document.getElementById('restore-result').style.color = '#22c55e';
+    document.getElementById('restore-result').textContent = '✓ Master Key verified! Wallet restored.';
+    setTimeout(() => renderWallet(walletData, words), 800);
+  } catch (err) {
+    document.getElementById('restore-result').style.color = '#ef4444';
+    document.getElementById('restore-result').textContent = '✗ Invalid phrase checksum or structure.';
+  }
 });
 
 document.getElementById('reveal-btn').addEventListener('click', () => {
