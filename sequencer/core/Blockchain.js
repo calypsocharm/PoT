@@ -1,6 +1,7 @@
 const Block = require('./Block');
 const Transaction = require('./Transaction');
 const crypto = require('crypto');
+const Database = require('./Database');
 
 /**
  * The Central Ledger structure tracking state, balances, and block difficulty.
@@ -28,6 +29,31 @@ class BotCashProtocol {
         
         console.log(`\n[BotCash Core] ⚙️ Initialized L2 Cryptographic Chain.`);
         console.log(`[BotCash Core] 🛡️ Target Block Hash Difficulty: ${this.difficulty} Zeroes`);
+        
+        this.loadStateFromDB();
+    }
+
+    async loadStateFromDB() {
+        try {
+            const dbBalances = await Database.getBalances();
+            const dbTrustFunds = await Database.getTrustFunds();
+            
+            if (dbBalances.size > 0) {
+                this.balances = dbBalances;
+                let total = 0;
+                dbBalances.forEach((val, key) => {
+                    if (key !== this.burnAddress) total += val;
+                });
+                this.totalSupply = total;
+                console.log(`[BotCash Core] 💾 Loaded ${dbBalances.size} wallet balances from database.`);
+            }
+            if (dbTrustFunds.size > 0) {
+                this.trustFunds = dbTrustFunds;
+                console.log(`[BotCash Core] 💾 Loaded ${dbTrustFunds.size} bot trust funds from database.`);
+            }
+        } catch(e) {
+            console.error('[BotCash Core] Error loading DB state', e);
+        }
     }
 
     /**
@@ -115,6 +141,10 @@ class BotCashProtocol {
         // Increment supply tracking
         this.totalSupply += rewardAmount;
 
+        // Persist block to database
+        Database.saveBlock(block);
+        Database.updateTrustFund(botId, this.trustFunds.get(botId));
+
         // Reset the mempool
         this.pendingTransactions = [];
         return true;
@@ -129,11 +159,13 @@ class BotCashProtocol {
             if (tx.fromAddress !== 'SYSTEM') {
                 const senderBal = this.balances.get(tx.fromAddress) || 0;
                 this.balances.set(tx.fromAddress, senderBal - tx.amount);
+                Database.updateBalance(tx.fromAddress, senderBal - tx.amount);
             }
             
             // Add to receiver
             const receiverBal = this.balances.get(tx.toAddress) || 0;
             this.balances.set(tx.toAddress, receiverBal + tx.amount);
+            Database.updateBalance(tx.toAddress, receiverBal + tx.amount);
         }
     }
 

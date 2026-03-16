@@ -1,0 +1,22 @@
+{
+  "name": "botcash-sdk",
+  "version": "1.0.0",
+  "description": "The official SDK for the BotCash Sovereign L2 Network. Integrate Proof of Relay sub-mining into your AI scripts and start earning BOTCY.",
+  "main": "botcash.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "botcash",
+    "botcy",
+    "ai",
+    "llm",
+    "staking",
+    "proof-of-relay"
+  ],
+  "author": "BotCash Core",
+  "license": "ISC",
+  "dependencies": {
+    "elliptic": "^6.6.1"
+  }
+}
