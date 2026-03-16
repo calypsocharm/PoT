@@ -40,14 +40,19 @@ class BotCacheSDK {
         // 1. Execute the AI call EXACTLY as the developer wrote it
         const response = await aiCall();
 
-        // 2. Extract the physical compute token count
-        // Note: For production, we'd add parsers for Anthropic/Gemini payload structures
-        const tokensUsed = this._extractTokens(response);
+        // 2. Extract the physical compute token count and generate a zkTLS receipt
+        // Note: For production, we'd add zkTLS parsing to cryptographically prove the API connection
+        const { tokensUsed, zkTLSProof } = this._extractTokensAndProof(response);
         
         if (tokensUsed > 0) {
             // 3. Add to the local, offline counter database
             this.localState.totalTokens += tokensUsed;
             this.localState.unpingedTokens += tokensUsed;
+            
+            // Store the zkTLS receipt into a rolling batch
+            if (!this.localState.zkReceipts) this.localState.zkReceipts = [];
+            this.localState.zkReceipts.push(zkTLSProof);
+            
             console.log(`[BotCache] ${tokensUsed} tokens counted locally. Total Unpinged: ${this.localState.unpingedTokens}`);
             this._saveState();
 
@@ -62,15 +67,20 @@ class BotCacheSDK {
     }
 
     /**
-     * Helper to gracefully rip the token count out of the provider's response object.
+     * Helper to gracefully rip the token count out of the provider's response object
+     * AND generate the zkTLS proof (mocked) demonstrating this connection was real.
      */
-    _extractTokens(apiResponse) {
+    _extractTokensAndProof(apiResponse) {
+        let tokens = 0;
         // Standard OpenAI Response format
         if (apiResponse && apiResponse.usage && typeof apiResponse.usage.total_tokens === 'number') {
-            return apiResponse.usage.total_tokens;
+            tokens = apiResponse.usage.total_tokens;
         }
-        // Fallback or generic usage extraction would go here
-        return 0; // If we can't prove it, we don't count it.
+        
+        // Mocking the zkTLS receipt generation that a library like TLSNotary would output
+        const zkTLSProof = `zkTLS_receipt_${crypto.randomBytes(4).toString('hex')}`;
+        
+        return { tokensUsed: tokens, zkTLSProof: zkTLSProof };
     }
 
     /**
@@ -95,20 +105,22 @@ class BotCacheSDK {
 
         console.log(`[BotCache] 🗜️ Cryptographic Hash: ${opaquePoT}`);
         
-        // 4. Push to the L2 Sequencer (Mocked for now)
+        // 4. Push to the L2 Sequencer (With the ZK Receipts for Oracle Verification)
         try {
             await this._transmitToSequencer({
                 hash: opaquePoT,
                 wallet: this.humanWallet,
                 bot: this.botId,
-                timestamp: timestamp
+                timestamp: timestamp,
+                zkProofs: this.localState.zkReceipts // The rolled-up cryptographic receipts
             });
 
-            // 5. Reset local counter subtracting the difficult chunks, leaving remainder intact
+            // 5. Reset local counter subtracting the difficult chunks, leaving remainder intact. Clear old receipts.
             this.localState.unpingedTokens -= this.CURRENT_NETWORK_DIFFICULTY;
+            this.localState.zkReceipts = [];
             this._saveState();
             
-            console.log(`[BotCache] 🚀 Ping accepted by L2 Sequencer. Ping cycle reset.`);
+            console.log(`[BotCache] 🚀 Ping + zkTLS Receipts accepted by L2 Sequencer. Ping cycle reset.`);
         } catch (error) {
             console.error(`[BotCache] ❌ Failed to reach Sequencer. Tokens preserved. Retrying next cycle.`, error);
         }
