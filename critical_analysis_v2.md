@@ -7,16 +7,22 @@
 
 ---
 
-## 1. The Oracle Problem (Faking the Threshold Ping)
+## 1. ~~The Oracle Problem (Faking the Threshold Ping)~~ **[SOLVED]**
 
 ### The Idea
 The `BotCache` SDK locally counts tokens. Once a bot hits the 1-Million-Token threshold, the SDK generates an "Opaque Ping" (Hash of `Wallet + Time + Event Code`) and sends it to the Sequencer to earn `$CACHE`.
 
 ### The Problem
 - If the ping contains zero API data to protect against TOS bans, **how does the network prove the bot actually did the compute?**
-- A malicious hacker could simply read the open-source SDK code, figure out how the hash is generated, and write a script that spams the Sequencer with perfectly formatted `0xPoT` hashes claiming they just finished 1 Million tokens.
-- **The Threat:** Without cryptographic proof that the local compute *actually happened*, the network will be drained by fake SDK scripts generating infinite free CACHE.
-- **Potential Solution Path:** We may need to integrate **Trusted Execution Environments (TEEs)**, requiring the SDK to perform a verifiable, localized Proof-of-Work puzzle equivalent to the compute time, or leverage a zero-knowledge proof of the API TLS connection (like TLSNotary).
+- A malicious hacker could simply read the open-source SDK code, figure out how the hash is generated, and write a script that spams perfectly formatted `0xPoT` hashes claiming they just finished 1 Million tokens.
+
+### The Solution: zkTLS (Zero-Knowledge TLS) Cryptographic Receipts
+To mathematically prevent SDK spoofing without leaking API payloads, the BotCache SDK integrates **zkTLS** (e.g., utilizing protocols like TLSNotary or zkPass). 
+
+1. **The TLS Proof**: When the SDK connects to `api.openai.com`, the zkTLS prover sits inside the secure TLS tunnel. 
+2. **Selective Disclosure**: When OpenAI returns the response, the SDK generates a Zero-Knowledge Proof that mathematically asserts: *"I have a valid TLS session signed by OpenAI's official SSL certificate. Inside this encrypted payload, the JSON field `usage.total_tokens` equals 534."*
+3. **The Blind Receipt**: The SDK creates a cryptographic receipt of the token count, while the actual `prompt` and `choices` fields remain perfectly hidden and encrypted.
+4. **The Squencer Validation**: When the SDK hits the 1 Million threshold and fires its Opaque Ping, it attaches a rolled-up SNARK of these zkTLS receipts. The Sequencer instantly verifies the cryptography. If you didn't *actually* connect to OpenAI's server and receive a real response signed by their SSL certificate, your ping is rejected. The API TOS is protected, and the Oracle Problem is structurally eliminated.
 
 ---
 
