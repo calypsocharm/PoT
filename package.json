@@ -26,6 +26,7 @@
     "ws": "^8.19.0"
   },
   "devDependencies": {
+    "html-minifier": "^4.0.0",
     "nodemon": "^3.1.14"
   }
 }

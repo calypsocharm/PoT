@@ -14,5 +14,21 @@ views.forEach(view => {
     }
 });
 
-fs.writeFileSync('index.html', indexHtml, 'utf8');
-console.log('Build complete: index.html updated!');
+const minify = require('html-minifier').minify;
+
+// Minify the final injected HTML
+const minifiedHtml = minify(indexHtml, {
+    removeAttributeQuotes: false,
+    collapseWhitespace: true,
+    removeComments: true,
+    minifyCSS: true,
+    minifyJS: true
+});
+
+const originalSize = Buffer.byteLength(indexHtml, 'utf8');
+const newSize = Buffer.byteLength(minifiedHtml, 'utf8');
+
+fs.writeFileSync('index.html', minifiedHtml, 'utf8');
+
+console.log(`Build complete: index.html optimized!`);
+console.log(`Size reduced from ${(originalSize/1024).toFixed(2)}KB to ${(newSize/1024).toFixed(2)}KB.`);
