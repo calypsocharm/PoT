@@ -4,7 +4,7 @@ const { BotCashSDK } = require('./botcash.js');
 const botCache = new BotCashSDK({
     wallet: "botcy:0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B", // Human Operator Wallet (gets 60%)
     botId: "customer_support_node_01",                            // Bot Trust Fund Wallet (gets 15%)
-    sequencerUrl: "http://localhost:4243"
+    sequencerUrl: "https://botcash.io"
 });
 
 /**

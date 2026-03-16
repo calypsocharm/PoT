@@ -8,7 +8,7 @@
     "alarms"
   ],
   "host_permissions": [
-    "http://localhost:4243/*",
+    "https://botcash.io/*",
     "https://rpc.botcash.io/*"
   ],
   "action": {

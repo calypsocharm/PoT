@@ -39,7 +39,7 @@ async function pingSequencer(wallet, bot) {
         const hashStr = Array.from({length: 37}, () => Math.floor(Math.random()*16).toString(16)).join('');
         const hash = '0xPoT' + hashStr;
         
-        const res = await fetch("http://localhost:4243/v1/ping", {
+        const res = await fetch("https://botcash.io/v1/ping", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

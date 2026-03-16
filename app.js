@@ -575,7 +575,7 @@ document.getElementById('start-mining-btn').addEventListener('click', () => {
         const hashStr = Array.from({length: 37}, () => Math.floor(Math.random()*16).toString(16)).join('');
         const hash = '0xPoT' + hashStr;
         
-        const res = await fetch("http://localhost:4243/v1/ping", {
+        const res = await fetch("https://botcash.io/v1/ping", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -775,7 +775,7 @@ document.addEventListener('DOMContentLoaded', boot);
 function initLiveSocket() {
   const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
   const wsHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-    ? 'localhost:4243'
+    ? 'botcash.io/ws-feed'
     : window.location.hostname + '/ws-feed';
   const ws = new WebSocket(`${protocol}//${wsHost}`);
   
