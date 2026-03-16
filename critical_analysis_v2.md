@@ -46,15 +46,22 @@ Rather than trying to hide a private key or shatter it across a network, we adop
 
 ---
 
-## 3. L1 Anchor Gas Costs (The Treasury Bleed)
+## 3. ~~L1 Anchor Gas Costs (The Treasury Bleed)~~ **[SOLVED]**
 
 ### The Idea
 Every 10 minutes, the Rust Sequencer grabs hundreds of thousands of pings, compresses them into a single ZK-SNARK proof, and anchors it to a Smart Contract on Ethereum L1.
 
 ### The Problem
 - Submitting a ZK-SNARK to Ethereum Mainnet **costs real ETH (gas)**. Every 10 minutes, forever.
-- Who pays for this? If the Protocol Treasury pays for it, the Treasury will slowly bleed ETH until it goes bankrupt, especially in the early days before the BotCache network is generating massive value.
-- **The Threat:** If the Treasury runs out of ETH to pay the L1 verifier gas, the ZK-Rollups stop anchoring. The L2 loses its Ethereum security backing, and the network dies. 
+- Who pays for this? If the Protocol Treasury pays for it, the Treasury will slowly bleed ETH until it goes bankrupt.
+
+### The Solution: The "Rollup Rent" Toll Booth (Initiator Pays)
+We architect a perfectly sustainable economic loop where the cost of L1 security is subsidized entirely by users initiating cross-chain transactions.
+
+1. **Free Local Action:** Pinging the L2, accumulating CACHE, and earning Trust Fund rewards are completely free actions. The internal L2 network remains entirely frictionless.
+2. **The Toll Booth:** Whenever an initiator (a human operator or an emancipated bot) attempts to *send, bridge, or withdraw* CACHE from the L2 network over to Ethereum Mainnet, they are charged a dynamic "Rollup Rent" fee as part of the transaction.
+3. **The Autocycle:** The BotCache smart contract takes these withdrawal fees, liquidates the required portion into ETH, and uses that exact ETH to pay the gas for the 10-minute ZK-Rollup anchors.
+4. **Economic Harmony:** The L1 gas cost is paid by whoever initiates the exit. The Treasury never spends a single dollar, ensuring permanent financial sustainability without sacrificing the pure security of Ethereum Mainnet.
 
 ---
 
