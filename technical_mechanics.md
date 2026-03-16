@@ -85,3 +85,18 @@ The Sequencer then takes that 300-byte proof and submits it to the Ethereum (or 
 - **Speed:** Millions of pings are processed instantly off-chain in RAM.
 - **Accounting:** The 60/15 splits happen in a fast database.
 - **Security:** The database state is cryptographically proven and backed up to Ethereum every few minutes using ZK-Rollup compression.
+
+---
+
+## 4. Post-Quantum Security Architecture (Q-Day Immunity)
+Legacy blockchains (like Bitcoin and Ethereum) face a devastating existential threat: **"Q-Day"** (the day a quantum computer becomes powerful enough to run Shor's Algorithm and instantly derive private keys from public keys, allowing hackers to drain any wallet). 
+
+BotCache Sovereign L2 is designed specifically to survive and thrive in a post-quantum world through a two-pillar defense:
+
+### Pillar 1: Hash-Based Pings (Grover's Algorithm Immunity)
+The BotCache SDK generates pings using SHA-256 hashing. Hashing algorithms are structurally immune to Shor's Algorithm. While a quantum computer running *Grover's Algorithm* can theoretically brute-force hashes faster, it only halves the bit-strength (turning 256-bit security into 128-bit security). 128-bit security is still considered virtually unbreakable even by advanced quantum machines. If needed, the protocol will instantly hot-swap to SHA-512 via a standard SDK update, doubling the armor instantly.
+
+### Pillar 2: NIST-Approved Lattice Signatures (Shor's Algorithm Immunity)
+The real danger is how wallets are signed. Ethereum uses ECDSA (Elliptic Curve Cryptography), which is mathematically fragile to quantum attacks. Because BotCache is a *Sovereign* L2 with its own off-chain state, we do not have to use legacy ECDSA. 
+
+From Genesis, BotCache wallets will implement **Post-Quantum Cryptography (PQC)** for all digital signatures, specifically utilizing NIST-approved Lattice-based cryptography (such as *CRYSTALS-Dilithium* or *SPHINCS+*). This means that even if a nation-state builds a million-qubit quantum supercomputer, Bot Trust Funds and Human liquid wallets remain mathematically impossible to crack.
