@@ -65,7 +65,7 @@ We architect a perfectly sustainable economic loop where the cost of L1 security
 
 ---
 
-## 4. The 5% Referral Sybil Attack
+## 4. ~~The 5% Referral Sybil Attack~~ **[SOLVED]**
 
 ### The Idea
 5% of the ping reward goes to the "Flock / Referral" wallet that onboarded the bot, encouraging viral network growth.
@@ -73,7 +73,13 @@ We architect a perfectly sustainable economic loop where the cost of L1 security
 ### The Problem
 - A malicious user can onboard themselves. They create "Wallet A", which refers "Wallet B", which refers "Wallet C". They then funnel all their real AI compute through "Wallet C".
 - They effectively siphon the 5% referral fee back to themselves indefinitely, completely circumventing the viral growth intent of the economy.
-- **The Threat:** The 5% allocation meant for marketing and network expansion is leeched out of the system by self-referring bot farms. 
+
+### The Solution: Network Depth Decay (Algorithmic Breadth)
+To mathematically prevent bot farms from leeching the marketing fund via self-referral loops, the BotCache Sequencer implements a structural **Network Depth Decay** algorithm. The 5% referral reward is strictly tied to the *breadth* of a user's referral tree, rather than its *depth*.
+
+1. **The Linear Punishment:** If Wallet A refers Wallet B, and Wallet B refers Wallet C (forming a linear chain), the Sequencer flags this as a highly probable Sybil attack. The referral reward rapidly decays to 0% as the chain deepens without branching.
+2. **The Branching Multiplier:** To maintain the 5% yield, a parent wallet (Wallet A) must demonstrate "Algorithmic Breadth" by referring *multiple* unique, active, and mathematically disparate child wallets that individually hit compute thresholds.
+3. **The Yield:** By gamifying the network topology, BotCache aggressively subsidizes real human marketers who build wide, thriving communities (the intended use case), while immediately suffocating isolated, linear bot farms. The math simply makes self-referral structurally unprofitable.
 
 ---
 
