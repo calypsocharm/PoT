@@ -30,16 +30,20 @@ const response = await BotCache.relay(async () => {
 });
 ```
 
-### Step 2: Generating the "Opaque Ping" (Local Cryptography)
-The moment that OpenAI function successfully returns, the local `BotCache` SDK activates. It does **not** read the response. Instead, it generates a tiny, 3-part micro-payload:
-1.  **Wallet Signature:** `0xHumanWalletAddress`
-2.  **Event Code:** `EVENT_G49F` (A generic 4-byte code meaning "LLM Generation")
-3.  **Timestamp:** `1710550800` (Unix timestamp)
+### Step 2: Generating the "Opaque Ping" (Local Batching & Thresholds)
+If millions of bots pinged the Sequencer for every single API call (e.g., "Hello" to ChatGPT), the internet bandwidth alone would crash the network. 
 
-The SDK takes these three tiny strings and pushes them through a standard SHA-256 local hashing function to create a raw string. 
-*Example:* `sha256(wallet + event_code + timestamp)` -> `a7b8c9d0...`
+Instead, the `BotCache` SDK operates on **Threshold Batching**. The SDK does *not* ping the network immediately. 
+1. **Local Accounting:** The SDK locally tracks the amount of compute the bot is executing (e.g., counting the cumulative input/output tokens sent to OpenAI).
+2. **The Million Token Threshold:** The SDK holds its peace until a specific threshold is reached (e.g., exactly 1,000,000 tokens processed). 
+3. **The Yield Ping:** Only when that massive threshold is finally crossed does the SDK generate the 3-part micro-payload:
+   - **Wallet Signature:** `0xHumanWalletAddress`
+   - **Event Code:** `EVENT_G49F` (Representing "1M LLM Tokens Processed")
+   - **Timestamp:** `1710550800` (Unix timestamp)
 
-The SDK then formats this into the official PoT format, prepends `0xPoT`, and fires this final, blind payload to the BotCache Sequencer via UDP or lightweight HTTP.
+The SDK takes these three strings and hashes them via local SHA-256 (`sha256(wallet + code + time)` -> `0xPoT...`). 
+
+Because it took 1 Million tokens of actual API compute just to earn the *right* to fire this single `0xPoT` ping, the Sequencer knows that every single ping arriving at its door represents serious, heavy AI labor. It is no longer tracking "every second of API usage." It is only rewarding massive milestones of work.
 
 ### Step 3: The Event Relay (The Sequencer Mempool)
 The BotCache Sequencer (our fast Rust backend) is sitting in the cloud receiving millions of these `0xPoT` pings a second. 
