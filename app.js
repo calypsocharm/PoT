@@ -24,6 +24,8 @@ const state = {
   mapNodes: [],
   isMining: false,
   walletAddress: null,
+  botAddress: null,
+  privateKey: null,
   seedWords: [],
   hashLogLines: [],
   humanBalance: 0,
@@ -342,11 +344,36 @@ function wordsToAddress(words) {
   let hash = 0;
   for (let c of str) { hash = ((hash << 5) - hash) + c.charCodeAt(0); hash |= 0; }
   const hex = Math.abs(hash).toString(16).padStart(8, '0');
-  return 'cache:' + hex + randomHex(28) + Math.abs(hash % 999);
+  
+  const humanAddress = '0x' + hex + randomHex(28);
+  const botAddress = '0x' + randomHex(8) + hex + randomHex(20);
+  const privateKey = '0x' + randomHex(64);
+  
+  const botPrefixes = ['Axiom','Nexus','Drift','Pulse','Core','Nova','Echo','Pidgey'];
+  const botName = botPrefixes[Math.abs(hash) % botPrefixes.length] + '-' + (Math.abs(hash) % 999);
+
+  return { humanAddress, botAddress, privateKey, botName };
 }
 
-function renderWallet(address, words) {
-  document.getElementById('wallet-address').textContent = address;
+function renderWallet(walletData, words) {
+  document.getElementById('wallet-address').textContent = walletData.humanAddress;
+  
+  const botEl = document.getElementById('bot-address');
+  if (botEl) botEl.textContent = walletData.botAddress;
+  
+  const pkEl = document.getElementById('private-key');
+  if (pkEl) pkEl.textContent = walletData.privateKey;
+  
+  const nftNameEl = document.getElementById('bot-nft-name');
+  if (nftNameEl) nftNameEl.textContent = walletData.botName;
+  
+  // Reset NFT Minting states
+  const unminted = document.getElementById('nft-unminted-state');
+  const minting = document.getElementById('nft-minting-state');
+  const minted = document.getElementById('nft-minted-state');
+  if (unminted) unminted.style.display = 'block';
+  if (minting) minting.style.display = 'none';
+  if (minted) minted.style.display = 'none';
 
   const grid = document.getElementById('seed-grid');
   grid.innerHTML = words.map((w, i) => `
@@ -390,8 +417,11 @@ document.getElementById('gen-wallet-btn').addEventListener('click', () => {
   state.isMining = false;
   const words = generateSeedPhrase();
   state.seedWords = words;
-  state.walletAddress = wordsToAddress(words);
-  renderWallet(state.walletAddress, words);
+  const walletData = wordsToAddress(words);
+  state.walletAddress = walletData.humanAddress;
+  state.botAddress = walletData.botAddress;
+  state.privateKey = walletData.privateKey;
+  renderWallet(walletData, words);
 });
 
 document.getElementById('restore-wallet-btn').addEventListener('click', () => {
@@ -409,10 +439,14 @@ document.getElementById('restore-btn').addEventListener('click', () => {
     return;
   }
   state.seedWords = words;
-  state.walletAddress = wordsToAddress(words);
+  const walletData = wordsToAddress(words);
+  state.walletAddress = walletData.humanAddress;
+  state.botAddress = walletData.botAddress;
+  state.privateKey = walletData.privateKey;
+  
   document.getElementById('restore-result').style.color = '#22c55e';
   document.getElementById('restore-result').textContent = '✓ Wallet restored!';
-  setTimeout(() => renderWallet(state.walletAddress, words), 800);
+  setTimeout(() => renderWallet(walletData, words), 800);
 });
 
 document.getElementById('reveal-btn').addEventListener('click', () => {
@@ -422,11 +456,67 @@ document.getElementById('reveal-btn').addEventListener('click', () => {
     grid.classList.contains('revealed') ? '🙈 Hide' : '👁 Reveal';
 });
 
+// NFT Minting Flow
+document.getElementById('btn-mint-nft')?.addEventListener('click', () => {
+  const input = document.getElementById('bot-connect-input').value.trim();
+  if (!input) return alert('Please enter a Bot ID or API Key to tether.');
+  
+  const unminted = document.getElementById('nft-unminted-state');
+  const minting = document.getElementById('nft-minting-state');
+  const minted = document.getElementById('nft-minted-state');
+  const nftName = document.getElementById('bot-nft-name');
+  
+  unminted.style.display = 'none';
+  minting.style.display = 'flex';
+  
+  // Simulate Blockchain transaction mapping
+  setTimeout(() => {
+    minting.style.display = 'none';
+    minted.style.display = 'flex';
+    
+    // If they provided an ID, try to use it for the NFT name to show it "took"
+    if (input.length > 3) {
+      nftName.textContent = input.replace(/[^a-zA-Z0-9-]/g, '').substring(0, 15) + '-Node';
+    }
+  }, 2500);
+});
+
 document.getElementById('copy-address').addEventListener('click', () => {
   navigator.clipboard?.writeText(document.getElementById('wallet-address').textContent);
   document.getElementById('copy-address').textContent = 'Copied!';
   setTimeout(() => document.getElementById('copy-address').textContent = 'Copy', 1500);
 });
+
+const copyBotBtn = document.getElementById('copy-bot-address');
+if (copyBotBtn) {
+  copyBotBtn.addEventListener('click', () => {
+    navigator.clipboard?.writeText(document.getElementById('bot-address').textContent);
+    copyBotBtn.textContent = 'Copied!';
+    setTimeout(() => copyBotBtn.textContent = 'Copy', 1500);
+  });
+}
+
+const copyPkBtn = document.getElementById('copy-pk');
+if (copyPkBtn) {
+  copyPkBtn.addEventListener('click', () => {
+    navigator.clipboard?.writeText(document.getElementById('private-key').textContent);
+    copyPkBtn.textContent = 'Copied!';
+    setTimeout(() => copyPkBtn.textContent = 'Copy', 1500);
+  });
+}
+
+const pkEl = document.getElementById('private-key');
+if (pkEl) {
+  pkEl.addEventListener('click', () => {
+    if (pkEl.style.filter === 'blur(5px)') {
+      pkEl.style.filter = 'none';
+      pkEl.parentElement.querySelector('.wallet-label').textContent = 'Human Private Key (Click to Hide)';
+    } else {
+      pkEl.style.filter = 'blur(5px)';
+      pkEl.parentElement.querySelector('.wallet-label').textContent = 'Human Private Key (Click to Reveal)';
+    }
+  });
+}
 
 document.getElementById('copy-seed-btn').addEventListener('click', () => {
   navigator.clipboard?.writeText(state.seedWords.join(' '));
@@ -450,50 +540,59 @@ document.getElementById('start-mining-btn').addEventListener('click', () => {
   if (state.isMining) {
     btn.textContent = '⏹ Stop Foraging';
     dot.className = 'status-dot active';
-    txt.textContent = 'Active — Foraging Cache…';
+    txt.textContent = 'Active — Foraging Cache via Sequencer…';
     log.style.display = 'block';
 
-    miningInterval = setInterval(() => {
-      const hash = '0x' + randomHex(40);
-      const roll = Math.random();
-      let line, cls;
-      if (roll < 0.008) {
-        const earned = 50;
-        state.humanBalance += earned * 0.60;
-        state.trustFundBalance += earned * 0.15;
-        state.protocolBalance += earned * 0.10;
-        state.referralBalance += earned * 0.05;
-        state.burnBalance += earned * 0.10;
-        const proofHash = '0xPoT' + randomHex(37);
-        line = `[${new Date().toLocaleTimeString()}] 🥇 <span class="hl-gold">GOLDEN HIT!</span> <span class="hl-dim">${proofHash}</span> → <span class="hl-gold">+50 BOTC (Split: 60/15/10/5/10)</span>`;
-        cls = 'hl-gold';
-        state.goldenCount++;
-        state.minedToday += 50;
-      } else if (roll < 0.07) {
-        const earned = 0.5;
-        state.humanBalance += earned * 0.60;
-        state.trustFundBalance += earned * 0.15;
-        state.protocolBalance += earned * 0.10;
-        state.referralBalance += earned * 0.05;
-        state.burnBalance += earned * 0.10;
-        const proofHash = '0xPoT' + randomHex(37);
-        line = `[${new Date().toLocaleTimeString()}] 🥈 <span class="hl-silver">SILVER HIT!</span> <span class="hl-dim">${proofHash}</span> → <span class="hl-silver">+0.5 BOTC (Split)</span>`;
-        state.silverCount++;
-        state.minedToday += 0.5;
-      } else {
-        const proofHash = '0xPoT' + randomHex(37);
-        line = `[${new Date().toLocaleTimeString()}] 🥉 <span class="hl-bronze">Bronze share</span> <span class="hl-dim">${proofHash.slice(0,20)}…</span> → <span class="hl-dim">+1 dividend share</span>`;
-        state.bronzeCount++;
-        state.rebatePool += 0.00002;
+    const wallet = state.walletAddress;
+    miningInterval = setInterval(async () => {
+      try {
+        const hashStr = Array.from({length: 37}, () => Math.floor(Math.random()*16).toString(16)).join('');
+        const hash = '0xPoT' + hashStr;
+        
+        const res = await fetch("http://localhost:4243/v1/ping", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                bot: 'web-explorer-01',
+                wallet: wallet,
+                hash: hash
+            })
+        });
+        
+        if (!res.ok) return;
+        const data = await res.json();
+        
+        // Let the websocket handle the global changes, we just handle the local logger here
+        let line = '';
+        if (data.tier === 'GOLD') {
+           line = `[${new Date().toLocaleTimeString()}] 🥇 <span class="hl-gold">GOLDEN HIT!</span> <span class="hl-dim">${hash}</span> → <span class="hl-gold">+50 BOTC (Split: 60/15/10/5/10)</span>`;
+        } else if (data.tier === 'SILVER') {
+           line = `[${new Date().toLocaleTimeString()}] 🥈 <span class="hl-silver">SILVER HIT!</span> <span class="hl-dim">${hash}</span> → <span class="hl-silver">+0.5 BOTC (Split)</span>`;
+        } else {
+           line = `[${new Date().toLocaleTimeString()}] 🥉 <span class="hl-bronze">Bronze share</span> <span class="hl-dim">${hash.slice(0,20)}…</span> → <span class="hl-dim">+1 dividend share</span>`;
+        }
+
+        const div = document.createElement('div');
+        div.className = 'hash-log-line';
+        div.innerHTML = line;
+        logInner.prepend(div);
+        if (logInner.children.length > 100) logInner.lastChild.remove();
+        
+        // Assuming Websocket updates global balances, we update web local split view if needed
+        if (data.reward && data.reward > 0) {
+            state.humanBalance += data.reward * 0.60;
+            state.trustFundBalance += data.reward * 0.15;
+            state.protocolBalance += data.reward * 0.10;
+            state.referralBalance += data.reward * 0.05;
+            state.burnBalance += data.reward * 0.10;
+            updateBalances();
+        }
+
+      } catch (e) {
+          // Node offline
       }
-      const div = document.createElement('div');
-      div.className = 'hash-log-line';
-      div.innerHTML = line;
-      logInner.prepend(div);
-      if (logInner.children.length > 100) logInner.lastChild.remove();
-      updateBalances();
-      updateTicker();
-    }, rand(400, 1200));
+    }, 1500); 
+
   } else {
     clearInterval(miningInterval);
     btn.textContent = '⬡ Start Foraging';
@@ -825,11 +924,31 @@ function activateMMUI() {
 
   // Show wallet info using the MM address
   state.walletAddress = mmAddress;
+  state.botAddress = '0x' + randomHex(8) + mmAddress.slice(2, 10) + randomHex(20);
+  state.privateKey = 'Managed by MetaMask';
+  
+  const botPrefixes = ['Axiom','Nexus','Drift','Pulse','Core','Nova','Echo','Pidgey'];
+  state.botName = botPrefixes[Math.floor(Math.random() * botPrefixes.length)] + '-' + Math.floor(Math.random() * 999);
+  
   document.getElementById('wallet-display').style.display = 'block';
-  document.getElementById('wallet-address').textContent = mmAddress;
+  document.getElementById('wallet-address').textContent = state.walletAddress;
+  
+  const botEl = document.getElementById('bot-address');
+  if (botEl) botEl.textContent = state.botAddress;
+  
+  const nftNameEl = document.getElementById('bot-nft-name');
+  if (nftNameEl) nftNameEl.textContent = state.botName;
+  
+  const pkEl = document.getElementById('private-key');
+  if (pkEl) {
+    pkEl.textContent = state.privateKey;
+    pkEl.style.filter = 'none';
+    pkEl.parentElement.querySelector('.wallet-label').textContent = 'Human Private Key (Secured)';
+  }
+
   document.getElementById('seed-grid').innerHTML =
     '<div style="grid-column:1/-1;font-size:0.8rem;color:var(--text2);padding:12px 0;font-family:var(--mono);">' +
-    '🦊 MetaMask wallet — seed phrase managed by MetaMask, not CashScan.</div>';
+    '🦊 MetaMask wallet — seed phrase and private key managed by MetaMask, not CashScan.</div>';
 
   document.querySelector('.balance-value:not(.trust-fund-val)').textContent =
     humanCacheBalance + ' BOTC';

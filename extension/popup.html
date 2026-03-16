@@ -41,15 +41,23 @@
       </button>
     </div>
 
+    <!-- PRIVATE KEY PILL -->
+    <div class="address-pill" style="margin-bottom: 20px; border-color: rgba(239, 68, 68, 0.2); background: rgba(239, 68, 68, 0.05);">
+      <span id="display-pk" style="filter: blur(4px); transition: filter 0.3s; color: #ef4444;">0xPrivate...</span>
+      <button id="btn-copy-pk" class="copy-btn" title="Copy Private Key" style="color: #ef4444;">
+        <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      </button>
+    </div>
+
     <!-- BALANCE CARD -->
     <div class="balance-card">
       <h3 class="label">Total Liquid Balance</h3>
       <div class="balance-amount"><span id="human-balance">0.000000</span> <span class="ticker">BOTC</span></div>
       <div class="usd-value" id="usd-balance">≈ $0.00 USD</div>
       <div class="balance-actions">
-        <button class="btn-action"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg> Send</button>
-        <button class="btn-action"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Receive</button>
-        <button class="btn-action"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Bridge L1</button>
+        <button class="btn-action" id="btn-send"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg> Send</button>
+        <button class="btn-action" id="btn-receive"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Receive</button>
+        <button class="btn-action" id="btn-bridge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Bridge L1</button>
       </div>
     </div>
 
@@ -66,6 +74,7 @@
     </div>
 
     <div class="utility-row">
+      <button id="btn-mine" class="btn primary" style="background:var(--accent); color:#000; margin-bottom:12px;">▶ Start Subminer (Ping Sequencer)</button>
       <button id="btn-logout" class="btn ghost danger">Lock Wallet</button>
     </div>
   </main>

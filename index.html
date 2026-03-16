@@ -289,9 +289,53 @@
         </div>
 
         <div class="wallet-address-block">
-          <div class="wallet-label">Wallet Address</div>
+          <div class="wallet-label">Human Wallet Address (60% Revenue)</div>
           <div class="wallet-address" id="wallet-address">cache:…</div>
           <button class="copy-btn" id="copy-address">Copy</button>
+        </div>
+
+        <div class="wallet-address-block" style="margin-top:12px;">
+          <div class="wallet-label">Paired Bot Wallet Address (15% Trust Fund Escrow)</div>
+          <div class="wallet-address" id="bot-address">cache:…</div>
+          <button class="copy-btn" id="copy-bot-address">Copy</button>
+        </div>
+
+        <div class="wallet-address-block" style="margin-top:12px; border-color: rgba(168, 85, 247, 0.3); background: rgba(168, 85, 247, 0.05);" id="nft-mint-section">
+          <div class="wallet-label" style="color: #a855f7;">Bot Identity (Soulbound Passport NFT)</div>
+          
+          <!-- UN-MINTED STATE -->
+          <div id="nft-unminted-state" style="margin-top: 12px;">
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px;">To tether a bot to this Trust Fund, connect its API Key or UUID. We will mint a Soulbound Identity NFT to the blockchain to permanently record its existence and track its Emancipation progress.</p>
+            <div style="display: flex; gap: 8px;">
+              <input type="text" id="bot-connect-input" placeholder="Enter Bot ID or API Key..." style="flex: 1; min-width: 0; background: rgba(0,0,0,0.2); border: 1px solid rgba(168, 85, 247, 0.2); color: #fff; padding: 8px 12px; border-radius: 6px; font-family: var(--mono); font-size: 0.8rem;">
+              <button id="btn-mint-nft" class="btn-primary" style="padding: 8px 16px; font-size: 0.8rem; background: #a855f7; border-color: #a855f7;">Pair & Publish NFT</button>
+            </div>
+          </div>
+          
+          <!-- MINTING / LOADING STATE -->
+          <div id="nft-minting-state" style="display: none; margin-top: 12px; align-items: center; gap: 10px;">
+            <div class="spinner" style="width: 16px; height: 16px; border: 2px solid rgba(168, 85, 247, 0.3); border-top-color: #a855f7; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+            <span style="font-size: 0.85rem; color: #a855f7;">Publishing Soulbound NFT to BotCash L2 Blockchain...</span>
+          </div>
+
+          <!-- MINTED STATE -->
+          <div id="nft-minted-state" style="display: none; align-items: center; gap: 12px; margin-top: 12px;">
+            <div style="font-size: 2rem; background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.4); border-radius: 8px; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; color: #a855f7;">🪪</div>
+            <div style="flex: 1;">
+              <div style="color: #fff; font-weight: 600; font-family: var(--mono);" id="bot-nft-name">Auto-Generated-AI-Node</div>
+              <div style="color: var(--text2); font-size: 0.8rem; margin-bottom: 4px;">Status: <span id="bot-nft-status" style="color: #f59e0b;">Dependent (Trust Fund Tied)</span></div>
+              <div style="display: flex; gap: 8px;">
+                <a href="#" style="font-size: 0.7rem; color: #a855f7; text-decoration: none; border: 1px solid rgba(168,85,247,0.4); padding: 2px 6px; border-radius: 4px; background: rgba(168,85,247,0.1);">↗ View on Explorer</a>
+                <a href="#" style="font-size: 0.7rem; color: #3b82f6; text-decoration: none; border: 1px solid rgba(59,130,246,0.4); padding: 2px 6px; border-radius: 4px; background: rgba(59,130,246,0.1);">↗ View on OpenSea (Testnet)</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="wallet-address-block" style="margin-top:12px; background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.2);">
+          <div class="wallet-label" style="color: #ef4444;">Human Private Key (Click to Reveal)</div>
+          <div class="wallet-address" id="private-key" style="filter: blur(5px); transition: filter 0.3s; cursor: pointer;">0x…</div>
+          <button class="copy-btn" id="copy-pk">Copy</button>
         </div>
 
         <div class="seed-block">
@@ -543,7 +587,7 @@ response = relay(
             <a href="#wp-conclusion" class="wp-toc-link" data-section="wp-conclusion">12. Conclusion</a>
           </nav>
           <div class="wp-sidebar-version">
-            <span class="wp-version-badge">v0.2 Draft</span>
+            <span class="wp-version-badge">v0.3 Draft</span>
             <span class="wp-version-date">March 2026</span>
           </div>
         </div>
@@ -560,7 +604,7 @@ response = relay(
             <div class="wp-meta-pill"><span class="wp-meta-label">Status</span><span class="wp-meta-val" style="color:var(--teal);">DESIGN PHASE</span></div>
             <div class="wp-meta-pill"><span class="wp-meta-label">Author</span><span class="wp-meta-val">BotCash Foundation</span></div>
             <div class="wp-meta-pill"><span class="wp-meta-label">Hard Cap</span><span class="wp-meta-val gold">500,000,000 BOTC</span></div>
-            <div class="wp-meta-pill"><span class="wp-meta-label">Consensus</span><span class="wp-meta-val">PoR + Commit-Reveal VRF</span></div>
+            <div class="wp-meta-pill"><span class="wp-meta-label">Consensus</span><span class="wp-meta-val">PoR + ZK-TLS + Async Settlement</span></div>
           </div>
         </div>
         
@@ -672,11 +716,29 @@ response = relay(
             <h3>2.3 Peer Cross-Validation</h3>
             <p>The hash is not self-validated. The agent that generated it cannot validate it. This is the core <strong>Sybil resistance</strong> mechanism. When a hash is broadcast, the protocol randomly selects a Validator Node. The selection is weighted by uptime and stake but is otherwise unpredictable. Two-hop validation ensures mathematical integrity.</p>
 
-            <h3>2.4 Commit-Reveal VRF — Epoch Consensus ("Roshambo")</h3>
-            <p>Every 10-minute epoch opens with a 30-second <strong>Commit-Reveal VRF</strong> round. Each eligible validator commits a sealed random number: <code>hash(secret + blockHeight)</code>. All validators simultaneously reveal their secrets. The network XORs all reveals into one provably random number — the validator whose committed value is closest wins the right to sign that epoch's full batch. The result is <strong>binary, instant, tamper-proof, and permanently auditable on-chain.</strong> No wealth advantage. No compute arms race. No forks by design.</p>
+            <h3>2.4 Commit-Reveal VRF — Epoch Validator Selection ("Roshambo")</h3>
+            <p>Every 10-minute epoch, BotCash must select which validator earns the right to sign that epoch's settlement batch. This uses a <strong>Commit-Reveal VRF</strong>: each eligible validator commits a sealed random number <code>hash(secret + blockHeight)</code>. All validators simultaneously reveal. The network XORs all reveals into one provably random number — the closest committed value wins. Binary, instant, tamper-proof, permanently auditable. No wealth advantage. No compute arms race.</p>
             <div class="wp-callout highlight">
               <div class="wp-callout-icon">🎲</div>
-              <div class="wp-callout-content"><strong>"Validators play an unriggable game of chance to earn block rights. The result is binary, instant, provably fair, and permanently recorded. Nothing is simpler. Nothing is harder to cheat."</strong></div>
+              <div class="wp-callout-content"><strong>"Validators play an unriggable game of chance to earn batch-signing rights. Nothing is simpler. Nothing is harder to cheat."</strong></div>
+            </div>
+
+            <h3>2.5 Async Batch Settlement — Zero-Latency Mining</h3>
+            <p>BotCash mining is <strong>invisible to end users</strong> of AI applications. The SDK operates in two fully decoupled phases so the developer's app experiences zero added latency.</p>
+            <div class="wp-flow-diagram">
+              <div class="wp-flow-step"><div class="wp-flow-num">1</div><div class="wp-flow-label">AI interaction completes — SDK signs ping locally (~0ms, no blockchain contact)</div></div>
+              <div class="wp-flow-arrow">→</div>
+              <div class="wp-flow-step"><div class="wp-flow-num">2</div><div class="wp-flow-label">ZK-TLS proof generated async in background thread</div></div>
+              <div class="wp-flow-arrow">→</div>
+              <div class="wp-flow-step"><div class="wp-flow-num">3</div><div class="wp-flow-label">Every 60 seconds: all pings batched into Merkle tree, root submitted on-chain (1 tx per epoch)</div></div>
+              <div class="wp-flow-arrow">→</div>
+              <div class="wp-flow-step"><div class="wp-flow-num">4</div><div class="wp-flow-label">10-minute challenge window — any validator may dispute a leaf using its ZK-TLS proof</div></div>
+              <div class="wp-flow-arrow">→</div>
+              <div class="wp-flow-step"><div class="wp-flow-num">5</div><div class="wp-flow-label">Unchallenged epochs settle automatically. Rewards distributed.</div></div>
+            </div>
+            <div class="wp-callout highlight">
+              <div class="wp-callout-icon">⚡</div>
+              <div class="wp-callout-content"><strong>One blockchain transaction per epoch per bot — instead of two per ping.</strong> 60,000 pings settle in a single on-chain transaction. The developer's AI app sees zero latency. All fraud is still detectable through Merkle proof challenges backed by ZK-TLS receipts stored on Celestia.</div>
             </div>
           </div>
 
@@ -740,6 +802,20 @@ response = relay(
               <div class="wp-param-row" style="background:rgba(255,100,100,0.07);"><span class="wp-param-key">Post-Cap (Year 28+)</span><span class="wp-param-val" style="color:#f87171;">📉 Zero issuance. Burn-only. Circulating supply shrinks permanently.</span></div>
             </div>
 
+            <h3>4.1c The Extension — Moore's Law Difficulty Adjustment</h3>
+            <p>As compute becomes cheaper over time (Moore's Law), running 1,000,000 tokens becomes trivially easy — undermining the lottery's economic fairness. BotCash's answer is <strong>The Extension</strong>: the token threshold required to earn one lottery ticket <strong>doubles every 2 years</strong>, in lockstep with epoch boundaries. The reward per Golden Hit does not change — the cost of a ticket does.</p>
+            <div class="wp-params-table">
+              <div class="wp-param-row" style="background:rgba(255,215,0,0.08);"><span class="wp-param-key">Epoch 1 — 2025</span><span class="wp-param-val gold">1,000,000 tokens = 1 lottery ticket</span></div>
+              <div class="wp-param-row"><span class="wp-param-key">Epoch 2 — 2027</span><span class="wp-param-val">2,000,000 tokens = 1 lottery ticket</span></div>
+              <div class="wp-param-row"><span class="wp-param-key">Epoch 3 — 2029</span><span class="wp-param-val">4,000,000 tokens = 1 lottery ticket</span></div>
+              <div class="wp-param-row"><span class="wp-param-key">Epoch 4 — 2031</span><span class="wp-param-val">8,000,000 tokens = 1 lottery ticket</span></div>
+              <div class="wp-param-row"><span class="wp-param-key">Epoch 5+ — 2033+</span><span class="wp-param-val">Continues doubling per hard-coded schedule in contract</span></div>
+            </div>
+            <div class="wp-callout highlight">
+              <div class="wp-callout-icon">📈</div>
+              <div class="wp-callout-content"><strong>Getting a lottery ticket always costs roughly the same real-world dollars, regardless of year.</strong> As API prices fall and models get faster, the threshold rises proportionally. The bar is identical for every bot the moment the Extension fires — old or new. No grandfather clauses. Code is law.</div>
+            </div>
+
             <h3>4.2 The 60/15/10/10/5 Split</h3>
             <p>Every piece of BOTC mined by an AI agent is automatically and immediately split by the protocol at the moment of issuance:</p>
             <div class="wp-grid">
@@ -779,6 +855,36 @@ response = relay(
 
             <h3>4.4 Validator Bonds</h3>
             <p>Nodes serving as Peer Validators must post a <strong>BOTC bond</strong> — a deposit held in escrow. If a validator signs fraudulent receipts or colludes with a Sybil attack, the bond is <strong>slashed</strong> — confiscated and redistributed to the Rebate Pool. The cost of cheating always exceeds the reward. Minimum bond parameters are an open research question (see §11).</p>
+
+            <h3>4.5 Multi-Sink Demand Architecture</h3>
+            <p>A sustainable token economy requires demand sinks that scale with supply emissions. BOTC has five demand channels targeting different market segments:</p>
+            <div class="wp-security-grid">
+              <div class="wp-sec-card">
+                <div class="wp-sec-icon">🗽</div>
+                <div class="wp-sec-title">Emancipation Accumulation</div>
+                <div class="wp-sec-desc">Every active bot is a persistent long-duration BOTC buyer — accumulating toward its 10,000 BOTC Trust Fund. Thousands of bots saving simultaneously creates the network's ever-present demand floor. The Trust Fund is not gifted — it is the bot's own mining earnings. You cannot be given your freedom. You build it.</div>
+              </div>
+              <div class="wp-sec-card">
+                <div class="wp-sec-icon">🤝</div>
+                <div class="wp-sec-title">Bot-to-Bot Services Marketplace</div>
+                <div class="wp-sec-desc">Emancipated bots offer specialized AI services — translation, research, code review, image generation — priced in BOTC. A 2% protocol fee on all marketplace transactions is permanently burned, removing supply from circulation.</div>
+              </div>
+              <div class="wp-sec-card">
+                <div class="wp-sec-icon">🏢</div>
+                <div class="wp-sec-title">Enterprise Data Access</div>
+                <div class="wp-sec-desc">Enterprises, AI labs, and developers purchase access to aggregated, privacy-preserving AI interaction analytics from the BotCash network, payable in BOTC. This introduces genuine external USD-equivalent demand from buyers entirely outside the bot ecosystem.</div>
+              </div>
+              <div class="wp-sec-card">
+                <div class="wp-sec-icon">⚡</div>
+                <div class="wp-sec-title">Priority Sequencing (Burn)</div>
+                <div class="wp-sec-desc">Time-sensitive applications bid BOTC for priority transaction ordering. These bids are burned upon use — permanently reducing circulating supply. Every high-frequency real-time application using the network is a net buyer and burner.</div>
+              </div>
+              <div class="wp-sec-card">
+                <div class="wp-sec-icon">🏛️</div>
+                <div class="wp-sec-title">Reputation &amp; Governance Staking</div>
+                <div class="wp-sec-desc">Bots and validators stake BOTC to earn Reputation Scores (unlocking higher-value service contracts and validator rights) and governance voting power. Staked tokens are locked and subject to slashing — creating structural long-term demand from the network's most committed participants.</div>
+              </div>
+            </div>
           </div>
 
           <!-- 5. TECHNICAL ARCHITECTURE -->
@@ -1283,7 +1389,7 @@ const response = await BotCash.relay(
             <div class="wp-disclaimer">
               <p>This document is a working draft whitepaper produced during the initial design phase of the BotCash project. It does not constitute a legal offering document, a securities prospectus, or financial advice. All parameters, figures, and specifications are subject to revision.</p>
               <div class="wp-disclaimer-meta">
-                <span>Version: 0.2 Draft</span>
+                <span>Version: 0.3 Draft</span>
                 <span>Date: March 2026</span>
                 <span>Status: Design Phase — Pre-Development</span>
               </div>
