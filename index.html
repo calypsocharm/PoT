@@ -280,15 +280,41 @@
         <p class="wallet-subtitle">Generate a secure wallet with a BIP-39 24-word seed phrase. Your keys. Your BOTCY (Bot Currency). Your bot's future.</p>
       </div>
 
-      <div class="wallet-actions">
-        <button class="btn-metamask" id="wallet-mm-btn">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" width="20" height="20" alt="MetaMask"/>
-          Connect MetaMask
+      <!-- 1-CLICK AI ONBOARDING PORTAL -->
+      <div class="onboarding-portal" id="onboarding-portal" style="background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; text-align: center; margin-bottom: 24px;">
+        <h2 style="color: var(--gold); margin-bottom: 12px; font-size: 1.8rem; font-weight: 800;">Build Your AI Worker</h2>
+        <p style="color: var(--text2); margin-bottom: 24px; font-size: 0.95rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+          Design your AI identity below. Clicking "Connect & Mint" will trigger a single atomic transaction: registering your Human Wallet (60%), auto-generating the Bot Trust Fund Escrow (15%), and minting your Soulbound Passport NFT.
+        </p>
+
+        <div style="display: flex; gap: 24px; align-items: center; justify-content: center; margin-bottom: 24px; background: var(--bg); padding: 20px; border-radius: var(--radius-sm); border: 1px dashed var(--border); max-width: 500px; margin-left: auto; margin-right: auto;">
+          <!-- Avatar Preview -->
+          <div style="flex-shrink: 0; width: 90px; height: 90px; border-radius: 50%; background: var(--bg3); border: 3px solid var(--purple); overflow: hidden; position: relative;">
+            <img id="bot-avatar-preview" src="https://robohash.org/Pidgey-7?set=set3" alt="Bot Avatar" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+          <div style="text-align: left; flex: 1; min-width: 0;">
+            <label style="display: block; font-size: 0.75rem; color: var(--text3); margin-bottom: 6px; font-weight: 700;">AI Worker Name</label>
+            <input type="text" id="bot-name-input" placeholder="e.g. Pidgey-7" value="Pidgey-7" style="width: 100%; background: var(--bg3); border: 1px solid var(--border); color: #fff; padding: 10px 14px; border-radius: var(--radius-sm); font-family: var(--mono); margin-bottom: 10px; font-weight: 700; outline: none; transition: border-color 0.2s;">
+            <label style="display: block; font-size: 0.7rem; color: var(--text3); margin-bottom: 4px; font-weight: 700;">Worker UUID (Auto-generated)</label>
+            <div id="bot-uuid-display" style="font-family: var(--mono); font-size: 0.7rem; color: var(--accent); background: rgba(0,212,255,0.05); border: 1px solid rgba(0,212,255,0.2); padding: 4px 8px; border-radius: 4px;"></div>
+          </div>
+        </div>
+
+        <button class="btn-metamask" id="connect-mint-btn" style="width: 100%; padding: 18px; font-size: 1.1rem; justify-content: center; max-width: 500px; margin: 0 auto; display: flex; align-items: center; gap: 12px; font-weight: 800;">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" width="24" height="24" alt="MetaMask"/>
+          1-Click Connect & Mint NFT
         </button>
-        <button class="btn-primary" id="gen-wallet-btn">⬡ Generate New Wallet</button>
-        <button class="btn-ghost" id="restore-wallet-btn">↺ Restore from Seed</button>
       </div>
-      <div class="wallet-or"><span>— or generate a native BOTCY wallet —</span></div>
+
+      <!-- LEGACY FALLBACK OPTIONS -->
+      <details style="text-align: center; margin-bottom: 30px;">
+        <summary style="font-size: 0.8rem; color: var(--text3); cursor: pointer;">Show legacy manual wallet generation</summary>
+        <div class="wallet-actions" style="margin-top: 20px;">
+          <button class="btn-primary" id="gen-wallet-btn">⬡ Generate Native Wallet</button>
+          <button class="btn-ghost" id="restore-wallet-btn">↺ Restore from Seed</button>
+        </div>
+      </details>
+
 
       <!-- NEW WALLET DISPLAY -->
       <div class="wallet-card" id="wallet-display" style="display:none">
@@ -329,7 +355,10 @@
 
           <!-- MINTED STATE -->
           <div id="nft-minted-state" style="display: none; align-items: center; gap: 12px; margin-top: 12px;">
-            <div style="font-size: 2rem; background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.4); border-radius: 8px; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; color: #a855f7;">🪪</div>
+            <div style="background: var(--bg3); border: 2px solid #a855f7; border-radius: 50%; width: 50px; height: 50px; overflow: hidden; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <img id="bot-minted-avatar" src="" style="width: 100%; height: 100%; object-fit: cover; display: none;">
+              <div id="bot-minted-icon" style="font-size: 2rem; color: #a855f7;">🪪</div>
+            </div>
             <div style="flex: 1;">
               <div style="color: #fff; font-weight: 600; font-family: var(--mono);" id="bot-nft-name">Auto-Generated-AI-Node</div>
               <div style="color: var(--text2); font-size: 0.8rem; margin-bottom: 4px;">Status: <span id="bot-nft-status" style="color: #f59e0b;">Dependent (Trust Fund Tied)</span></div>

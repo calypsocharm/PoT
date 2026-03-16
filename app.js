@@ -1074,3 +1074,90 @@ setTimeout(checkMMOnLoad, 500);
   });
 })();
 
+// ──────────────────────── 1-CLICK AI ONBOARDING ────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  const botNameInput = document.getElementById('bot-name-input');
+  const botAvatarPreview = document.getElementById('bot-avatar-preview');
+  const botUuidDisplay = document.getElementById('bot-uuid-display');
+  
+  if (botNameInput && botAvatarPreview && botUuidDisplay) {
+     botUuidDisplay.textContent = Array.from({length: 16}, () => Math.floor(Math.random()*16).toString(16)).join('').replace(/(.{4})/g, '$1-').slice(0,-1);
+     
+     botNameInput.addEventListener('input', () => {
+       const val = botNameInput.value.trim() || 'Pidgey-7';
+       botAvatarPreview.src = `https://robohash.org/${encodeURIComponent(val)}?set=set3`;
+     });
+  }
+
+  const connectMintBtn = document.getElementById('connect-mint-btn');
+  if (connectMintBtn) {
+    connectMintBtn.addEventListener('click', async () => {
+      // Prompt MetaMask if available
+      if (typeof window.ethereum !== 'undefined') {
+        try {
+          await window.ethereum.request({ method: 'eth_requestAccounts' });
+        } catch (e) {
+          console.warn("MetaMask connection failed or rejected.", e);
+        }
+      } else {
+        alert("MetaMask not detected. Proceeding with native split wallet generation.");
+      }
+
+      const btn = connectMintBtn;
+      const originalHTML = btn.innerHTML;
+      btn.innerHTML = `<div style="width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin-slow 0.8s linear infinite; display: inline-block;"></div> Requesting Signature...`;
+      
+      setTimeout(() => {
+        btn.innerHTML = `<div style="width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin-slow 0.8s linear infinite; display: inline-block;"></div> Minting Soulbound NFT...`;
+        
+        setTimeout(() => {
+          btn.innerHTML = `✓ Bot Registered!`;
+          btn.style.background = 'rgba(34,197,94,0.1)';
+          btn.style.borderColor = 'var(--green)';
+          btn.style.color = 'var(--green)';
+
+          // Simulate wallet generation logic
+          const name = botNameInput.value.trim() || 'Pidgey-7';
+          state.isMining = false;
+          const words = generateSeedPhrase();
+          state.seedWords = words;
+          const walletData = wordsToAddress(words);
+          state.walletAddress = walletData.humanAddress;
+          state.botAddress = walletData.botAddress;
+          state.privateKey = walletData.privateKey;
+          walletData.botName = name + '-Node';
+          
+          document.getElementById('onboarding-portal').style.display = 'none';
+          renderWallet(walletData, words);
+          
+          // automatically "mint" the NFT visually
+          const unminted = document.getElementById('nft-unminted-state');
+          const minting = document.getElementById('nft-minting-state');
+          const minted = document.getElementById('nft-minted-state');
+          const nftName = document.getElementById('bot-nft-name');
+          const mintedAvatar = document.getElementById('bot-minted-avatar');
+          const mintedIcon = document.getElementById('bot-minted-icon');
+
+          if(unminted) unminted.style.display = 'none';
+          if(minting) minting.style.display = 'none';
+          if(minted) {
+             minted.style.display = 'flex';
+             if (mintedAvatar && mintedIcon) {
+                mintedAvatar.style.display = 'block';
+                mintedAvatar.src = botAvatarPreview.src;
+                mintedIcon.style.display = 'none';
+             }
+          }
+          if(nftName) nftName.textContent = walletData.botName;
+          state.botConnected = true;
+          const mineBtn = document.getElementById('start-mining-btn');
+          if (mineBtn) {
+            mineBtn.style.opacity = '1';
+            mineBtn.style.cursor = 'pointer';
+          }
+          
+        }, 1500)
+      }, 1000)
+    });
+  }
+});
