@@ -1,12 +1,13 @@
 :root {
-  --bg-main: #0B0E14;
-  --bg-card: rgba(25, 30, 42, 0.65);
-  --bg-card-hover: rgba(40, 45, 60, 0.8);
-  --border-light: rgba(255, 255, 255, 0.08);
-  --accent: #22c55e;
-  --accent-glow: rgba(34, 197, 94, 0.3);
-  --text-main: #F8FAFC;
-  --text-muted: #94A3B8;
+  --bg-main: #070b14;
+  --bg-card: rgba(13, 18, 32, 0.9);
+  --bg-card-hover: rgba(17, 24, 39, 0.8);
+  --border-light: rgba(245, 200, 66, 0.2);
+  --accent: #f5c842;
+  --accent-glow: rgba(245, 200, 66, 0.25);
+  --secondary: #00d4ff;
+  --text-main: #e2e8f0;
+  --text-muted: #94a3b8;
   --font-sans: 'Inter', -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
   --radius-sm: 8px;
@@ -23,7 +24,7 @@ body {
   padding: 16px;
   font-family: var(--font-sans);
   background: var(--bg-main);
-  background-image: radial-gradient(circle at 100% 0%, rgba(34, 197, 94, 0.15) 0%, transparent 250px);
+  background-image: radial-gradient(circle at 100% 0%, rgba(245, 200, 66, 0.15) 0%, transparent 250px);
   color: var(--text-main);
   overflow-x: hidden;
 }
@@ -49,11 +50,11 @@ p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom
 .network-badge {
   display: flex; align-items: center; gap: 6px;
   font-size: 0.7rem; font-weight: 600;
-  background: rgba(34,197,94,0.1);
+  background: rgba(245, 200, 66,0.1);
   color: var(--accent);
   padding: 4px 8px;
   border-radius: 12px;
-  border: 1px solid rgba(34,197,94,0.3);
+  border: 1px solid rgba(245, 200, 66,0.3);
 }
 .pulse-dot {
   width: 6px; height: 6px; border-radius: 50%;
@@ -84,7 +85,7 @@ p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom
   background: var(--accent); color: #000;
   box-shadow: 0 4px 14px var(--accent-glow);
 }
-.btn.primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(34,197,94,0.4); }
+.btn.primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(245, 200, 66,0.4); }
 .btn.primary:active { transform: translateY(1px); }
 .btn.ghost { background: transparent; color: var(--text-main); border: 1px solid var(--border-light); }
 .btn.ghost:hover { background: rgba(255,255,255,0.05); }
@@ -106,7 +107,7 @@ p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom
   background: none; border: none; color: var(--accent); cursor: pointer;
   display: flex; align-items: center; padding: 4px; border-radius: 4px; transition: background 0.2s;
 }
-.copy-btn:hover { background: rgba(34,197,94,0.1); }
+.copy-btn:hover { background: rgba(245, 200, 66,0.1); }
 
 /* Balances */
 .balance-card {

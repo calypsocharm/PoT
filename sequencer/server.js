@@ -173,7 +173,7 @@ const server = http.createServer((req, res) => {
         } catch (err) {
             console.error(err);
             res.writeHead(500);
-            return res.end(JSON.stringify({ error: "Sequencer Node Error" }));
+            return res.end(JSON.stringify({ error: "Sequencer Node Error: " + err.message, stack: err.stack }));
         }
     });
 });

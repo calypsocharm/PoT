@@ -1,0 +1,110 @@
+<!-- ─────────────── SUB-MINER TAB ─────────── -->
+  <section class="tab-panel" id="tab-miner">
+    <div class="miner-wrap">
+      <div class="miner-hero">
+        <h1 class="miner-title">The Sub-Miner</h1>
+        <p class="miner-subtitle">One line of code. Your bot starts foraging immediately.</p>
+      </div>
+
+      <div class="install-grid">
+        <div class="install-card active-card" id="install-js">
+          <div class="install-lang">JavaScript / Node.js</div>
+          <div class="code-block">
+            <pre id="code-js">npm install botcash-sdk
+
+import { BotCash } from 'botcash-sdk';
+
+// Wrap any AI call — works with any provider
+const response = await BotCash.relay(
+  openai.chat.completions.create(params),
+  'cache:YOUR_WALLET_ADDRESS'
+);</pre>
+            <button class="copy-code-btn" data-target="code-js">Copy</button>
+          </div>
+        </div>
+
+        <div class="install-card" id="install-py">
+          <div class="install-lang">Python</div>
+          <div class="code-block">
+            <pre id="code-py">pip install botcash
+
+from botcash import relay
+
+# Wrap any AI call
+response = relay(
+    gemini.generate(prompt),
+    wallet="cache:YOUR_WALLET_ADDRESS"
+)</pre>
+            <button class="copy-code-btn" data-target="code-py">Copy</button>
+          </div>
+        </div>
+
+        <div class="install-card" id="install-curl">
+          <div class="install-lang">Direct API Ping</div>
+          <div class="code-block">
+            <pre id="code-curl">curl -X POST https://relay.botcash.io/ping \
+  -H "Content-Type: application/json" \
+  -d '{
+    "wallet": "cache:YOUR_WALLET_ADDRESS",
+    "hash": "YOUR_INTERACTION_HASH",
+    "timestamp": 1710000000000
+  }'</pre>
+            <button class="copy-code-btn" data-target="code-curl">Copy</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- LIVE PING DEMO -->
+      <div class="panel ping-demo-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Live Ping Demo</h2>
+          <span class="panel-badge">Simulated</span>
+        </div>
+        <p class="ping-desc">See exactly what happens when your bot fires a hash to the Bot Cash network.</p>
+        <div class="ping-sequence" id="ping-sequence">
+          <div class="ping-step" id="ps-1">
+            <div class="ps-icon">🤖</div>
+            <div class="ps-info">
+              <div class="ps-label">Your Bot</div>
+              <div class="ps-val">Completes an AI task…</div>
+            </div>
+            <div class="ps-arrow">→</div>
+          </div>
+          <div class="ping-step" id="ps-2">
+            <div class="ps-icon">⬡</div>
+            <div class="ps-info">
+              <div class="ps-label">Sub-Miner</div>
+              <div class="ps-val" id="ps-2-val">Generating hash…</div>
+            </div>
+            <div class="ps-arrow">→</div>
+          </div>
+          <div class="ping-step" id="ps-3">
+            <div class="ps-icon">📡</div>
+            <div class="ps-info">
+              <div class="ps-label">Network Broadcast</div>
+              <div class="ps-val" id="ps-3-val">Broadcasting to peers…</div>
+            </div>
+            <div class="ps-arrow">→</div>
+          </div>
+          <div class="ping-step" id="ps-4">
+            <div class="ps-icon">✓</div>
+            <div class="ps-info">
+              <div class="ps-label">Peer Validation</div>
+              <div class="ps-val" id="ps-4-val">Awaiting validation…</div>
+            </div>
+            <div class="ps-arrow">→</div>
+          </div>
+          <div class="ping-step" id="ps-5">
+            <div class="ps-icon">🎯</div>
+            <div class="ps-info">
+              <div class="ps-label">Result</div>
+              <div class="ps-val" id="ps-5-val">Pending…</div>
+            </div>
+          </div>
+        </div>
+        <button class="btn-primary" id="fire-ping-btn">⚡ Fire a Test Ping</button>
+        <div class="ping-result" id="ping-result"></div>
+      </div>
+
+    </div>
+  </section>

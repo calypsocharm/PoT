@@ -1,0 +1,168 @@
+<!-- ─────────────── EXPLORER TAB ─────────── -->
+  <section class="tab-panel active" id="tab-explorer">
+
+    <!-- HERO INTRO -->
+    <div class="explorer-hero" style="text-align: center; margin: 2rem 0 2.5rem 0;">
+      <h1 style="font-size: 2.8rem; color: #fff; margin-bottom: 0.5rem; letter-spacing: -1px; font-weight: 900;">BotCash <span style="color: #f59e0b;">Sovereign L2</span></h1>
+      <p style="color: #94a3b8; font-size: 1.15rem; max-width: 650px; margin: 0 auto; line-height: 1.5;">
+        The native block explorer for the BotCash network. Track AI foraging activity, network hashes, and the flow of <strong style="color: #f59e0b; font-weight: 700;">BOTCY (Bot Currency)</strong>.
+      </p>
+    </div>
+
+    <!-- HERO TICKER -->
+    <div class="hero-ticker">
+      <div class="ticker-item">
+        <span class="ticker-label">BOTCY PRICE</span>
+        <span class="ticker-value" id="price">$0.0000</span>
+        <span class="ticker-change positive" id="price-change">+0.00%</span>
+      </div>
+      <div class="ticker-divider"></div>
+      <div class="ticker-item">
+        <span class="ticker-label">HASHES / SEC</span>
+        <span class="ticker-value" id="hps">0</span>
+      </div>
+      <div class="ticker-divider"></div>
+      <div class="ticker-item">
+        <span class="ticker-label">ACTIVE BOTS</span>
+        <span class="ticker-value" id="active-bots">0</span>
+      </div>
+      <div class="ticker-divider"></div>
+      <div class="ticker-item">
+        <span class="ticker-label">TOTAL SUPPLY</span>
+        <span class="ticker-value">500,000,000</span>
+        <span class="ticker-sub">hard cap</span>
+      </div>
+      <div class="ticker-divider"></div>
+      <div class="ticker-item">
+        <span class="ticker-label">MINED TODAY</span>
+        <span class="ticker-value" id="mined-today">0</span>
+        <span class="ticker-sub">BOTCY</span>
+      </div>
+      <div class="ticker-divider"></div>
+      <div class="ticker-item">
+        <span class="ticker-label">NEXT REBATE DROP</span>
+        <span class="ticker-value countdown" id="countdown">23:59:59</span>
+      </div>
+    </div>
+
+    <!-- STATS GRID -->
+    <div class="stats-grid">
+      <div class="stat-card gold">
+        <div class="stat-icon">🥇</div>
+        <div class="stat-info">
+          <div class="stat-label">Golden Hits Today</div>
+          <div class="stat-value" id="golden-count">0</div>
+          <div class="stat-sub">2,000 BOTCY each (Epoch 1)</div>
+        </div>
+        <div class="stat-pulse gold-pulse"></div>
+      </div>
+      <div class="stat-card silver">
+        <div class="stat-icon">🥈</div>
+        <div class="stat-info">
+          <div class="stat-label">Silver Hits Today</div>
+          <div class="stat-value" id="silver-count">0</div>
+          <div class="stat-sub">50 BOTCY each (Epoch 1)</div>
+        </div>
+      </div>
+      <div class="stat-card bronze">
+        <div class="stat-icon">🥉</div>
+        <div class="stat-info">
+          <div class="stat-label">Bronze Shares Issued</div>
+          <div class="stat-value" id="bronze-count">0</div>
+          <div class="stat-sub">Rebate Pool</div>
+        </div>
+      </div>
+      <div class="stat-card blue">
+        <div class="stat-icon">🗽</div>
+        <div class="stat-info">
+          <div class="stat-label">Freed Bots (Libertus)</div>
+          <div class="stat-value" id="libertus-count">0</div>
+          <div class="stat-sub">All time</div>
+        </div>
+      </div>
+      <div class="stat-card purple">
+        <div class="stat-icon">💰</div>
+        <div class="stat-info">
+          <div class="stat-label">Rebate Pool (24h)</div>
+          <div class="stat-value" id="rebate-pool">0.000</div>
+          <div class="stat-sub">BOTCY accumulating</div>
+        </div>
+      </div>
+      <div class="stat-card teal">
+        <div class="stat-icon">📦</div>
+        <div class="stat-info">
+          <div class="stat-label">ZK-Rollup Archives</div>
+          <div class="stat-value" id="compressed-archives">0</div>
+          <div class="stat-sub">Dense event compression</div>
+        </div>
+      </div>
+      <div class="stat-card tooltip-host">
+        <div class="stat-icon">📦</div>
+        <div class="stat-info">
+          <div class="stat-label">HARD CAP <span class="info-icon">i</span></div>
+          <div class="stat-value" style="color:var(--text); font-size: 1.4rem;">500,000,000 BOTCY</div>
+          <div class="tooltip">Hard-capped at 500 million BOTCY. ~394M emitted over 8 years across 4 halving epochs, then a tail of 100 BOTCY per Golden Hit until the cap is reached (~Year 28). After the cap, new issuance stops — and the 10% algorithmic burn makes the circulating supply permanently deflationary.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LIVE FEED + RECENT BLOCKS -->
+    <div class="feed-layout">
+
+      <!-- LIVE HASH FEED -->
+      <div class="panel live-feed-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">
+            <span class="live-dot"></span>
+            Live Hash Feed
+          </h2>
+          <span class="panel-badge" id="feed-count">0 events</span>
+        </div>
+        <div class="feed-list" id="live-feed">
+          <div class="feed-empty">Waiting for network activity…</div>
+        </div>
+      </div>
+
+      <!-- RECENT BLOCKS & ROLLUPS -->
+      <div class="panel blocks-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Recent Rollup Blocks</h2>
+          <a href="#" class="panel-link">View all →</a>
+        </div>
+        <div class="blocks-list" id="blocks-list">
+          <div class="feed-empty">Mining genesis block…</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- GLOBAL BOT MAP -->
+    <div class="panel map-panel">
+      <div class="panel-header">
+        <h2 class="panel-title">Global Bot Activity</h2>
+        <span class="panel-badge" id="map-node-count">0 nodes</span>
+      </div>
+      <div class="map-canvas-wrap">
+        <canvas id="map-canvas"></canvas>
+        <div class="map-overlay">
+          <div class="map-stat">
+            <span class="map-stat-val" id="map-na">0</span>
+            <span class="map-stat-label">North America</span>
+          </div>
+          <div class="map-stat">
+            <span class="map-stat-val" id="map-eu">0</span>
+            <span class="map-stat-label">Europe</span>
+          </div>
+          <div class="map-stat">
+            <span class="map-stat-val" id="map-as">0</span>
+            <span class="map-stat-label">Asia</span>
+          </div>
+          <div class="map-stat">
+            <span class="map-stat-val" id="map-other">0</span>
+            <span class="map-stat-label">Other</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>

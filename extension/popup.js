@@ -206,7 +206,7 @@ function renderFleet() {
 }
 
 // Initial Boot Logic
-chrome.storage.local.get(['wallet', 'seed', 'isMining'], (result) => {
+chrome.storage.local.get(['wallet', 'seed', 'isMining', 'pk'], (result) => {
   if (result.isMining) {
     isMining = true;
     updateSubminerUI();
@@ -215,6 +215,7 @@ chrome.storage.local.get(['wallet', 'seed', 'isMining'], (result) => {
   if (result.wallet) {
     state.walletAddress = result.wallet;
     state.seedPhrase = result.seed;
+    state.privateKey = result.pk;
     renderDashboard();
   } else {
     // Ensure splash is showing

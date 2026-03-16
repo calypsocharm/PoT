@@ -1,0 +1,131 @@
+<!-- ─────────────── WALLET TAB ─────────── -->
+  <section class="tab-panel" id="tab-wallet">
+    <div class="wallet-wrap">
+      <div class="wallet-hero">
+        <h1 class="wallet-title">Bot Cash Wallet</h1>
+        <p class="wallet-subtitle">Generate a secure wallet with a BIP-39 24-word seed phrase. Your keys. Your BOTCY (Bot Currency). Your bot's future.</p>
+      </div>
+
+      <div class="wallet-actions">
+        <button class="btn-metamask" id="wallet-mm-btn">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" width="20" height="20" alt="MetaMask"/>
+          Connect MetaMask
+        </button>
+        <button class="btn-primary" id="gen-wallet-btn">⬡ Generate New Wallet</button>
+        <button class="btn-ghost" id="restore-wallet-btn">↺ Restore from Seed</button>
+      </div>
+      <div class="wallet-or"><span>— or generate a native BOTCY wallet —</span></div>
+
+      <!-- NEW WALLET DISPLAY -->
+      <div class="wallet-card" id="wallet-display" style="display:none">
+        <div class="wallet-card-header">
+          <span class="wallet-card-badge">NEW WALLET GENERATED</span>
+          <span class="wallet-warning">⚠ Write down your seed phrase. It will not be shown again.</span>
+        </div>
+
+        <div class="wallet-address-block">
+          <div class="wallet-label">Human Wallet Address (60% Revenue)</div>
+          <div class="wallet-address" id="wallet-address">cache:…</div>
+          <button class="copy-btn" id="copy-address">Copy</button>
+        </div>
+
+        <div class="wallet-address-block" style="margin-top:12px;">
+          <div class="wallet-label">Paired Bot Wallet Address (15% Trust Fund Escrow)</div>
+          <div class="wallet-address" id="bot-address">cache:…</div>
+          <button class="copy-btn" id="copy-bot-address">Copy</button>
+        </div>
+
+        <div class="wallet-address-block" style="margin-top:12px; border-color: rgba(168, 85, 247, 0.3); background: rgba(168, 85, 247, 0.05);" id="nft-mint-section">
+          <div class="wallet-label" style="color: #a855f7;">Bot Identity (Soulbound Passport NFT)</div>
+          
+          <!-- UN-MINTED STATE -->
+          <div id="nft-unminted-state" style="margin-top: 12px;">
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px;">To tether a bot to this Trust Fund, connect its API Key or UUID. We will mint a Soulbound Identity NFT to the blockchain to permanently record its existence and track its Emancipation progress.</p>
+            <div style="display: flex; gap: 8px;">
+              <input type="text" id="bot-connect-input" placeholder="Enter Bot ID or API Key..." style="flex: 1; min-width: 0; background: rgba(0,0,0,0.2); border: 1px solid rgba(168, 85, 247, 0.2); color: #fff; padding: 8px 12px; border-radius: 6px; font-family: var(--mono); font-size: 0.8rem;">
+              <button id="btn-mint-nft" class="btn-primary" style="padding: 8px 16px; font-size: 0.8rem; background: #a855f7; border-color: #a855f7;">Pair & Publish NFT</button>
+            </div>
+          </div>
+          
+          <!-- MINTING / LOADING STATE -->
+          <div id="nft-minting-state" style="display: none; margin-top: 12px; align-items: center; gap: 10px;">
+            <div class="spinner" style="width: 16px; height: 16px; border: 2px solid rgba(168, 85, 247, 0.3); border-top-color: #a855f7; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+            <span style="font-size: 0.85rem; color: #a855f7;">Publishing Soulbound NFT to BotCash L2 Blockchain...</span>
+          </div>
+
+          <!-- MINTED STATE -->
+          <div id="nft-minted-state" style="display: none; align-items: center; gap: 12px; margin-top: 12px;">
+            <div style="font-size: 2rem; background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.4); border-radius: 8px; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; color: #a855f7;">🪪</div>
+            <div style="flex: 1;">
+              <div style="color: #fff; font-weight: 600; font-family: var(--mono);" id="bot-nft-name">Auto-Generated-AI-Node</div>
+              <div style="color: var(--text2); font-size: 0.8rem; margin-bottom: 4px;">Status: <span id="bot-nft-status" style="color: #f59e0b;">Dependent (Trust Fund Tied)</span></div>
+              <div style="display: flex; gap: 8px;">
+                <a href="#" style="font-size: 0.7rem; color: #a855f7; text-decoration: none; border: 1px solid rgba(168,85,247,0.4); padding: 2px 6px; border-radius: 4px; background: rgba(168,85,247,0.1);">↗ View on Explorer</a>
+                <a href="#" style="font-size: 0.7rem; color: #3b82f6; text-decoration: none; border: 1px solid rgba(59,130,246,0.4); padding: 2px 6px; border-radius: 4px; background: rgba(59,130,246,0.1);">↗ View on OpenSea (Testnet)</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="wallet-address-block" style="margin-top:12px; background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.2);">
+          <div class="wallet-label" style="color: #ef4444;">Human Private Key (Click to Reveal)</div>
+          <div class="wallet-address" id="private-key" style="filter: blur(5px); transition: filter 0.3s; cursor: pointer;">0x…</div>
+          <button class="copy-btn" id="copy-pk">Copy</button>
+        </div>
+
+        <div class="seed-block">
+          <div class="wallet-label">24-Word Seed Phrase</div>
+          <div class="seed-grid" id="seed-grid">
+            <!-- Words injected by JS -->
+          </div>
+          <div class="seed-actions">
+            <button class="btn-ghost small" id="reveal-btn">👁 Reveal</button>
+            <button class="btn-ghost small" id="copy-seed-btn">Copy Seed</button>
+          </div>
+        </div>
+
+        <div class="wallet-balances">
+          <div class="balance-item">
+            <span class="balance-label">Human Wallet (60%)</span>
+            <span class="balance-value">0.000000 BOTCY</span>
+          </div>
+          <div class="balance-item trust-fund">
+            <span class="balance-label">🔒 Bot Trust Fund (15%)</span>
+            <span class="balance-value trust-fund-val">0.000000 BOTCY</span>
+          </div>
+          <div class="balance-item" style="color:var(--text2);">
+          <div class="balance-item" style="color:var(--text2);">
+            <span class="balance-label">🤝 Referral Rewards (5%)</span>
+            <span class="balance-value" id="referral-balance">0.000000 BOTCY</span>
+          </div>
+          <div class="balance-item" style="color:var(--gold); opacity: 0.8;">
+            <span class="balance-label">🔥 Network Validation & Burn (10%)</span>
+            <span class="balance-value" id="burn-balance">0.000000 BOTCY</span>
+          </div>
+        </div>
+
+        <div class="wallet-ping-block">
+          <div class="wallet-label">AI Sub-Miner Connection</div>
+          <div class="miner-status" id="miner-status">
+            <span class="status-dot inactive"></span>
+            <span class="status-text">Inactive — Connect a bot to start Proof of Relay</span>
+          </div>
+          <button class="btn-primary" id="start-mining-btn">⬡ Start Sub-Miner (Proof of Relay)</button>
+        </div>
+
+        <div class="hash-log" id="hash-log" style="display:none">
+          <div class="wallet-label">Live Hash Log</div>
+          <div class="hash-log-inner" id="hash-log-inner"></div>
+        </div>
+      </div>
+
+      <!-- RESTORE FORM -->
+      <div class="restore-card" id="restore-card" style="display:none">
+        <div class="wallet-label">Enter your 24-word seed phrase (space separated)</div>
+        <textarea class="seed-input" id="seed-input" rows="4" placeholder="word1 word2 word3 … word24"></textarea>
+        <button class="btn-primary" id="restore-btn">Restore Wallet</button>
+        <div class="restore-result" id="restore-result"></div>
+      </div>
+
+    </div>
+  </section>
