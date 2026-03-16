@@ -13,17 +13,17 @@ class BotCashProtocol {
         this.pendingTransactions = [];
         this.miningReward = 50;  // Base Block Minting Reward
         
-        // Ledger Balances mapping: Address -> amount BOTC
+        // Ledger Balances mapping: Address -> amount BOTCY
         this.balances = new Map();
         
         // Trust Funds track the 15% involuntary stake per Bot hardware
         this.trustFunds = new Map();
         
         this.totalSupply = 0;
-        this.maxSupply = 10000000; // Hardcap 10 million BOTC
+        this.maxSupply = 10000000; // Hardcap 10 million BOTCY
         
         // Treasury/Burn addresses
-        this.treasuryAddress = "cache:BOTC_DAO_TREASURY_MULTISIG_000";
+        this.treasuryAddress = "cache:BOTS_DAO_TREASURY_MULTISIG_000";
         this.burnAddress = "cache:BURN0000000000000000000000000000";
         
         console.log(`\n[BotCash Core] ⚙️ Initialized L2 Cryptographic Chain.`);
@@ -60,11 +60,11 @@ class BotCashProtocol {
         
         // Check balance (If it's not a SYSTEM mint)
         if (transaction.fromAddress !== 'SYSTEM' && this.getBalanceOfAddress(transaction.fromAddress) < transaction.amount) {
-             throw new Error('Not enough BOTC balance in wallet');
+             throw new Error('Not enough BOTCY balance in wallet');
         }
 
         this.pendingTransactions.push(transaction);
-        console.log(`[MemPool] 📥 Tx Queued: ${transaction.hash.slice(0, 10)}... | From: ${transaction.fromAddress.slice(0, 10)}... | Amount: ${transaction.amount} BOTC`);
+        console.log(`[MemPool] 📥 Tx Queued: ${transaction.hash.slice(0, 10)}... | From: ${transaction.fromAddress.slice(0, 10)}... | Amount: ${transaction.amount} BOTCY`);
     }
 
     /**

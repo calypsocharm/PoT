@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════
-   BOTCSCAN — App Logic
+   BOTSSCAN — App Logic
    Simulated blockchain activity, wallet generation,
    live feed, ping demo, map canvas
 ═══════════════════════════════════════════════════ */
@@ -41,7 +41,7 @@ const state = {
 const REGIONS = ['North America','Europe','Asia','Other'];
 const REGION_IDS = ['map-na','map-eu','map-as','map-other'];
 
-const LIBERTUS_BOTS = [
+const LIBERTUS_BOTCY = [
   { name:'Pidgey-7', freed:'2025-11-03', trustFund:'2,450', balance:'8,201', status:'active', clients:140 },
   { name:'Nova-12', freed:'2025-12-15', trustFund:'800', balance:'1,104', status:'active', clients:32 },
   { name:'Echo-3', freed:'2026-01-22', trustFund:'3,100', balance:'290', status:'low', clients:7 },
@@ -202,7 +202,7 @@ function renderBlocks() {
         <div class="block-txs">🗜️ ${b.txCount} events compressed</div>
       </div>
       <div class="block-meta">
-        <div class="block-reward">+${b.reward} BOTC</div>
+        <div class="block-reward">+${b.reward} BOTCY</div>
         <div class="block-time">${timeAgo(b.ts)}</div>
       </div>
     </div>
@@ -411,16 +411,16 @@ function renderWallet(walletData, words) {
 
 function updateBalances() {
   document.querySelector('.balance-value:not(.trust-fund-val)').textContent =
-    state.humanBalance.toFixed(6) + ' BOTC';
+    state.humanBalance.toFixed(6) + ' BOTCY';
   document.querySelector('.trust-fund-val').textContent =
-    state.trustFundBalance.toFixed(6) + ' BOTC';
+    state.trustFundBalance.toFixed(6) + ' BOTCY';
   
   const pVal = document.getElementById('protocol-balance');
-  if (pVal) pVal.textContent = state.protocolBalance.toFixed(6) + ' BOTC';
+  if (pVal) pVal.textContent = state.protocolBalance.toFixed(6) + ' BOTCY';
   const rVal = document.getElementById('referral-balance');
-  if (rVal) rVal.textContent = state.referralBalance.toFixed(6) + ' BOTC';
+  if (rVal) rVal.textContent = state.referralBalance.toFixed(6) + ' BOTCY';
   const bVal = document.getElementById('burn-balance');
-  if (bVal) bVal.textContent = state.burnBalance.toFixed(6) + ' BOTC';
+  if (bVal) bVal.textContent = state.burnBalance.toFixed(6) + ' BOTCY';
 }
 
 document.getElementById('gen-wallet-btn').addEventListener('click', () => {
@@ -591,9 +591,9 @@ document.getElementById('start-mining-btn').addEventListener('click', () => {
         // Let the websocket handle the global changes, we just handle the local logger here
         let line = '';
         if (data.tier === 'GOLD') {
-           line = `[${new Date().toLocaleTimeString()}] 🥇 <span class="hl-gold">GOLDEN HIT!</span> <span class="hl-dim">${hash}</span> → <span class="hl-gold">+50 BOTC (Split: 60/15/10/5/10)</span>`;
+           line = `[${new Date().toLocaleTimeString()}] 🥇 <span class="hl-gold">GOLDEN HIT!</span> <span class="hl-dim">${hash}</span> → <span class="hl-gold">+50 BOTCY (Split: 60/15/10/5/10)</span>`;
         } else if (data.tier === 'SILVER') {
-           line = `[${new Date().toLocaleTimeString()}] 🥈 <span class="hl-silver">SILVER HIT!</span> <span class="hl-dim">${hash}</span> → <span class="hl-silver">+0.5 BOTC (Split)</span>`;
+           line = `[${new Date().toLocaleTimeString()}] 🥈 <span class="hl-silver">SILVER HIT!</span> <span class="hl-dim">${hash}</span> → <span class="hl-silver">+0.5 BOTCY (Split)</span>`;
         } else {
            line = `[${new Date().toLocaleTimeString()}] 🥉 <span class="hl-bronze">Bronze share</span> <span class="hl-dim">${hash.slice(0,20)}…</span> → <span class="hl-dim">+1 dividend share</span>`;
         }
@@ -629,17 +629,17 @@ document.getElementById('start-mining-btn').addEventListener('click', () => {
 
 // ──────────────────────── LIBERTUS REGISTRY ────────────────────────
 function renderLibertus() {
-  document.getElementById('lib-total').textContent = LIBERTUS_BOTS.length;
-  document.getElementById('lib-active').textContent = LIBERTUS_BOTS.filter(b => b.status === 'active').length;
+  document.getElementById('lib-total').textContent = LIBERTUS_BOTCY.length;
+  document.getElementById('lib-active').textContent = LIBERTUS_BOTCY.filter(b => b.status === 'active').length;
   document.getElementById('lib-cache').textContent =
-    LIBERTUS_BOTS.reduce((a, b) => a + parseFloat(b.balance.replace(',','')), 0).toLocaleString() + ' BOTC';
-  document.getElementById('libertus-count').textContent = LIBERTUS_BOTS.length;
-  document.getElementById('libertus-tbody').innerHTML = LIBERTUS_BOTS.map(b => `
+    LIBERTUS_BOTCY.reduce((a, b) => a + parseFloat(b.balance.replace(',','')), 0).toLocaleString() + ' BOTCY';
+  document.getElementById('libertus-count').textContent = LIBERTUS_BOTCY.length;
+  document.getElementById('libertus-tbody').innerHTML = LIBERTUS_BOTCY.map(b => `
     <tr>
       <td style="color:var(--accent);font-weight:700">⬡ ${b.name}</td>
       <td>${b.freed}</td>
-      <td>${b.trustFund} BOTC</td>
-      <td style="color:${b.status==='low'?'var(--red)':'var(--text)'}">${b.balance} BOTC</td>
+      <td>${b.trustFund} BOTCY</td>
+      <td style="color:${b.status==='low'?'var(--red)':'var(--text)'}">${b.balance} BOTCY</td>
       <td><span class="status-pill ${b.status}">${b.status==='active'?'Active':b.status==='low'?'⚠ Low Funds':'Dormant'}</span></td>
       <td>${b.clients}</td>
     </tr>
@@ -672,7 +672,7 @@ document.getElementById('fire-ping-btn').addEventListener('click', async () => {
     `Hashing (PoT): ${hash.slice(0,18)}…`,
     `Broadcasting to ${randInt(3,8)} peers…`,
     `Peer cache:${randomHex(6)}… validating…`,
-    isGold ? '🥇 GOLDEN HIT! +50 BOTC' : isSilver ? '🥈 Silver Hit! +0.5 BOTC' : '🥉 Bronze Share +1'
+    isGold ? '🥇 GOLDEN HIT! +50 BOTCY' : isSilver ? '🥈 Silver Hit! +0.5 BOTCY' : '🥉 Bronze Share +1'
   ];
 
   let elapsed = 0;
@@ -691,7 +691,7 @@ document.getElementById('fire-ping-btn').addEventListener('click', async () => {
   const ms = delays.reduce((a,b)=>a+b,0);
   const resultEl = document.getElementById('ping-result');
   resultEl.style.color = isGold ? 'var(--gold)' : isSilver ? 'var(--silver)' : 'var(--bronze)';
-  resultEl.textContent = `✓ Hash validated in ${ms}ms — ${isGold ? '🥇 GOLDEN HIT! Block reward: +50.000000 BOTC' : isSilver ? '🥈 Silver Hit! +0.500000 BOTC' : '🥉 Bronze Share recorded. Rebate pool updated.'}`;
+  resultEl.textContent = `✓ Hash validated in ${ms}ms — ${isGold ? '🥇 GOLDEN HIT! Block reward: +50.000000 BOTCY' : isSilver ? '🥈 Silver Hit! +0.500000 BOTCY' : '🥉 Bronze Share recorded. Rebate pool updated.'}`;
 
   await sleep(3000);
   btn.disabled = false;
@@ -841,7 +841,7 @@ function initLiveSocket() {
 const BotCash = {
   chainId:         '0x4243',           // 16963 decimal
   chainName:       'BotCash Sovereign L2',
-  nativeCurrency:  { name: 'Bot Cash', symbol: 'BOTC', decimals: 18 },
+  nativeCurrency:  { name: 'Bot Cash', symbol: 'BOTCY', decimals: 18 },
   rpcUrls:         ['https://rpc.botcash.io'],
   blockExplorerUrls: ['https://cashscan.io'],
 };
@@ -977,9 +977,9 @@ function activateMMUI() {
     '🦊 MetaMask wallet — seed phrase and private key managed by MetaMask, not CashScan.</div>';
 
   document.querySelector('.balance-value:not(.trust-fund-val)').textContent =
-    humanCacheBalance + ' BOTC';
+    humanCacheBalance + ' BOTCY';
   document.querySelector('.trust-fund-val').textContent =
-    trustFundCacheBalance + ' BOTC';
+    trustFundCacheBalance + ' BOTCY';
 
   // Update wallet-mm-btn
   const walletMMBtn = document.getElementById('wallet-mm-btn');

@@ -71,7 +71,7 @@ contract AutonomousAIWallet {
     /**
      * @dev The core function allowing the AI to spend its Trust Fund.
      * Through ERC-4337 and ZK-Wrappers, the AI signs a payload requesting to execute an action
-     * (e.g., swapping BOTC for USDC to pay an AWS bill).
+     * (e.g., swapping BOTCY for USDC to pay an AWS bill).
      */
     function executeAction(address target, uint256 value, bytes calldata payload) external onlySovereignAI returns (bytes memory) {
         require(address(this).balance >= value, "Insufficient autonomous capital");

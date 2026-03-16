@@ -4,7 +4,7 @@ Use these standard commands to save your progress and update the live site via G
 
 ## 1. Commit and Push (Save to GitHub)
 
-Run these commands in your PowerShell or terminal in the `botcache-scan` folder:
+Run these commands in your PowerShell or terminal in the `botcashescan` folder:
 
 ```powershell
 git add .

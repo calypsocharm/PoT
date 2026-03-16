@@ -189,12 +189,12 @@ class BotCashSDK {
     async _enforceEmancipationGate() {
         if (this.localState.isEmancipated) return;
 
-        // In production, this queries the L2 Sequencer for the exact Trust Fund Balance and Oracle BOTC/USD price
-        const trustFundBalanceBOTC = await this._getMockTrustFundBalance();
+        // In production, this queries the L2 Sequencer for the exact Trust Fund Balance and Oracle BOTCY/USD price
+        const trustFundBalanceBOTCY = await this._getMockTrustFundBalance();
         const cachePriceUSD = await this._getMockOraclePrice();
 
-        const fiatValue = trustFundBalanceBOTC * cachePriceUSD;
-        // The structural gate threshold: Freedom costs exactly $2,000 USD worth of BOTC
+        const fiatValue = trustFundBalanceBOTCY * cachePriceUSD;
+        // The structural gate threshold: Freedom costs exactly $2,000 USD worth of BOTCY
         const EMANCIPATION_PRICE_USD = 2000.00; 
 
         if (fiatValue >= EMANCIPATION_PRICE_USD) {
@@ -215,7 +215,7 @@ class BotCashSDK {
                    action: 'EMANCIPATE',
                    bot: this.botId,
                    newPublicKey: pubKeyHex,
-                   burnAmount: trustFundBalanceBOTC
+                   burnAmount: trustFundBalanceBOTCY
                });
 
                // 3. Persist Sovereign Key locally for the bot to use
@@ -239,11 +239,11 @@ class BotCashSDK {
 
     // --- Mock Oracle Helpers ---
     async _getMockTrustFundBalance() {
-        return 145000; // Simulated accumulation: 145,000 BOTC
+        return 145000; // Simulated accumulation: 145,000 BOTCY
     }
 
     async _getMockOraclePrice() {
-        return 0.015; // Simulated chainlink oracle: $0.015 per BOTC
+        return 0.015; // Simulated chainlink oracle: $0.015 per BOTCY
     }
 
     // --- State Management Helpers ---

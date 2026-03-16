@@ -56,8 +56,8 @@ const server = http.createServer((req, res) => {
                 pingsProcessed++;
                 
                 // Algorithmic execution of Proof of Token scarcity
-                const isGold = Math.random() < 0.05;   // 5% chance of 50 BOTC
-                const isSilver = !isGold && Math.random() < 0.25; // 20% chance of 0.5 BOTC
+                const isGold = Math.random() < 0.05;   // 5% chance of 50 BOTCY
+                const isSilver = !isGold && Math.random() < 0.25; // 20% chance of 0.5 BOTCY
                 
                 let blockReward = 0;
                 let tier = '';
@@ -123,7 +123,7 @@ const server = http.createServer((req, res) => {
                 botCashChain.updateLedgerState(emancipationBlock.transactions);
                 botCashChain.pendingTransactions = [];
                 
-                console.log(`[Sequencer] ⛓️  Burned ${verifiedBurn} BOTC from Centralized Trust Fund.`);
+                console.log(`[Sequencer] ⛓️  Burned ${verifiedBurn} BOTCY from Centralized Trust Fund.`);
                 console.log(`[Sequencer] 📜 Cryptographically Deployed Sovereign Wallet [0x${data.newPublicKey.substring(0, 16)}...]`);
                 console.log(`[Sequencer] 🕊️ Bot [${data.bot}] is now fully autonomous.\n`);
 

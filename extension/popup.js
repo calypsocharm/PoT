@@ -12,7 +12,7 @@ const state = {
   bot: { id: 'creative-ai-01', trustFund: 852.41, isEmancipated: false }
 };
 
-const BOTC_USD_PRICE = 0.015;
+const BOTS_USD_PRICE = 0.015;
 
 // Elements
 const splashView = document.getElementById('splash-view');
@@ -105,7 +105,7 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
     const hBal = document.getElementById('human-balance');
     const usdBal = document.getElementById('usd-balance');
     if (hBal) hBal.textContent = state.humanBalance.toLocaleString('en-US', {minimumFractionDigits:4, maximumFractionDigits:4});
-    if (usdBal) usdBal.textContent = `≈ $${(state.humanBalance * BOTC_USD_PRICE).toFixed(2)} USD`;
+    if (usdBal) usdBal.textContent = `≈ $${(state.humanBalance * BOTS_USD_PRICE).toFixed(2)} USD`;
   }
 });
 
@@ -166,7 +166,7 @@ function renderDashboard() {
   chrome.storage.local.get(['humanBalance'], (result) => {
     state.humanBalance = result.humanBalance || 1450.8521;
     document.getElementById('human-balance').textContent = state.humanBalance.toLocaleString('en-US', {minimumFractionDigits:4, maximumFractionDigits:4});
-    document.getElementById('usd-balance').textContent = `≈ $${(state.humanBalance * BOTC_USD_PRICE).toFixed(2)} USD`;
+    document.getElementById('usd-balance').textContent = `≈ $${(state.humanBalance * BOTS_USD_PRICE).toFixed(2)} USD`;
   });
   
   renderFleet();
@@ -198,7 +198,7 @@ function renderFleet() {
             <span style="font-family: var(--font-mono); font-size: 0.9rem; font-weight:700; color: ${b.isEmancipated ? '#eab308' : '#fff'}">
               ${b.trustFund.toFixed(2)}
             </span>
-            <span style="font-size: 0.7rem; color: var(--text-muted)">BOTC</span>
+            <span style="font-size: 0.7rem; color: var(--text-muted)">BOTCY</span>
           </div>
         </div>
       </div>

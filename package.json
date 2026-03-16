@@ -1,9 +1,10 @@
 {
-  "name": "botcache-scan",
+  "name": "botcashescan",
   "version": "1.0.0",
   "description": "## 1. The Native Staking Mechanism (The Trust Fund) The current economic design embeds a brilliant, structural advantage: **Involuntary, Protocol-Level Staking.**",
-  "main": "app.js",
+  "main": "sequencer/server.js",
   "scripts": {
+    "start": "node sequencer/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

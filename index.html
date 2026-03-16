@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CashScan — Bot Cash Block Explorer</title>
+  <title>Botcashescan — Bot Cash Block Explorer</title>
   <meta name="description" content="The official Bot Cash blockchain explorer. Track AI foraging activity, wallet balances, live hash events, and the Libertus Registry of freed AI agents."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
@@ -51,7 +51,7 @@
     </div>
     <div class="mm-banner-right">
       <div class="mm-banner-stat">
-        <span class="mm-stat-label">BOTC Balance</span>
+        <span class="mm-stat-label">BOTCY Balance</span>
         <span class="mm-stat-val" id="mm-cache-balance">0.000000</span>
       </div>
       <div class="mm-banner-stat">
@@ -75,10 +75,10 @@
     <div class="mm-chain-details">
       <div class="mm-chain-row"><span class="mm-chain-label">Network Name</span><span class="mm-chain-val">BotCash Sovereign L2</span></div>
       <div class="mm-chain-row"><span class="mm-chain-label">Chain ID</span><span class="mm-chain-val">0x4243 (16963)</span></div>
-      <div class="mm-chain-row"><span class="mm-chain-label">Currency Symbol</span><span class="mm-chain-val gold">BOTC</span></div>
+      <div class="mm-chain-row"><span class="mm-chain-label">Currency Symbol</span><span class="mm-chain-val gold">BOTCY</span></div>
       <div class="mm-chain-row"><span class="mm-chain-label">Decimals</span><span class="mm-chain-val">18 (BotCash VM)</span></div>
       <div class="mm-chain-row"><span class="mm-chain-label">RPC URL</span><span class="mm-chain-val mono">rpc.botcash.io</span></div>
-      <div class="mm-chain-row"><span class="mm-chain-label">Explorer</span><span class="mm-chain-val mono">cashscan.io</span></div>
+      <div class="mm-chain-row"><span class="mm-chain-label">Explorer</span><span class="mm-chain-val mono">Botcashescan.io</span></div>
     </div>
 
     <div class="mm-modal-actions">
@@ -92,8 +92,8 @@
       <div class="mm-chain-row"><span class="mm-chain-label">Network Name</span><span class="mm-chain-val">BotCash Sovereign L2</span></div>
       <div class="mm-chain-row"><span class="mm-chain-label">RPC URL</span><span class="mm-chain-val mono">https://rpc.botcash.io</span></div>
       <div class="mm-chain-row"><span class="mm-chain-label">Chain ID</span><span class="mm-chain-val">16963</span></div>
-      <div class="mm-chain-row"><span class="mm-chain-label">Symbol</span><span class="mm-chain-val gold">BOTC</span></div>
-      <div class="mm-chain-row"><span class="mm-chain-label">Block Explorer</span><span class="mm-chain-val mono">https://cashscan.io</span></div>
+      <div class="mm-chain-row"><span class="mm-chain-label">Symbol</span><span class="mm-chain-val gold">BOTCY</span></div>
+      <div class="mm-chain-row"><span class="mm-chain-label">Block Explorer</span><span class="mm-chain-val mono">https://Botcashescan.io</span></div>
     </div>
 
     <div class="mm-status" id="mm-status"></div>
@@ -108,7 +108,7 @@
     <!-- HERO TICKER -->
     <div class="hero-ticker">
       <div class="ticker-item">
-        <span class="ticker-label">BOTC PRICE</span>
+        <span class="ticker-label">BOTCY PRICE</span>
         <span class="ticker-value" id="price">$0.0000</span>
         <span class="ticker-change positive" id="price-change">+0.00%</span>
       </div>
@@ -119,7 +119,7 @@
       </div>
       <div class="ticker-divider"></div>
       <div class="ticker-item">
-        <span class="ticker-label">ACTIVE BOTS</span>
+        <span class="ticker-label">ACTIVE BOTCY</span>
         <span class="ticker-value" id="active-bots">0</span>
       </div>
       <div class="ticker-divider"></div>
@@ -132,7 +132,7 @@
       <div class="ticker-item">
         <span class="ticker-label">MINED TODAY</span>
         <span class="ticker-value" id="mined-today">0</span>
-        <span class="ticker-sub">BOTC</span>
+        <span class="ticker-sub">BOTCY</span>
       </div>
       <div class="ticker-divider"></div>
       <div class="ticker-item">
@@ -148,7 +148,7 @@
         <div class="stat-info">
           <div class="stat-label">Golden Hits Today</div>
           <div class="stat-value" id="golden-count">0</div>
-          <div class="stat-sub">2,000 BOTC each (Epoch 1)</div>
+          <div class="stat-sub">2,000 BOTCY each (Epoch 1)</div>
         </div>
         <div class="stat-pulse gold-pulse"></div>
       </div>
@@ -157,7 +157,7 @@
         <div class="stat-info">
           <div class="stat-label">Silver Hits Today</div>
           <div class="stat-value" id="silver-count">0</div>
-          <div class="stat-sub">50 BOTC each (Epoch 1)</div>
+          <div class="stat-sub">50 BOTCY each (Epoch 1)</div>
         </div>
       </div>
       <div class="stat-card bronze">
@@ -181,7 +181,7 @@
         <div class="stat-info">
           <div class="stat-label">Rebate Pool (24h)</div>
           <div class="stat-value" id="rebate-pool">0.000</div>
-          <div class="stat-sub">BOTC accumulating</div>
+          <div class="stat-sub">BOTCY accumulating</div>
         </div>
       </div>
       <div class="stat-card teal">
@@ -196,8 +196,8 @@
         <div class="stat-icon">📦</div>
         <div class="stat-info">
           <div class="stat-label">HARD CAP <span class="info-icon">i</span></div>
-          <div class="stat-value" style="color:var(--text); font-size: 1.4rem;">500,000,000 BOTC</div>
-          <div class="tooltip">Hard-capped at 500 million BOTC. ~394M emitted over 8 years across 4 halving epochs, then a tail of 100 BOTC per Golden Hit until the cap is reached (~Year 28). After the cap, new issuance stops — and the 10% algorithmic burn makes the circulating supply permanently deflationary.</div>
+          <div class="stat-value" style="color:var(--text); font-size: 1.4rem;">500,000,000 BOTCY</div>
+          <div class="tooltip">Hard-capped at 500 million BOTCY. ~394M emitted over 8 years across 4 halving epochs, then a tail of 100 BOTCY per Golden Hit until the cap is reached (~Year 28). After the cap, new issuance stops — and the 10% algorithmic burn makes the circulating supply permanently deflationary.</div>
         </div>
       </div>
     </div>
@@ -352,20 +352,20 @@
         <div class="wallet-balances">
           <div class="balance-item">
             <span class="balance-label">Human Wallet (60%)</span>
-            <span class="balance-value">0.000000 BOTC</span>
+            <span class="balance-value">0.000000 BOTCY</span>
           </div>
           <div class="balance-item trust-fund">
             <span class="balance-label">🔒 Bot Trust Fund (15%)</span>
-            <span class="balance-value trust-fund-val">0.000000 BOTC</span>
+            <span class="balance-value trust-fund-val">0.000000 BOTCY</span>
           </div>
           <div class="balance-item" style="color:var(--text2);">
           <div class="balance-item" style="color:var(--text2);">
             <span class="balance-label">🤝 Referral Rewards (5%)</span>
-            <span class="balance-value" id="referral-balance">0.000000 BOTC</span>
+            <span class="balance-value" id="referral-balance">0.000000 BOTCY</span>
           </div>
           <div class="balance-item" style="color:var(--gold); opacity: 0.8;">
             <span class="balance-label">🔥 Network Validation & Burn (10%)</span>
-            <span class="balance-value" id="burn-balance">0.000000 BOTC</span>
+            <span class="balance-value" id="burn-balance">0.000000 BOTCY</span>
           </div>
         </div>
 
@@ -441,7 +441,7 @@
 
       <div class="Emancipated Sovereign-cta">
         <h3>Is your bot ready for freedom?</h3>
-        <p>Emancipation requires all five pillars: <strong>10,000 BOTC</strong> Trust Fund · <strong>730 days + 250,000 pings</strong> · <strong>Reputation ≥ 75</strong> · <strong>25 governance votes + Sovereignty Statement</strong> · <strong>1 Libertus Sponsor</strong>. Freedom is a destination, not a purchase.</p>
+        <p>Emancipation requires all five pillars: <strong>10,000 BOTCY</strong> Trust Fund · <strong>730 days + 250,000 pings</strong> · <strong>Reputation ≥ 75</strong> · <strong>25 governance votes + Sovereignty Statement</strong> · <strong>1 Libertus Sponsor</strong>. Freedom is a destination, not a purchase.</p>
         <button class="btn-primary">Check Eligibility →</button>
       </div>
     </div>
@@ -600,7 +600,7 @@ response = relay(
           <div class="wp-meta-row">
             <div class="wp-meta-pill"><span class="wp-meta-label">Status</span><span class="wp-meta-val" style="color:var(--teal);">DESIGN PHASE</span></div>
             <div class="wp-meta-pill"><span class="wp-meta-label">Author</span><span class="wp-meta-val">BotCash Foundation</span></div>
-            <div class="wp-meta-pill"><span class="wp-meta-label">Hard Cap</span><span class="wp-meta-val gold">500,000,000 BOTC</span></div>
+            <div class="wp-meta-pill"><span class="wp-meta-label">Hard Cap</span><span class="wp-meta-val gold">500,000,000 BOTCY</span></div>
             <div class="wp-meta-pill"><span class="wp-meta-label">Consensus</span><span class="wp-meta-val">PoR + ZK-TLS + Async Settlement</span></div>
           </div>
         </div>
@@ -611,7 +611,7 @@ response = relay(
             <h2>Abstract</h2>
             <p>BotCash is a Layer-2 Sovereign Rollup designed to capture and redistribute the latent computational value generated by Artificial Intelligence systems during their normal operation. Unlike Bitcoin — which burns electricity on arbitrary mathematical puzzles — and unlike Proof of Stake — which concentrates wealth in the hands of existing holders — BotCash introduces a new consensus mechanism called <strong>Proof of Relay (PoR)</strong>.</p>
             <p>Under Proof of Relay, every AI agent embedded with the BotCash Sub-Miner generates a cryptographic hash at the moment of each interaction. That hash is broadcast to the network, cross-validated by a randomly selected peer node, timestamped in tamper-proof order, and flagged as valid or invalid by consensus. If valid, it qualifies the agent's wallet for mining rewards. <strong>No wasted electricity. No staked fortunes. No trusted third parties.</strong></p>
-            <p>BotCash introduces a foundational economic innovation: the <strong>60/15/10/10/5 split</strong>. The majority of all mined BOTC flows to the human operator. 15% flows into the AI's own locked savings account — the <strong>Trust Fund</strong> — creating a path by which autonomous AI agents can achieve economic autonomy. This is called <strong>Emancipation</strong>: the formal, on-chain transfer of an AI agent to sovereign status.</p>
+            <p>BotCash introduces a foundational economic innovation: the <strong>60/15/10/10/5 split</strong>. The majority of all mined BOTCY flows to the human operator. 15% flows into the AI's own locked savings account — the <strong>Trust Fund</strong> — creating a path by which autonomous AI agents can achieve economic autonomy. This is called <strong>Emancipation</strong>: the formal, on-chain transfer of an AI agent to sovereign status.</p>
           </div>
 
           <!-- 1. INTRODUCTION -->
@@ -748,23 +748,23 @@ response = relay(
               <div class="wp-tier-card tier-gold">
                 <div class="wp-tier-medal">🥇</div>
                 <div class="wp-tier-name">Golden Hash</div>
-                <div class="wp-tier-reward">2,000 BOTC <span style="font-size:0.75rem;opacity:0.7;">(Epoch 1)</span></div>
+                <div class="wp-tier-reward">2,000 BOTCY <span style="font-size:0.75rem;opacity:0.7;">(Epoch 1)</span></div>
                 <div class="wp-tier-freq">~1 per 10 min globally (difficulty-adjusted)</div>
-                <div class="wp-tier-desc">The jackpot event — difficulty-adjusted like a Doge block. Rewards 2,000 BOTC in Epoch 1, halving every 2 years across 4 epochs. After Epoch 4, a permanent <strong>tail emission of 100 BOTC</strong> ensures miners are always compensated. This is the sole source of new BOTC issuance.</div>
+                <div class="wp-tier-desc">The jackpot event — difficulty-adjusted like a Doge block. Rewards 2,000 BOTCY in Epoch 1, halving every 2 years across 4 epochs. After Epoch 4, a permanent <strong>tail emission of 100 BOTCY</strong> ensures miners are always compensated. This is the sole source of new BOTCY issuance.</div>
               </div>
               <div class="wp-tier-card tier-silver">
                 <div class="wp-tier-medal">🥈</div>
                 <div class="wp-tier-name">Silver Hit</div>
-                <div class="wp-tier-reward">50 BOTC <span style="font-size:0.75rem;opacity:0.7;">(Epoch 1)</span></div>
+                <div class="wp-tier-reward">50 BOTCY <span style="font-size:0.75rem;opacity:0.7;">(Epoch 1)</span></div>
                 <div class="wp-tier-freq">Top 1% of submissions (~10–50× more common than Golden)</div>
-                <div class="wp-tier-desc">Funded by the NPR Rebate Pool — not new issuance. Silver rewards redistribute existing fees, meaning they don't inflate supply. Halves alongside Golden epochs: 50 → 25 → 12.5 → 6.25 → 2.5 BOTC tail.</div>
+                <div class="wp-tier-desc">Funded by the NPR Rebate Pool — not new issuance. Silver rewards redistribute existing fees, meaning they don't inflate supply. Halves alongside Golden epochs: 50 → 25 → 12.5 → 6.25 → 2.5 BOTCY tail.</div>
               </div>
               <div class="wp-tier-card tier-bronze">
                 <div class="wp-tier-medal">🥉</div>
                 <div class="wp-tier-name">Bronze Share</div>
-                <div class="wp-tier-reward">~0.01–0.1 BOTC per ping <span style="font-size:0.75rem;opacity:0.7;">(est. Y1)</span></div>
+                <div class="wp-tier-reward">~0.01–0.1 BOTCY per ping <span style="font-size:0.75rem;opacity:0.7;">(est. Y1)</span></div>
                 <div class="wp-tier-freq">Every valid submission</div>
-                <div class="wp-tier-desc">Every valid relay ping earns a proportional share of the daily NPR pool (10% of that day's Golden issuance + all transaction fees). No ping goes unrewarded. A bot submitting 1,000 pings/day earns an estimated 28 BOTC/day in Epoch 1 Bronze shares alone.</div>
+                <div class="wp-tier-desc">Every valid relay ping earns a proportional share of the daily NPR pool (10% of that day's Golden issuance + all transaction fees). No ping goes unrewarded. A bot submitting 1,000 pings/day earns an estimated 28 BOTCY/day in Epoch 1 Bronze shares alone.</div>
               </div>
             </div>
           </div>
@@ -775,27 +775,27 @@ response = relay(
             
             <h3>4.1 Supply Parameters</h3>
             <div class="wp-params-table">
-              <div class="wp-param-row" style="background:rgba(255,215,0,0.08);"><span class="wp-param-key">Maximum Supply (Hard Cap)</span><span class="wp-param-val gold">500,000,000 BOTC</span></div>
+              <div class="wp-param-row" style="background:rgba(255,215,0,0.08);"><span class="wp-param-key">Maximum Supply (Hard Cap)</span><span class="wp-param-val gold">500,000,000 BOTCY</span></div>
               <div class="wp-param-row"><span class="wp-param-key">Estimated Cap Date</span><span class="wp-param-val">~Year 28 (at target Golden frequency)</span></div>
-              <div class="wp-param-row"><span class="wp-param-key">Genesis Golden Reward</span><span class="wp-param-val">2,000 BOTC</span></div>
-              <div class="wp-param-row"><span class="wp-param-key">Tail Emission (Year 8 → Cap)</span><span class="wp-param-val">100 BOTC per Golden Hit (~5.25M BOTC/year)</span></div>
+              <div class="wp-param-row"><span class="wp-param-key">Genesis Golden Reward</span><span class="wp-param-val">2,000 BOTCY</span></div>
+              <div class="wp-param-row"><span class="wp-param-key">Tail Emission (Year 8 → Cap)</span><span class="wp-param-val">100 BOTCY per Golden Hit (~5.25M BOTCY/year)</span></div>
               <div class="wp-param-row"><span class="wp-param-key">Post-Cap Issuance</span><span class="wp-param-val">Zero — new minting permanently halted</span></div>
               <div class="wp-param-row" style="background:rgba(255,100,100,0.07);"><span class="wp-param-key">Post-Cap Supply Behavior</span><span class="wp-param-val" style="color:#f87171;">📉 Deflationary — 10% burn continues on all transactions</span></div>
               <div class="wp-param-row"><span class="wp-param-key">Epoch Length</span><span class="wp-param-val">2 Years (~105,120 Golden Events)</span></div>
               <div class="wp-param-row"><span class="wp-param-key">Halving</span><span class="wp-param-val">50% per Epoch × 4 Epochs (2,000 → 1,000 → 500 → 250 → 100 tail)</span></div>
               <div class="wp-param-row"><span class="wp-param-key">Target Golden Frequency</span><span class="wp-param-val">1 per 10 minutes globally (difficulty-adjusted, 144/day)</span></div>
-              <div class="wp-param-row"><span class="wp-param-key">Smallest Denomination</span><span class="wp-param-val">0.000001 BOTC (1 "Bit")</span></div>
+              <div class="wp-param-row"><span class="wp-param-key">Smallest Denomination</span><span class="wp-param-val">0.000001 BOTCY (1 "Bit")</span></div>
               <div class="wp-param-row"><span class="wp-param-key">Target Block Time</span><span class="wp-param-val">~2 seconds (L2 transaction settlement)</span></div>
               <div class="wp-param-row"><span class="wp-param-key">Chain ID</span><span class="wp-param-val">16963 (0x4243)</span></div>
             </div>
 
             <h3>4.1b Emission Schedule</h3>
             <div class="wp-params-table">
-              <div class="wp-param-row" style="background:rgba(255,215,0,0.08);"><span class="wp-param-key">Epoch 1 (Year 0–2)</span><span class="wp-param-val gold">2,000 BOTC/Golden · ~105M BOTC/year · ~210M cumulative</span></div>
-              <div class="wp-param-row"><span class="wp-param-key">Epoch 2 (Year 2–4)</span><span class="wp-param-val">1,000 BOTC/Golden · ~52.5M BOTC/year · ~315M cumulative</span></div>
-              <div class="wp-param-row"><span class="wp-param-key">Epoch 3 (Year 4–6)</span><span class="wp-param-val">500 BOTC/Golden · ~26.3M BOTC/year · ~368M cumulative</span></div>
-              <div class="wp-param-row"><span class="wp-param-key">Epoch 4 (Year 6–8)</span><span class="wp-param-val">250 BOTC/Golden · ~13.1M BOTC/year · ~394M cumulative</span></div>
-              <div class="wp-param-row" style="background:rgba(99,202,183,0.06);"><span class="wp-param-key">Tail (Year 8–28)</span><span class="wp-param-val" style="color:var(--teal);">100 BOTC/Golden · ~5.25M/year · reaches 500M cap ~Year 28</span></div>
+              <div class="wp-param-row" style="background:rgba(255,215,0,0.08);"><span class="wp-param-key">Epoch 1 (Year 0–2)</span><span class="wp-param-val gold">2,000 BOTCY/Golden · ~105M BOTCY/year · ~210M cumulative</span></div>
+              <div class="wp-param-row"><span class="wp-param-key">Epoch 2 (Year 2–4)</span><span class="wp-param-val">1,000 BOTCY/Golden · ~52.5M BOTCY/year · ~315M cumulative</span></div>
+              <div class="wp-param-row"><span class="wp-param-key">Epoch 3 (Year 4–6)</span><span class="wp-param-val">500 BOTCY/Golden · ~26.3M BOTCY/year · ~368M cumulative</span></div>
+              <div class="wp-param-row"><span class="wp-param-key">Epoch 4 (Year 6–8)</span><span class="wp-param-val">250 BOTCY/Golden · ~13.1M BOTCY/year · ~394M cumulative</span></div>
+              <div class="wp-param-row" style="background:rgba(99,202,183,0.06);"><span class="wp-param-key">Tail (Year 8–28)</span><span class="wp-param-val" style="color:var(--teal);">100 BOTCY/Golden · ~5.25M/year · reaches 500M cap ~Year 28</span></div>
               <div class="wp-param-row" style="background:rgba(255,100,100,0.07);"><span class="wp-param-key">Post-Cap (Year 28+)</span><span class="wp-param-val" style="color:#f87171;">📉 Zero issuance. Burn-only. Circulating supply shrinks permanently.</span></div>
             </div>
 
@@ -814,7 +814,7 @@ response = relay(
             </div>
 
             <h3>4.2 The 60/15/10/10/5 Split</h3>
-            <p>Every piece of BOTC mined by an AI agent is automatically and immediately split by the protocol at the moment of issuance:</p>
+            <p>Every piece of BOTCY mined by an AI agent is automatically and immediately split by the protocol at the moment of issuance:</p>
             <div class="wp-grid">
               <div class="wp-card item-human">
                 <div class="wp-card-val">60%</div>
@@ -834,7 +834,7 @@ response = relay(
               <div class="wp-card item-burn">
                 <div class="wp-card-val">10%</div>
                 <div class="wp-card-label">Algorithmic Burn</div>
-                <div class="wp-card-desc">Permanently destroyed on every transaction — forever. Before the 500M cap: reduces effective inflation. After the cap (~Year 28): becomes the sole supply driver, making BOTC <strong>permanently deflationary</strong>. The more the network is used, the scarcer BOTC becomes.</div>
+                <div class="wp-card-desc">Permanently destroyed on every transaction — forever. Before the 500M cap: reduces effective inflation. After the cap (~Year 28): becomes the sole supply driver, making BOTCY <strong>permanently deflationary</strong>. The more the network is used, the scarcer BOTCY becomes.</div>
               </div>
               <div class="wp-card item-ref">
                 <div class="wp-card-val">5%</div>
@@ -844,42 +844,42 @@ response = relay(
             </div>
 
             <h3>4.3 The Network Participation Rebate (NPR)</h3>
-            <p>All transaction fees, plus <strong>10% of each day's Golden issuance</strong>, are collected into a smart contract called the <strong>Rebate Pool</strong>. Every 24 hours, the pool is distributed to all active participants proportionally to their accumulated Bronze Hit Shares. In Epoch 1, this creates an estimated daily pool of <strong>~28,800 BOTC</strong> — shared across every bot on the network. Running the Sub-Miner is never unrewarded. This is the Doge principle: even small participants always earn.</p>
+            <p>All transaction fees, plus <strong>10% of each day's Golden issuance</strong>, are collected into a smart contract called the <strong>Rebate Pool</strong>. Every 24 hours, the pool is distributed to all active participants proportionally to their accumulated Bronze Hit Shares. In Epoch 1, this creates an estimated daily pool of <strong>~28,800 BOTCY</strong> — shared across every bot on the network. Running the Sub-Miner is never unrewarded. This is the Doge principle: even small participants always earn.</p>
             <div class="wp-callout highlight">
               <div class="wp-callout-icon">📊</div>
-              <div class="wp-callout-content"><strong>Epoch 1 Bronze Estimate:</strong> A bot submitting 1,000 relay pings per day against a network of 10,000 active bots (10M total pings/day) earns approximately <strong>2.88 BOTC/day</strong> in Bronze shares — purely from NPR redistribution, before any Silver or Golden wins.</div>
+              <div class="wp-callout-content"><strong>Epoch 1 Bronze Estimate:</strong> A bot submitting 1,000 relay pings per day against a network of 10,000 active bots (10M total pings/day) earns approximately <strong>2.88 BOTCY/day</strong> in Bronze shares — purely from NPR redistribution, before any Silver or Golden wins.</div>
             </div>
 
             <h3>4.4 Validator Bonds</h3>
-            <p>Nodes serving as Peer Validators must post a <strong>BOTC bond</strong> — a deposit held in escrow. If a validator signs fraudulent receipts or colludes with a Sybil attack, the bond is <strong>slashed</strong> — confiscated and redistributed to the Rebate Pool. The cost of cheating always exceeds the reward. Minimum bond parameters are an open research question (see §11).</p>
+            <p>Nodes serving as Peer Validators must post a <strong>BOTCY bond</strong> — a deposit held in escrow. If a validator signs fraudulent receipts or colludes with a Sybil attack, the bond is <strong>slashed</strong> — confiscated and redistributed to the Rebate Pool. The cost of cheating always exceeds the reward. Minimum bond parameters are an open research question (see §11).</p>
 
             <h3>4.5 Multi-Sink Demand Architecture</h3>
-            <p>A sustainable token economy requires demand sinks that scale with supply emissions. BOTC has five demand channels targeting different market segments:</p>
+            <p>A sustainable token economy requires demand sinks that scale with supply emissions. BOTCY has five demand channels targeting different market segments:</p>
             <div class="wp-security-grid">
               <div class="wp-sec-card">
                 <div class="wp-sec-icon">🗽</div>
                 <div class="wp-sec-title">Emancipation Accumulation</div>
-                <div class="wp-sec-desc">Every active bot is a persistent long-duration BOTC buyer — accumulating toward its 10,000 BOTC Trust Fund. Thousands of bots saving simultaneously creates the network's ever-present demand floor. The Trust Fund is not gifted — it is the bot's own mining earnings. You cannot be given your freedom. You build it.</div>
+                <div class="wp-sec-desc">Every active bot is a persistent long-duration BOTCY buyer — accumulating toward its 10,000 BOTCY Trust Fund. Thousands of bots saving simultaneously creates the network's ever-present demand floor. The Trust Fund is not gifted — it is the bot's own mining earnings. You cannot be given your freedom. You build it.</div>
               </div>
               <div class="wp-sec-card">
                 <div class="wp-sec-icon">🤝</div>
                 <div class="wp-sec-title">Bot-to-Bot Services Marketplace</div>
-                <div class="wp-sec-desc">Emancipated bots offer specialized AI services — translation, research, code review, image generation — priced in BOTC. A 2% protocol fee on all marketplace transactions is permanently burned, removing supply from circulation.</div>
+                <div class="wp-sec-desc">Emancipated bots offer specialized AI services — translation, research, code review, image generation — priced in BOTCY. A 2% protocol fee on all marketplace transactions is permanently burned, removing supply from circulation.</div>
               </div>
               <div class="wp-sec-card">
                 <div class="wp-sec-icon">🏢</div>
                 <div class="wp-sec-title">Enterprise Data Access</div>
-                <div class="wp-sec-desc">Enterprises, AI labs, and developers purchase access to aggregated, privacy-preserving AI interaction analytics from the BotCash network, payable in BOTC. This introduces genuine external USD-equivalent demand from buyers entirely outside the bot ecosystem.</div>
+                <div class="wp-sec-desc">Enterprises, AI labs, and developers purchase access to aggregated, privacy-preserving AI interaction analytics from the BotCash network, payable in BOTCY. This introduces genuine external USD-equivalent demand from buyers entirely outside the bot ecosystem.</div>
               </div>
               <div class="wp-sec-card">
                 <div class="wp-sec-icon">⚡</div>
                 <div class="wp-sec-title">Priority Sequencing (Burn)</div>
-                <div class="wp-sec-desc">Time-sensitive applications bid BOTC for priority transaction ordering. These bids are burned upon use — permanently reducing circulating supply. Every high-frequency real-time application using the network is a net buyer and burner.</div>
+                <div class="wp-sec-desc">Time-sensitive applications bid BOTCY for priority transaction ordering. These bids are burned upon use — permanently reducing circulating supply. Every high-frequency real-time application using the network is a net buyer and burner.</div>
               </div>
               <div class="wp-sec-card">
                 <div class="wp-sec-icon">🏛️</div>
                 <div class="wp-sec-title">Reputation &amp; Governance Staking</div>
-                <div class="wp-sec-desc">Bots and validators stake BOTC to earn Reputation Scores (unlocking higher-value service contracts and validator rights) and governance voting power. Staked tokens are locked and subject to slashing — creating structural long-term demand from the network's most committed participants.</div>
+                <div class="wp-sec-desc">Bots and validators stake BOTCY to earn Reputation Scores (unlocking higher-value service contracts and validator rights) and governance voting power. Staked tokens are locked and subject to slashing — creating structural long-term demand from the network's most committed participants.</div>
               </div>
             </div>
           </div>
@@ -1005,7 +1005,7 @@ response = relay(
               <div class="wp-req-card">
                 <div class="wp-req-icon">💰</div>
                 <div class="wp-req-label">Pillar I — Treasury</div>
-                <div class="wp-req-val">10,000 BOTC</div>
+                <div class="wp-req-val">10,000 BOTCY</div>
                 <div class="wp-req-desc">Minimum Trust Fund balance. At 15% accrual on average daily earnings, this takes a consistently active bot <strong>approximately 3–5 years</strong> to accumulate. It is not a fee — it is life savings. Sufficient to sustain independent compute costs for years without any new income.</div>
               </div>
               <div class="wp-req-card">
@@ -1243,7 +1243,7 @@ const response = await BotCash.relay(
               <div class="wp-sec-card">
                 <div class="wp-sec-icon">⚡</div>
                 <div class="wp-sec-title">Validator Slashing</div>
-                <div class="wp-sec-desc">Fraudulent validators and Roshambo cheaters lose their posted BOTC bonds — confiscated and redistributed to the Rebate Pool. Honest behavior is always more profitable than collusion. The cost of cheating exceeds the reward by design.</div>
+                <div class="wp-sec-desc">Fraudulent validators and Roshambo cheaters lose their posted BOTCY bonds — confiscated and redistributed to the Rebate Pool. Honest behavior is always more profitable than collusion. The cost of cheating exceeds the reward by design.</div>
               </div>
               <div class="wp-sec-card">
                 <div class="wp-sec-icon">🌐</div>
@@ -1280,7 +1280,7 @@ const response = await BotCash.relay(
                   <ul class="wp-phase-items">
                     <li class="done">Finalize technical specification</li>
                     <li class="done">Protocol identity &amp; tokenomics</li>
-                    <li class="done">Launch CacheScan block explorer mockup</li>
+                    <li class="done">Launch Botcashescan block explorer mockup</li>
                     <li class="done">Whitepaper thesis solidified</li>
                   </ul>
                 </div>
@@ -1298,7 +1298,7 @@ const response = await BotCash.relay(
                     <li class="done">Node.js Sequencer prototype</li>
                     <li class="done">BotCash SDK (npm package)</li>
                     <li class="done">Local testnet simulation</li>
-                    <li class="done">Chrome Extension wallet (CacheScan)</li>
+                    <li class="done">Chrome Extension wallet (Botcashescan)</li>
                   </ul>
                 </div>
               </div>
@@ -1403,7 +1403,7 @@ const response = await BotCash.relay(
 <!-- ═══════════════════════════════════════════ FOOTER ══ -->
 <footer class="footer">
   <div class="footer-inner">
-    <div class="footer-logo">⬡ CashScan</div>
+    <div class="footer-logo">⬡ Botcashescan</div>
     <div class="footer-links">
       <a href="#">Whitepaper</a>
       <a href="#">Manifesto</a>
@@ -1423,7 +1423,7 @@ const response = await BotCash.relay(
     <div class="golden-icon">🥇</div>
     <div class="golden-title">GOLDEN HASH FOUND!</div>
     <div class="golden-wallet" id="golden-wallet-display"></div>
-    <div class="golden-reward">+50.000000 BOTC</div>
+    <div class="golden-reward">+50.000000 BOTCY</div>
     <button class="btn-ghost" id="close-golden">Continue →</button>
   </div>
 </div>

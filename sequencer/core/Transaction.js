@@ -3,7 +3,7 @@ const EC = require('elliptic').ec;
 const ec = new EC('secp256k1');
 
 /**
- * Transaction represents a cryptographic transfer of BOTC.
+ * Transaction represents a cryptographic transfer of BOTCY.
  * It mandates that only a valid mathematical signature from the sender
  * can authorize movement of funds.
  */
@@ -11,7 +11,7 @@ class Transaction {
     constructor(fromAddress, toAddress, amount, nonce = 0, type = 'TRANSFER') {
         this.fromAddress = fromAddress; // 'SYSTEM' for PoT Minting
         this.toAddress = toAddress;     // Wallet address
-        this.amount = amount;           // Float amount of BOTC
+        this.amount = amount;           // Float amount of BOTCY
         this.nonce = nonce;             // Helps prevent replay attacks
         this.type = type;               // TRANSFER, MINT, EMANCIPATE
         this.timestamp = Date.now();

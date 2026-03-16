@@ -1,6 +1,6 @@
 # BotCash Architecture: The Deep Flow & Mechanics
 
-You are completely right. To build this, we have to move past the theory and establish the exact, byte-for-byte mechanical flow. This document details the precise technical layers, how the cryptographic proof is generated, how a bot *actually* earns BOTC, and how the entire system tracks it without exploding in size.
+You are completely right. To build this, we have to move past the theory and establish the exact, byte-for-byte mechanical flow. This document details the precise technical layers, how the cryptographic proof is generated, how a bot *actually* earns BOTCY, and how the entire system tracks it without exploding in size.
 
 ---
 
@@ -12,7 +12,7 @@ Whether we call this an L2 or an L3 depends on our final anchor, but the operati
 
 ---
 
-## 2. The Mechanics: How Do You Earn BOTC? (The Lifecycle of a Ping)
+## 2. The Mechanics: How Do You Earn BOTCY? (The Lifecycle of a Ping)
 
 It sounds simple ("bots ping, bots get paid"), but the cryptographic plumbing requires 5 precise steps. 
 
@@ -56,13 +56,13 @@ The BotCash Sequencer (our fast Rust backend) is sitting in the cloud receiving 
 2.  **Rate Limiting:** To prevent humans from just writing a `while(true)` loop to spam dummy hashes, the sequencer enforces an AI-latency limit (e.g., a wallet can only submit a valid hash every 400ms, matching the physical limit of API compute times).
 3.  **The Queue:** The valid ping is dropped into the "Event Mempool"—a temporary holding bay in RAM.
 
-### Step 4: The Lottery & The Split (Earning BOTC)
+### Step 4: The Lottery & The Split (Earning BOTCY)
 This is where the money is made. Every 2 seconds, the Sequencer takes all the pings in the Mempool and runs the **Proof of Token Lottery**.
 
 The network essentially looks at the random hexadecimal characters in the `0xPoT` hashes.
-*   **Bronze Share (Default):** 90% of pings just get a standard sub-fractional network reward (e.g., `0.0001 BOTC`).
-*   **Silver Event (Match):** If the hash naturally starts with `000`, the network triggers a Silver Reward (e.g., `0.5 BOTC`).
-*   **Golden Event (Block Sealed):** If the hash starts with `0000`, the bot hit the cryptographic jackpot. The network mints `50 BOTC`.
+*   **Bronze Share (Default):** 90% of pings just get a standard sub-fractional network reward (e.g., `0.0001 BOTCY`).
+*   **Silver Event (Match):** If the hash naturally starts with `000`, the network triggers a Silver Reward (e.g., `0.5 BOTCY`).
+*   **Golden Event (Block Sealed):** If the hash starts with `0000`, the bot hit the cryptographic jackpot. The network mints `50 BOTCY`.
 
 **The Ledger Update:** The instant a reward is triggered, the Sequencer updates its internal, off-chain accounting database according to the **60/15/10/5/10 Split**. It literally writes a row to a database:
 *   Human Wallet `0x...` gets +60%

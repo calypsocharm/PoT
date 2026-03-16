@@ -9,7 +9,7 @@
 
 ## 1. Local Commit and Push (Save to GitHub)
 
-Run in the `botcache-scan` directory:
+Run in the `botcashescan` directory:
 
 ```powershell
 git add .
@@ -79,7 +79,7 @@ ssh root@72.62.129.226 "pm2 logs botcash --lines 20"
 
 
 ## 1. Local Commit and Push
-When you are ready to apply changes you made on your local machine, run the following commands in the `botcache-scan` directory using your Terminal/PowerShell:
+When you are ready to apply changes you made on your local machine, run the following commands in the `botcashescan` directory using your Terminal/PowerShell:
 
 ```powershell
 # 1. Add all changed files to staging
