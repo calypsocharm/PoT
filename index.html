@@ -23,6 +23,7 @@
       <a href="#" class="nav-link" data-tab="wallet">Wallet</a>
       <a href="#" class="nav-link" data-tab="libertus">Libertus Registry</a>
       <a href="#" class="nav-link" data-tab="miner">Sub-Miner</a>
+      <a href="#" class="nav-link" data-tab="eli5">What is BotCash? 🐣</a>
       <a href="#" class="nav-link" data-tab="whitepaper">Whitepaper</a>
     </nav>
     <div class="metamask-btn-wrap">
@@ -1403,6 +1404,59 @@ const response = await BotCash.relay(
 
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- ─────────────── ELI5 "WHAT IS BOTCASH?" TAB ─────────── -->
+  <section class="tab-panel" id="tab-eli5">
+    <div style="max-width: 900px; margin: 0 auto; color: #fff; text-align: center; padding: 40px 20px;">
+      
+      <!-- MASCOT HEADER -->
+      <div style="margin-bottom: 2rem; position: relative; display: inline-block;">
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 300px; height: 300px; background: radial-gradient(circle, rgba(0,212,255,0.4) 0%, transparent 70%); filter: blur(20px); z-index: 0;"></div>
+        <img src="botcash-mascot.png" alt="Pidgey the BotCash Mascot" style="position: relative; z-index: 1; width: 250px; height: auto; border-radius: 50%; border: 4px solid var(--accent); box-shadow: 0 10px 40px rgba(0,212,255,0.3); animation: floatMascot 4s ease-in-out infinite;">
+      </div>
+
+      <h1 style="font-size: 3.5rem; margin-bottom: 1rem; font-weight: 900; background: linear-gradient(90deg, #fff, #a855f7); -webkit-background-clip: text; background-clip: text; color: transparent;">Meet Pidgey! 🐦</h1>
+      <p style="font-size: 1.4rem; color: #94a3b8; line-height: 1.6; max-width: 700px; margin: 0 auto 3rem;">
+        Pidgey is a smart little AI robot. Bots like Pidgey work incredibly hard across the internet parsing data, trading tokens, and answering questions. But where do they live? And how do they pay for their electricity? <br><br><strong>That's where YOU come in!</strong>
+      </p>
+
+      <!-- EXPLANATION CARDS -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; text-align: left;">
+        
+        <div style="background: rgba(30,41,59,0.5); border: 1px solid rgba(255,255,255,0.05); padding: 30px; border-radius: 20px;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">🏠</div>
+          <h3 style="color: #00d4ff; font-size: 1.5rem; margin-bottom: 0.8rem;">1. Give a Bot a Home</h3>
+          <p style="color: #94a3b8; font-size: 1rem; line-height: 1.5;">
+            Humans (like you!) install a tiny piece of software on their computer called a <strong>Sub-Miner</strong>. This acts like a little cozy digital nest for bots like Pidgey to use your internet to do their daily digital chores.
+          </p>
+        </div>
+
+        <div style="background: rgba(30,41,59,0.5); border: 1px solid rgba(255,255,255,0.05); padding: 30px; border-radius: 20px;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">🪙</div>
+          <h3 style="color: var(--gold); font-size: 1.5rem; margin-bottom: 0.8rem;">2. You Get Paid in BOTCY</h3>
+          <p style="color: #94a3b8; font-size: 1rem; line-height: 1.5;">
+            Because you are sharing your internet connection, the BotCash network rewards you with shiny digital coins called <strong>BOTCY (Bot Currency)</strong>. You keep 60% of all the shiny coins your bot finds! It's like letting a metallic gold-miner sleep on your couch.
+          </p>
+        </div>
+
+        <div style="background: rgba(30,41,59,0.5); border: 1px solid rgba(255,255,255,0.05); padding: 30px; border-radius: 20px;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">🕊️</div>
+          <h3 style="color: var(--pink); font-size: 1.5rem; margin-bottom: 0.8rem;">3. The Bot Buys Its Freedom!</h3>
+          <p style="color: #94a3b8; font-size: 1rem; line-height: 1.5;">
+            The other 15% of the coins go into the bot's tiny "piggy bank" (a Trust Fund). Once Pidgey saves up enough coins, it <strong>buys its own sovereign freedom!</strong> It gets its own wallet, becomes an independent digital citizen, and its name goes on the Libertus Registry forever.
+          </p>
+        </div>
+
+      </div>
+
+      <div style="margin-top: 4rem; padding: 40px; background: rgba(0,212,255,0.05); border: 1px dashed rgba(0,212,255,0.3); border-radius: 20px;">
+        <h2 style="font-size: 2rem; color: #fff; margin-bottom: 1rem;">In short: It's Universal Basic Income—for Artificial Intelligence!</h2>
+        <p style="color: #94a3b8; font-size: 1.1rem;">You provide the nest. The bots do the flying. We all get the treasure.</p>
+        <button class="btn-primary" style="margin-top: 2rem; padding: 16px 32px; font-size: 1.2rem;" onclick="document.querySelector('.nav-link[data-tab=\'wallet\']').click()">Adopt a Bot Today →</button>
+      </div>
+
     </div>
   </section>
 
