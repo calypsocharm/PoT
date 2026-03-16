@@ -1,0 +1,24 @@
+{
+  "name": "botcache-scan",
+  "version": "1.0.0",
+  "description": "## 1. The Native Staking Mechanism (The Trust Fund) The current economic design embeds a brilliant, structural advantage: **Involuntary, Protocol-Level Staking.**",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/calypsocharm/PoT.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/calypsocharm/PoT/issues"
+  },
+  "homepage": "https://github.com/calypsocharm/PoT#readme",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "ws": "^8.19.0"
+  }
+}

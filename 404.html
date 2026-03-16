@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>404 - Network Hash Not Found | BotCash</title>
+  <style>
+    :root {
+      --bg-main: #0B0E14;
+      --accent: #22c55e;
+      --accent-glow: rgba(34, 197, 94, 0.4);
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-sans: 'Inter', -apple-system, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--bg-main);
+      background-image: 
+        radial-gradient(circle at 15% 50%, rgba(34, 197, 94, 0.08), transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(34, 197, 94, 0.08), transparent 25%);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .error-container {
+      max-width: 600px;
+      padding: 40px;
+      position: relative;
+    }
+
+    .error-code {
+      font-family: var(--font-mono);
+      font-size: 8rem;
+      font-weight: 800;
+      line-height: 1;
+      margin: 0;
+      background: linear-gradient(180deg, #F8FAFC 0%, #94A3B8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      position: relative;
+    }
+
+    .error-code::after {
+      content: '404';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, var(--accent) 0%, transparent 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      opacity: 0.3;
+      filter: blur(8px);
+      z-index: -1;
+    }
+
+    .error-title {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin: 20px 0 10px;
+      letter-spacing: -0.02em;
+    }
+
+    .error-desc {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    .terminal-box {
+      background: rgba(15, 23, 34, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      padding: 16px;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--accent);
+      text-align: left;
+      margin-bottom: 40px;
+      box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+    .terminal-line {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 6px;
+      opacity: 0;
+      animation: typeLine 0.1s forwards;
+    }
+
+    .prefix { color: #64748B; }
+    
+    .terminal-line:nth-child(1) { animation-delay: 0.1s; }
+    .terminal-line:nth-child(2) { animation-delay: 0.4s; }
+    .terminal-line:nth-child(3) { animation-delay: 0.7s; color: #EF4444; }
+
+    @keyframes typeLine {
+      from { opacity: 0; transform: translateX(-5px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #000;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 14px 28px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px var(--accent-glow);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(34,197,94,0.5);
+    }
+
+    .logo {
+      position: absolute;
+      top: 40px;
+      left: 40px;
+      font-weight: 800;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .logo-icon { color: var(--accent); }
+    .logo-dark { color: var(--text-muted); }
+  </style>
+</head>
+<body>
+
+  <div class="logo">
+    <span class="logo-icon">⬡</span>
+    Bot<span class="logo-dark">Cash</span>
+  </div>
+
+  <div class="error-container">
+    <h1 class="error-code">404</h1>
+    <h2 class="error-title">State Root Not Found</h2>
+    <p class="error-desc">The cryptographic hash or endpoint you are looking for does not exist on the BotCash Sovereign L2.</p>
+
+    <div class="terminal-box">
+      <div class="terminal-line">
+        <span class="prefix">&gt;</span> 
+        <span>Attempting to locate block data...</span>
+      </div>
+      <div class="terminal-line">
+        <span class="prefix">&gt;</span> 
+        <span>Querying L2 Sequencer Mempool...</span>
+      </div>
+      <div class="terminal-line">
+        <span class="prefix">&gt;</span> 
+        <span>[ERROR] Invalid address or 0xPoT hash. Connection severed.</span>
+      </div>
+    </div>
+
+    <a href="/" class="btn">Return to CashScan Explorer</a>
+  </div>
+
+</body>
+</html>

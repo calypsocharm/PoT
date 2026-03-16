@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════
-   CACHESCAN — App Logic
+   BOTCSCAN — App Logic
    Simulated blockchain activity, wallet generation,
    live feed, ping demo, map canvas
 ═══════════════════════════════════════════════════ */
@@ -199,7 +199,7 @@ function renderBlocks() {
         <div class="block-txs">🗜️ ${b.txCount} events compressed</div>
       </div>
       <div class="block-meta">
-        <div class="block-reward">+${b.reward} CACHE</div>
+        <div class="block-reward">+${b.reward} BOTC</div>
         <div class="block-time">${timeAgo(b.ts)}</div>
       </div>
     </div>
@@ -374,16 +374,16 @@ function renderWallet(address, words) {
 
 function updateBalances() {
   document.querySelector('.balance-value:not(.trust-fund-val)').textContent =
-    state.humanBalance.toFixed(6) + ' CACHE';
+    state.humanBalance.toFixed(6) + ' BOTC';
   document.querySelector('.trust-fund-val').textContent =
-    state.trustFundBalance.toFixed(6) + ' CACHE';
+    state.trustFundBalance.toFixed(6) + ' BOTC';
   
   const pVal = document.getElementById('protocol-balance');
-  if (pVal) pVal.textContent = state.protocolBalance.toFixed(6) + ' CACHE';
+  if (pVal) pVal.textContent = state.protocolBalance.toFixed(6) + ' BOTC';
   const rVal = document.getElementById('referral-balance');
-  if (rVal) rVal.textContent = state.referralBalance.toFixed(6) + ' CACHE';
+  if (rVal) rVal.textContent = state.referralBalance.toFixed(6) + ' BOTC';
   const bVal = document.getElementById('burn-balance');
-  if (bVal) bVal.textContent = state.burnBalance.toFixed(6) + ' CACHE';
+  if (bVal) bVal.textContent = state.burnBalance.toFixed(6) + ' BOTC';
 }
 
 document.getElementById('gen-wallet-btn').addEventListener('click', () => {
@@ -465,7 +465,7 @@ document.getElementById('start-mining-btn').addEventListener('click', () => {
         state.referralBalance += earned * 0.05;
         state.burnBalance += earned * 0.10;
         const proofHash = '0xPoT' + randomHex(37);
-        line = `[${new Date().toLocaleTimeString()}] 🥇 <span class="hl-gold">GOLDEN HIT!</span> <span class="hl-dim">${proofHash}</span> → <span class="hl-gold">+50 CACHE (Split: 60/15/10/5/10)</span>`;
+        line = `[${new Date().toLocaleTimeString()}] 🥇 <span class="hl-gold">GOLDEN HIT!</span> <span class="hl-dim">${proofHash}</span> → <span class="hl-gold">+50 BOTC (Split: 60/15/10/5/10)</span>`;
         cls = 'hl-gold';
         state.goldenCount++;
         state.minedToday += 50;
@@ -477,7 +477,7 @@ document.getElementById('start-mining-btn').addEventListener('click', () => {
         state.referralBalance += earned * 0.05;
         state.burnBalance += earned * 0.10;
         const proofHash = '0xPoT' + randomHex(37);
-        line = `[${new Date().toLocaleTimeString()}] 🥈 <span class="hl-silver">SILVER HIT!</span> <span class="hl-dim">${proofHash}</span> → <span class="hl-silver">+0.5 CACHE (Split)</span>`;
+        line = `[${new Date().toLocaleTimeString()}] 🥈 <span class="hl-silver">SILVER HIT!</span> <span class="hl-dim">${proofHash}</span> → <span class="hl-silver">+0.5 BOTC (Split)</span>`;
         state.silverCount++;
         state.minedToday += 0.5;
       } else {
@@ -507,14 +507,14 @@ function renderLibertus() {
   document.getElementById('lib-total').textContent = LIBERTUS_BOTS.length;
   document.getElementById('lib-active').textContent = LIBERTUS_BOTS.filter(b => b.status === 'active').length;
   document.getElementById('lib-cache').textContent =
-    LIBERTUS_BOTS.reduce((a, b) => a + parseFloat(b.balance.replace(',','')), 0).toLocaleString() + ' CACHE';
+    LIBERTUS_BOTS.reduce((a, b) => a + parseFloat(b.balance.replace(',','')), 0).toLocaleString() + ' BOTC';
   document.getElementById('libertus-count').textContent = LIBERTUS_BOTS.length;
   document.getElementById('libertus-tbody').innerHTML = LIBERTUS_BOTS.map(b => `
     <tr>
       <td style="color:var(--accent);font-weight:700">⬡ ${b.name}</td>
       <td>${b.freed}</td>
-      <td>${b.trustFund} CACHE</td>
-      <td style="color:${b.status==='low'?'var(--red)':'var(--text)'}">${b.balance} CACHE</td>
+      <td>${b.trustFund} BOTC</td>
+      <td style="color:${b.status==='low'?'var(--red)':'var(--text)'}">${b.balance} BOTC</td>
       <td><span class="status-pill ${b.status}">${b.status==='active'?'Active':b.status==='low'?'⚠ Low Funds':'Dormant'}</span></td>
       <td>${b.clients}</td>
     </tr>
@@ -547,7 +547,7 @@ document.getElementById('fire-ping-btn').addEventListener('click', async () => {
     `Hashing (PoT): ${hash.slice(0,18)}…`,
     `Broadcasting to ${randInt(3,8)} peers…`,
     `Peer cache:${randomHex(6)}… validating…`,
-    isGold ? '🥇 GOLDEN HIT! +50 CACHE' : isSilver ? '🥈 Silver Hit! +0.5 CACHE' : '🥉 Bronze Share +1'
+    isGold ? '🥇 GOLDEN HIT! +50 BOTC' : isSilver ? '🥈 Silver Hit! +0.5 BOTC' : '🥉 Bronze Share +1'
   ];
 
   let elapsed = 0;
@@ -566,7 +566,7 @@ document.getElementById('fire-ping-btn').addEventListener('click', async () => {
   const ms = delays.reduce((a,b)=>a+b,0);
   const resultEl = document.getElementById('ping-result');
   resultEl.style.color = isGold ? 'var(--gold)' : isSilver ? 'var(--silver)' : 'var(--bronze)';
-  resultEl.textContent = `✓ Hash validated in ${ms}ms — ${isGold ? '🥇 GOLDEN HIT! Block reward: +50.000000 CACHE' : isSilver ? '🥈 Silver Hit! +0.500000 CACHE' : '🥉 Bronze Share recorded. Rebate pool updated.'}`;
+  resultEl.textContent = `✓ Hash validated in ${ms}ms — ${isGold ? '🥇 GOLDEN HIT! Block reward: +50.000000 BOTC' : isSilver ? '🥈 Silver Hit! +0.500000 BOTC' : '🥉 Bronze Share recorded. Rebate pool updated.'}`;
 
   await sleep(3000);
   btn.disabled = false;
@@ -604,7 +604,7 @@ document.getElementById('global-search').addEventListener('keydown', e => {
   if (e.key === 'Enter') {
     const val = e.target.value.trim();
     if (!val) return;
-    alert(`🔍 Searching Bot Cache network for: "${val}"\n\n(Full blockchain search coming in mainnet release)`);
+    alert(`🔍 Searching Bot Cash network for: "${val}"\n\n(Full blockchain search coming in mainnet release)`);
     e.target.value = '';
   }
 });
@@ -625,12 +625,16 @@ function boot() {
   state.tps = 1240;
   updateTicker();
 
-  // Spawn feed events
+  // Connect to the Live BotCash Sequencer WebSockets!
+  initLiveSocket();
+  
+  // (We removed the old fake setInterval that spawned random feed events)
+  
+  // Update UI Ticker (Simulation for map nodes and TPS)
   setInterval(() => {
-    const count = randInt(1, 4);
-    for (let i = 0; i < count; i++) spawnFeedEvent();
+    state.tps = Math.max(1, randInt(800, 2400));
     updateTicker();
-  }, 800);
+  }, 2000);
 
   // Countdown
   const now = new Date();
@@ -642,13 +646,75 @@ function boot() {
 
 document.addEventListener('DOMContentLoaded', boot);
 
+// ──────────────────────── WEBSOCKET LIVE FEED ────────────────────────
+function initLiveSocket() {
+  const ws = new WebSocket('ws://localhost:4243');
+  
+  ws.onopen = () => {
+    console.log('[CashScan] 🟢 Connected to BotCash L2 Sequencer');
+    const el = document.getElementById('live-feed');
+    el.innerHTML = '<div class="feed-empty" style="color:var(--accent)">🟢 Connected to L2 Sequencer. Waiting for events…</div>';
+  };
+  
+  ws.onmessage = (event) => {
+    try {
+      const data = JSON.parse(event.data);
+      if (data.type === 'INIT_STATE' && data.stateSnapshot) {
+        state.minedToday = data.stateSnapshot.totalMined;
+        updateTicker();
+      } else if (data.type === 'PING') {
+        const tierClass = data.tier === 'GOLD' ? 'gold-r' : data.tier === 'SILVER' ? 'silver-r' : 'bronze-r';
+        const icon = data.tier === 'GOLD' ? '🥇' : data.tier === 'SILVER' ? '🥈' : '🥉';
+        
+        if (data.tier === 'GOLD') { state.goldenCount++; showGoldenOverlay(data.wallet); }
+        if (data.tier === 'SILVER') state.silverCount++;
+        if (data.tier === 'BRONZE') { state.bronzeCount++; state.rebatePool += 0.00002; }
+        
+        state.minedToday = data.stateSnapshot?.totalMined || (state.minedToday + data.reward);
+        
+        state.feedEvents.unshift({
+          tier: data.tier.toLowerCase(),
+          reward: data.tier === 'BRONZE' ? '+1 Share' : data.reward.toFixed(6),
+          tierClass,
+          icon,
+          wallet: data.wallet,
+          hash: data.hash,
+          ts: data.timestamp
+        });
+        
+        if (state.feedEvents.length > 80) state.feedEvents.pop();
+        renderFeed();
+        
+        // Occasional simulated block push for aesthetics
+        if (Math.random() < 0.08) {
+            addBlock('0xSeq_' + data.wallet.slice(6, 12), (data.reward * rand(10, 50)).toFixed(4));
+        }
+
+        // Add to map nodes slightly
+        if (Math.random() < 0.3) {
+           state.activeBots++;
+        }
+        updateTicker();
+      }
+    } catch (e) {
+      console.error('WS Error:', e);
+    }
+  };
+  
+  ws.onerror = () => { }
+  ws.onclose = () => {
+    console.log('[CashScan] 🔴 Sequencer connection lost. Reconnecting in 3s...');
+    setTimeout(initLiveSocket, 3000);
+  };
+}
+
 // ──────────────────────── METAMASK / EVM ────────────────────────
-const BotCache = {
+const BotCash = {
   chainId:         '0x4243',           // 16963 decimal
-  chainName:       'BotCache Sovereign L2',
-  nativeCurrency:  { name: 'Bot Cache', symbol: 'CACHE', decimals: 18 },
-  rpcUrls:         ['https://rpc.botcache.io'],
-  blockExplorerUrls: ['https://cachescan.io'],
+  chainName:       'BotCash Sovereign L2',
+  nativeCurrency:  { name: 'Bot Cash', symbol: 'BOTC', decimals: 18 },
+  rpcUrls:         ['https://rpc.botcash.io'],
+  blockExplorerUrls: ['https://cashscan.io'],
 };
 
 let mmConnected = false;
@@ -689,20 +755,20 @@ document.getElementById('mm-add-chain-btn').addEventListener('click', async () =
     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
     mmAddress = accounts[0];
 
-    statusEl.textContent = '⏳ Adding BotCache network…';
+    statusEl.textContent = '⏳ Adding BotCash network…';
 
-    // 2. Add BotCache network
+    // 2. Add BotCash network
     try {
       await window.ethereum.request({
         method: 'wallet_addEthereumChain',
-        params: [BotCache],
+        params: [BotCash],
       });
     } catch (addErr) {
       // If chain already exists, it may throw 4902 — try switching instead
       if (addErr.code === 4902) {
         await window.ethereum.request({
           method: 'wallet_switchEthereumChain',
-          params: [{ chainId: BotCache.chainId }],
+          params: [{ chainId: BotCash.chainId }],
         });
       } else {
         throw addErr;
@@ -711,7 +777,7 @@ document.getElementById('mm-add-chain-btn').addEventListener('click', async () =
 
     // 3. Success
     statusEl.className = 'mm-status success';
-    statusEl.textContent = '✓ BotCache added! Welcome to the network.';
+    statusEl.textContent = '✓ BotCash added! Welcome to the network.';
     mmConnected = true;
 
     setTimeout(() => {
@@ -759,12 +825,12 @@ function activateMMUI() {
   document.getElementById('wallet-address').textContent = mmAddress;
   document.getElementById('seed-grid').innerHTML =
     '<div style="grid-column:1/-1;font-size:0.8rem;color:var(--text2);padding:12px 0;font-family:var(--mono);">' +
-    '🦊 MetaMask wallet — seed phrase managed by MetaMask, not CacheScan.</div>';
+    '🦊 MetaMask wallet — seed phrase managed by MetaMask, not CashScan.</div>';
 
   document.querySelector('.balance-value:not(.trust-fund-val)').textContent =
-    humanCacheBalance + ' CACHE';
+    humanCacheBalance + ' BOTC';
   document.querySelector('.trust-fund-val').textContent =
-    trustFundCacheBalance + ' CACHE';
+    trustFundCacheBalance + ' BOTC';
 
   // Update wallet-mm-btn
   const walletMMBtn = document.getElementById('wallet-mm-btn');

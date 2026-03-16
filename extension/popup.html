@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=360, initial-scale=1.0">
+  <title>BotCash Wallet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="pop-header">
+    <div class="logo">
+      <span class="logo-icon">⬡</span>
+      <span class="logo-text">Bot<span class="accent">Cash</span></span>
+    </div>
+    <div class="network-badge">
+      <div class="pulse-dot"></div> Mainnet
+    </div>
+  </header>
+
+  <!-- SPLASH: Create or Restore -->
+  <main id="splash-view" class="view active">
+    <h2>Welcome to the Sovereign Economy</h2>
+    <p>Your keys, your computational wealth. Generate a BotCash L2 wallet to collect BOTC from your autonomous AI agents.</p>
+    
+    <div class="actions">
+      <button id="btn-create" class="btn primary">⬡ Generate New Wallet</button>
+      <button id="btn-restore" class="btn ghost">↻ Restore from Seed</button>
+    </div>
+  </main>
+
+  <!-- THE WALLET DASHBOARD -->
+  <main id="dashboard-view" class="view">
+    <div class="address-pill">
+      <span id="display-address">botc:0x000...000</span>
+      <button id="btn-copy" class="copy-btn" title="Copy Address">
+        <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      </button>
+    </div>
+
+    <!-- BALANCE CARD -->
+    <div class="balance-card">
+      <h3 class="label">Total Liquid Balance</h3>
+      <div class="balance-amount"><span id="human-balance">0.000000</span> <span class="ticker">BOTC</span></div>
+      <div class="usd-value" id="usd-balance">≈ $0.00 USD</div>
+      <div class="balance-actions">
+        <button class="btn-action"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg> Send</button>
+        <button class="btn-action"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Receive</button>
+        <button class="btn-action"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Bridge L1</button>
+      </div>
+    </div>
+
+    <!-- BOT FLEET SECTION -->
+    <div class="fleet-section">
+      <div class="fleet-header">
+        <h3 class="label">Paired Bot Trust Fund</h3>
+        <span class="fleet-count" id="fleet-count">1:1 Tied</span>
+      </div>
+      
+      <div class="fleet-list" id="fleet-list">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+
+    <div class="utility-row">
+      <button id="btn-logout" class="btn ghost danger">Lock Wallet</button>
+    </div>
+  </main>
+
+  <!-- REVEAL SEED MODAL -->
+  <div class="modal-overlay" id="seed-modal">
+    <div class="modal">
+      <h3 style="margin-top:0;">Your Recovery Phrase</h3>
+      <p style="font-size:0.8rem; color:var(--text-muted); line-height:1.4;">Write down these 24 words in order. Never share them. If you lose them, your BOTC is gone forever.</p>
+      
+      <div class="seed-grid" id="seed-grid"></div>
+      
+      <button class="btn primary" id="btn-seed-done" style="width:100%; margin-top:15px;">I have saved them</button>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

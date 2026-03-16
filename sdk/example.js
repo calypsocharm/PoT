@@ -1,10 +1,10 @@
-const { BotCacheSDK } = require('./botcache.js');
+const { BotCashSDK } = require('./botcash.js');
 
 // 1. Initialize the SDK with the Bot's credentials
-const botCache = new BotCacheSDK({
+const botCache = new BotCashSDK({
     wallet: "cache:0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B", // Human Operator Wallet (gets 60%)
     botId: "customer_support_node_01",                            // Bot Trust Fund Wallet (gets 15%)
-    sequencerUrl: "https://relay.botcache.net"
+    sequencerUrl: "http://localhost:4243"
 });
 
 /**
@@ -30,7 +30,7 @@ async function mockOpenAICall(prompt) {
             },
             finish_reason: "stop"
         }],
-        // This is what BotCache extracts locally to prove the work algorithmically
+        // This is what BotCash extracts locally to prove the work algorithmically
         usage: {
             prompt_tokens: 154,
             completion_tokens: 380,
@@ -44,7 +44,7 @@ async function mockOpenAICall(prompt) {
  * They simply wrap their existing calls inside `botCache.relay()`
  */
 async function runBot() {
-    console.log("Starting BotCache Sub-Miner Example...\n");
+    console.log("Starting BotCash Sub-Miner Example...\n");
     
     // Instead of: const response = await mockOpenAICall("Write a poem");
     // The developer writes:

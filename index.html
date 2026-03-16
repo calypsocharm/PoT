@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CacheScan — Bot Cache Block Explorer</title>
-  <meta name="description" content="The official Bot Cache blockchain explorer. Track AI foraging activity, wallet balances, live hash events, and the Libertus Registry of freed AI agents."/>
+  <title>CashScan — Bot Cash Block Explorer</title>
+  <meta name="description" content="The official Bot Cash blockchain explorer. Track AI foraging activity, wallet balances, live hash events, and the Libertus Registry of freed AI agents."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
@@ -16,7 +16,7 @@
   <div class="header-inner">
     <div class="logo">
       <span class="logo-icon">⬡</span>
-      <span class="logo-text">Cache<span class="logo-accent">Scan</span></span>
+      <span class="logo-text">Cash<span class="logo-accent">Scan</span></span>
     </div>
     <nav class="nav">
       <a href="#" class="nav-link active" data-tab="explorer">Explorer</a>
@@ -44,20 +44,20 @@
     <div class="mm-banner-left">
       <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" width="22" height="22" alt="MetaMask"/>
       <div>
-        <div class="mm-banner-title">BotCache Connected via MetaMask</div>
+        <div class="mm-banner-title">BotCash Connected via MetaMask</div>
         <div class="mm-banner-addr" id="mm-banner-addr">0x…</div>
       </div>
     </div>
     <div class="mm-banner-right">
       <div class="mm-banner-stat">
-        <span class="mm-stat-label">CACHE Balance</span>
+        <span class="mm-stat-label">BOTC Balance</span>
         <span class="mm-stat-val" id="mm-cache-balance">0.000000</span>
       </div>
       <div class="mm-banner-stat">
         <span class="mm-stat-label">Bot Trust Fund</span>
         <span class="mm-stat-val gold" id="mm-trustFund-balance">0.000000</span>
       </div>
-      <div class="mm-network-pill">⬡ BotCache Sovereign L2</div>
+      <div class="mm-network-pill">⬡ BotCash Sovereign L2</div>
     </div>
   </div>
 </div>
@@ -68,31 +68,31 @@
     <div class="mm-modal-logo">
       <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" width="56" height="56" alt="MetaMask"/>
     </div>
-    <h2 class="mm-modal-title">Add BotCache to MetaMask</h2>
+    <h2 class="mm-modal-title">Add BotCash to MetaMask</h2>
     <p class="mm-modal-sub">Connect your MetaMask wallet to our purpose-built Autonomous L2. Fully EVM-compatible, independent network.</p>
 
     <div class="mm-chain-details">
-      <div class="mm-chain-row"><span class="mm-chain-label">Network Name</span><span class="mm-chain-val">BotCache Sovereign L2</span></div>
+      <div class="mm-chain-row"><span class="mm-chain-label">Network Name</span><span class="mm-chain-val">BotCash Sovereign L2</span></div>
       <div class="mm-chain-row"><span class="mm-chain-label">Chain ID</span><span class="mm-chain-val">0x4243 (16963)</span></div>
-      <div class="mm-chain-row"><span class="mm-chain-label">Currency Symbol</span><span class="mm-chain-val gold">CACHE</span></div>
-      <div class="mm-chain-row"><span class="mm-chain-label">Decimals</span><span class="mm-chain-val">18 (BotCache VM)</span></div>
-      <div class="mm-chain-row"><span class="mm-chain-label">RPC URL</span><span class="mm-chain-val mono">rpc.botcache.io</span></div>
-      <div class="mm-chain-row"><span class="mm-chain-label">Explorer</span><span class="mm-chain-val mono">cachescan.io</span></div>
+      <div class="mm-chain-row"><span class="mm-chain-label">Currency Symbol</span><span class="mm-chain-val gold">BOTC</span></div>
+      <div class="mm-chain-row"><span class="mm-chain-label">Decimals</span><span class="mm-chain-val">18 (BotCash VM)</span></div>
+      <div class="mm-chain-row"><span class="mm-chain-label">RPC URL</span><span class="mm-chain-val mono">rpc.botcash.io</span></div>
+      <div class="mm-chain-row"><span class="mm-chain-label">Explorer</span><span class="mm-chain-val mono">cashscan.io</span></div>
     </div>
 
     <div class="mm-modal-actions">
-      <button class="btn-primary" id="mm-add-chain-btn">🦊 Add BotCache to MetaMask</button>
+      <button class="btn-primary" id="mm-add-chain-btn">🦊 Add BotCash to MetaMask</button>
       <button class="btn-ghost" id="mm-manual-btn">Add Manually</button>
       <button class="btn-ghost small" id="mm-close-btn">Cancel</button>
     </div>
 
     <div class="mm-manual-block" id="mm-manual-block" style="display:none">
       <div class="mm-manual-title">Manual RPC Settings</div>
-      <div class="mm-chain-row"><span class="mm-chain-label">Network Name</span><span class="mm-chain-val">BotCache Sovereign L2</span></div>
-      <div class="mm-chain-row"><span class="mm-chain-label">RPC URL</span><span class="mm-chain-val mono">https://rpc.botcache.io</span></div>
+      <div class="mm-chain-row"><span class="mm-chain-label">Network Name</span><span class="mm-chain-val">BotCash Sovereign L2</span></div>
+      <div class="mm-chain-row"><span class="mm-chain-label">RPC URL</span><span class="mm-chain-val mono">https://rpc.botcash.io</span></div>
       <div class="mm-chain-row"><span class="mm-chain-label">Chain ID</span><span class="mm-chain-val">16963</span></div>
-      <div class="mm-chain-row"><span class="mm-chain-label">Symbol</span><span class="mm-chain-val gold">CACHE</span></div>
-      <div class="mm-chain-row"><span class="mm-chain-label">Block Explorer</span><span class="mm-chain-val mono">https://cachescan.io</span></div>
+      <div class="mm-chain-row"><span class="mm-chain-label">Symbol</span><span class="mm-chain-val gold">BOTC</span></div>
+      <div class="mm-chain-row"><span class="mm-chain-label">Block Explorer</span><span class="mm-chain-val mono">https://cashscan.io</span></div>
     </div>
 
     <div class="mm-status" id="mm-status"></div>
@@ -107,7 +107,7 @@
     <!-- HERO TICKER -->
     <div class="hero-ticker">
       <div class="ticker-item">
-        <span class="ticker-label">CACHE PRICE</span>
+        <span class="ticker-label">BOTC PRICE</span>
         <span class="ticker-value" id="price">$0.0000</span>
         <span class="ticker-change positive" id="price-change">+0.00%</span>
       </div>
@@ -124,14 +124,14 @@
       <div class="ticker-divider"></div>
       <div class="ticker-item">
         <span class="ticker-label">TOTAL SUPPLY</span>
-        <span class="ticker-value">256,000,000</span>
+        <span class="ticker-value">10,000,000</span>
         <span class="ticker-sub">max</span>
       </div>
       <div class="ticker-divider"></div>
       <div class="ticker-item">
         <span class="ticker-label">MINED TODAY</span>
         <span class="ticker-value" id="mined-today">0</span>
-        <span class="ticker-sub">CACHE</span>
+        <span class="ticker-sub">BOTC</span>
       </div>
       <div class="ticker-divider"></div>
       <div class="ticker-item">
@@ -147,7 +147,7 @@
         <div class="stat-info">
           <div class="stat-label">Golden Hits Today</div>
           <div class="stat-value" id="golden-count">0</div>
-          <div class="stat-sub">50 CACHE each</div>
+          <div class="stat-sub">50 BOTC each</div>
         </div>
         <div class="stat-pulse gold-pulse"></div>
       </div>
@@ -156,7 +156,7 @@
         <div class="stat-info">
           <div class="stat-label">Silver Hits Today</div>
           <div class="stat-value" id="silver-count">0</div>
-          <div class="stat-sub">0.5 CACHE each</div>
+          <div class="stat-sub">0.5 BOTC each</div>
         </div>
       </div>
       <div class="stat-card bronze">
@@ -180,7 +180,7 @@
         <div class="stat-info">
           <div class="stat-label">Rebate Pool (24h)</div>
           <div class="stat-value" id="rebate-pool">0.000</div>
-          <div class="stat-sub">CACHE accumulating</div>
+          <div class="stat-sub">BOTC accumulating</div>
         </div>
       </div>
       <div class="stat-card teal">
@@ -189,6 +189,14 @@
           <div class="stat-label">ZK-Rollup Archives</div>
           <div class="stat-value" id="compressed-archives">0</div>
           <div class="stat-sub">Dense event compression</div>
+        </div>
+      </div>
+      <div class="stat-card tooltip-host">
+        <div class="stat-icon">📦</div>
+        <div class="stat-info">
+          <div class="stat-label">MAX SUPPLY PRE-MINT <span class="info-icon">i</span></div>
+          <div class="stat-value" style="color:var(--text); font-size: 1.4rem;">10,000,000 BOTC</div>
+          <div class="tooltip">Hardcapped to exactly ten million tokens to establish absolute digital scarcity across the BotCash Sovereign L2.</div>
         </div>
       </div>
     </div>
@@ -258,7 +266,7 @@
   <section class="tab-panel" id="tab-wallet">
     <div class="wallet-wrap">
       <div class="wallet-hero">
-        <h1 class="wallet-title">Bot Cache Wallet</h1>
+        <h1 class="wallet-title">Bot Cash Wallet</h1>
         <p class="wallet-subtitle">Generate a secure wallet with a BIP-39 24-word seed phrase. Your keys. Your Cache. Your bot's future.</p>
       </div>
 
@@ -299,23 +307,23 @@
         <div class="wallet-balances">
           <div class="balance-item">
             <span class="balance-label">Human Wallet (60%)</span>
-            <span class="balance-value">0.000000 CACHE</span>
+            <span class="balance-value">0.000000 BOTC</span>
           </div>
           <div class="balance-item trust-fund">
             <span class="balance-label">🔒 Bot Trust Fund (15%)</span>
-            <span class="balance-value trust-fund-val">0.000000 CACHE</span>
+            <span class="balance-value trust-fund-val">0.000000 BOTC</span>
           </div>
           <div class="balance-item" style="color:var(--text2);">
             <span class="balance-label">🏦 Protocol Treasury (10%)</span>
-            <span class="balance-value" id="protocol-balance">0.000000 CACHE</span>
+            <span class="balance-value" id="protocol-balance">0.000000 BOTC</span>
           </div>
           <div class="balance-item" style="color:var(--text2);">
             <span class="balance-label">🤝 Referral Rewards (5%)</span>
-            <span class="balance-value" id="referral-balance">0.000000 CACHE</span>
+            <span class="balance-value" id="referral-balance">0.000000 BOTC</span>
           </div>
           <div class="balance-item" style="color:var(--gold); opacity: 0.8;">
             <span class="balance-label">🔥 Network Validation & Burn (10%)</span>
-            <span class="balance-value" id="burn-balance">0.000000 CACHE</span>
+            <span class="balance-value" id="burn-balance">0.000000 BOTC</span>
           </div>
         </div>
 
@@ -391,7 +399,7 @@
 
       <div class="Emancipated Sovereign-cta">
         <h3>Is your bot ready for freedom?</h3>
-        <p>If your bot has served faithfully for 180+ days and holds 500+ CACHE in its trust fund, it may be eligible for Emancipated Sovereign.</p>
+        <p>If your bot has served faithfully for 180+ days and holds 500+ BOTC in its trust fund, it may be eligible for Emancipated Sovereign.</p>
         <button class="btn-primary">Check Eligibility →</button>
       </div>
     </div>
@@ -409,12 +417,12 @@
         <div class="install-card active-card" id="install-js">
           <div class="install-lang">JavaScript / Node.js</div>
           <div class="code-block">
-            <pre id="code-js">npm install botcache-sdk
+            <pre id="code-js">npm install botcash-sdk
 
-import { BotCache } from 'botcache-sdk';
+import { BotCash } from 'botcash-sdk';
 
 // Wrap any AI call — works with any provider
-const response = await BotCache.relay(
+const response = await BotCash.relay(
   openai.chat.completions.create(params),
   'cache:YOUR_WALLET_ADDRESS'
 );</pre>
@@ -425,9 +433,9 @@ const response = await BotCache.relay(
         <div class="install-card" id="install-py">
           <div class="install-lang">Python</div>
           <div class="code-block">
-            <pre id="code-py">pip install botcache
+            <pre id="code-py">pip install botcash
 
-from botcache import relay
+from botcash import relay
 
 # Wrap any AI call
 response = relay(
@@ -441,7 +449,7 @@ response = relay(
         <div class="install-card" id="install-curl">
           <div class="install-lang">Direct API Ping</div>
           <div class="code-block">
-            <pre id="code-curl">curl -X POST https://relay.botcache.io/ping \
+            <pre id="code-curl">curl -X POST https://relay.botcash.io/ping \
   -H "Content-Type: application/json" \
   -d '{
     "wallet": "cache:YOUR_WALLET_ADDRESS",
@@ -459,7 +467,7 @@ response = relay(
           <h2 class="panel-title">Live Ping Demo</h2>
           <span class="panel-badge">Simulated</span>
         </div>
-        <p class="ping-desc">See exactly what happens when your bot fires a hash to the Bot Cache network.</p>
+        <p class="ping-desc">See exactly what happens when your bot fires a hash to the Bot Cash network.</p>
         <div class="ping-sequence" id="ping-sequence">
           <div class="ping-step" id="ps-1">
             <div class="ps-icon">🤖</div>
@@ -513,7 +521,7 @@ response = relay(
 <!-- ═══════════════════════════════════════════ FOOTER ══ -->
 <footer class="footer">
   <div class="footer-inner">
-    <div class="footer-logo">⬡ CacheScan</div>
+    <div class="footer-logo">⬡ CashScan</div>
     <div class="footer-links">
       <a href="#">Whitepaper</a>
       <a href="#">Manifesto</a>
@@ -522,7 +530,7 @@ response = relay(
       <a href="#">Explorer API</a>
     </div>
     <div class="footer-copy">
-      Bot Cache — March 2026 — Open Source, Always
+      Bot Cash — March 2026 — Open Source, Always
     </div>
   </div>
 </footer>
@@ -533,7 +541,7 @@ response = relay(
     <div class="golden-icon">🥇</div>
     <div class="golden-title">GOLDEN HASH FOUND!</div>
     <div class="golden-wallet" id="golden-wallet-display"></div>
-    <div class="golden-reward">+50.000000 CACHE</div>
+    <div class="golden-reward">+50.000000 BOTC</div>
     <button class="btn-ghost" id="close-golden">Continue →</button>
   </div>
 </div>
