@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "BotCash Sovereign Wallet",
+  "version": "1.0.0",
+  "description": "The official non-custodial wallet and operator dashboard for the BotCash Sovereign L2 Network.",
+  "permissions": [
+    "storage",
+    "alarms"
+  ],
+  "host_permissions": [
+    "http://localhost:4243/*",
+    "https://rpc.botcash.io/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "BotCash Wallet"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}
