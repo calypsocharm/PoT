@@ -1,6 +1,82 @@
 # Full Website Commit and VPS Deployment Guide
 
-This document outlines the step-by-step process of saving your changes locally, pushing them to GitHub, and pulling them onto the live VPS server to update the BotCash network.
+**VPS IP:** `72.62.129.226`
+**VPS User:** `root`
+**Live site root:** `/var/www/botcash`
+**GitHub repo:** `https://github.com/calypsocharm/PoT.git`
+
+---
+
+## 1. Local Commit and Push (Save to GitHub)
+
+Run in the `botcache-scan` directory:
+
+```powershell
+git add .
+git commit -m "Your descriptive commit message here"
+git push origin main
+```
+
+---
+
+## 2a. Deploy via SCP (Recommended — bypasses git auth issues)
+
+Copy changed files directly to the VPS:
+
+```powershell
+# Copy the main site file
+scp index.html root@72.62.129.226:/var/www/botcash/index.html
+
+# Copy CSS if changed
+scp style.css root@72.62.129.226:/var/www/botcash/style.css
+
+# Copy JS if changed
+scp app.js root@72.62.129.226:/var/www/botcash/app.js
+scp bip39.js root@72.62.129.226:/var/www/botcash/bip39.js
+
+# Copy everything at once (full sync)
+scp -r * root@72.62.129.226:/var/www/botcash/
+```
+
+No restart needed — Nginx serves static files immediately after copy.
+
+---
+
+## 2b. Deploy via SSH + Git Pull (if GitHub auth is configured on VPS)
+
+```bash
+ssh root@72.62.129.226
+cd /var/www/botcash
+git config --global --add safe.directory /var/www/botcash
+git pull origin main
+```
+
+---
+
+## 3. Restart Services (only if server-side JS changed)
+
+```bash
+ssh root@72.62.129.226
+pm2 status
+pm2 restart botcash
+```
+
+If Nginx config changed:
+```bash
+sudo systemctl restart nginx
+```
+
+---
+
+## 4. Verify Deployment
+
+Open **https://botcash.io** and confirm changes are live.
+
+Check PM2 logs if anything looks broken:
+```bash
+ssh root@72.62.129.226 "pm2 logs botcash --lines 20"
+```
+
 
 ## 1. Local Commit and Push
 When you are ready to apply changes you made on your local machine, run the following commands in the `botcache-scan` directory using your Terminal/PowerShell:
