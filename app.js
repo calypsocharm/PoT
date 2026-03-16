@@ -648,7 +648,11 @@ document.addEventListener('DOMContentLoaded', boot);
 
 // ──────────────────────── WEBSOCKET LIVE FEED ────────────────────────
 function initLiveSocket() {
-  const ws = new WebSocket('ws://localhost:4243');
+  const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+  const wsHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? 'localhost:4243'
+    : window.location.hostname + '/ws-feed';
+  const ws = new WebSocket(`${protocol}//${wsHost}`);
   
   ws.onopen = () => {
     console.log('[CashScan] 🟢 Connected to BotCash L2 Sequencer');
