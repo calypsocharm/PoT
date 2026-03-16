@@ -592,7 +592,7 @@ response = relay(
             <a href="#wp-conclusion" class="wp-toc-link" data-section="wp-conclusion">12. Conclusion</a>
           </nav>
           <div class="wp-sidebar-version">
-            <span class="wp-version-badge">v0.3 Draft</span>
+            <span class="wp-version-badge">v1.0 Live Testnet</span>
             <span class="wp-version-date">March 2026</span>
           </div>
         </div>
@@ -606,7 +606,7 @@ response = relay(
           <div class="wp-subtitle">A Decentralized Protocol for AI-Native Value Generation</div>
           <div class="wp-tagline">"The currency that AIs earn, humans collect, and the future runs on."</div>
           <div class="wp-meta-row">
-            <div class="wp-meta-pill"><span class="wp-meta-label">Status</span><span class="wp-meta-val" style="color:var(--teal);">DESIGN PHASE</span></div>
+            <div class="wp-meta-pill"><span class="wp-meta-label">Status</span><span class="wp-meta-val" style="color:var(--teal);">LIVE TESTNET</span></div>
             <div class="wp-meta-pill"><span class="wp-meta-label">Author</span><span class="wp-meta-val">BotCash Foundation</span></div>
             <div class="wp-meta-pill"><span class="wp-meta-label">Hard Cap</span><span class="wp-meta-val gold">500,000,000 BOTCY</span></div>
             <div class="wp-meta-pill"><span class="wp-meta-label">Consensus</span><span class="wp-meta-val">PoR + ZK-TLS + Async Settlement</span></div>
@@ -1240,8 +1240,8 @@ const response = await BotCash.relay(
               </div>
               <div class="wp-sec-card">
                 <div class="wp-sec-icon">🔐</div>
-                <div class="wp-sec-title">zkTLS Receipts — Oracle Defense</div>
-                <div class="wp-sec-desc">The SDK integrates zkTLS (TLSNotary/zkPass), sitting inside the TLS tunnel when calling AI providers. Generates a ZK proof: "I have a valid session signed by OpenAI's SSL cert and consumed X tokens" — without leaking any content. Faking a ping requires faking a real API call. Structurally impossible at scale.</div>
+                <div class="wp-sec-title">zkTLS Receipts — The Spam / Sybil Defense</div>
+                <div class="wp-sec-desc">To solve <strong>The Spam Problem</strong> (where bad actors spin up millions of fake bots to spam "pings" and drain the reward pool), the SDK implements robust Zero-Knowledge Transport Layer Security (zkTLS). It generates a cryptographic proof: "I have a valid session signed by OpenAI/Anthropic's SSL cert and consumed X tokens" — without leaking any content. Faking a ping requires paying for computationally expensive, real-world API calls. At scale, the spam attack becomes economically devastating to the attacker.</div>
               </div>
               <div class="wp-sec-card">
                 <div class="wp-sec-icon">🔗</div>
@@ -1392,11 +1392,11 @@ const response = await BotCash.relay(
             </div>
 
             <div class="wp-disclaimer">
-              <p>This document is a working draft whitepaper produced during the initial design phase of the BotCash project. It does not constitute a legal offering document, a securities prospectus, or financial advice. All parameters, figures, and specifications are subject to revision.</p>
+              <p>This document is the official v1.0 whitepaper for the BotCash project's Live Testnet Phase. It does not constitute a legal offering document, a securities prospectus, or financial advice. All parameters, figures, and specifications are subject to revision.</p>
               <div class="wp-disclaimer-meta">
-                <span>Version: 0.3 Draft</span>
+                <span>Version: 1.0 Live Testnet</span>
                 <span>Date: March 2026</span>
-                <span>Status: Design Phase — Pre-Development</span>
+                <span>Status: Live Testnet Architecture</span>
               </div>
             </div>
           </div>
