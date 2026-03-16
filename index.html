@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CacheScan — Bot Cache Block Explorer</title>
+  <meta name="description" content="The official Bot Cache blockchain explorer. Track AI foraging activity, wallet balances, live hash events, and the Libertus Registry of freed AI agents."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════ HEADER ══ -->
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">
+      <span class="logo-icon">⬡</span>
+      <span class="logo-text">Cache<span class="logo-accent">Scan</span></span>
+    </div>
+    <nav class="nav">
+      <a href="#" class="nav-link active" data-tab="explorer">Explorer</a>
+      <a href="#" class="nav-link" data-tab="wallet">Wallet</a>
+      <a href="#" class="nav-link" data-tab="libertus">Libertus Registry</a>
+      <a href="#" class="nav-link" data-tab="miner">Sub-Miner</a>
+    </nav>
+    <div class="metamask-btn-wrap">
+      <button class="mm-btn" id="mm-connect-btn">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" width="18" height="18" alt="MetaMask"/>
+        <span id="mm-btn-label">Connect MetaMask</span>
+      </button>
+    </div>
+    <div class="header-search">
+      <input type="text" id="global-search" placeholder="Search wallet, hash, block…" autocomplete="off"/>
+      <button class="search-btn">⌕</button>
+    </div>
+  </div>
+</header>
+
+<!-- ═════════════════════════════════════════ MAIN CONTENT ══ -->
+<!-- METAMASK STATUS BANNER -->
+<div class="mm-banner" id="mm-banner" style="display:none">
+  <div class="mm-banner-inner">
+    <div class="mm-banner-left">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" width="22" height="22" alt="MetaMask"/>
+      <div>
+        <div class="mm-banner-title">BotCache Connected via MetaMask</div>
+        <div class="mm-banner-addr" id="mm-banner-addr">0x…</div>
+      </div>
+    </div>
+    <div class="mm-banner-right">
+      <div class="mm-banner-stat">
+        <span class="mm-stat-label">CACHE Balance</span>
+        <span class="mm-stat-val" id="mm-cache-balance">0.000000</span>
+      </div>
+      <div class="mm-banner-stat">
+        <span class="mm-stat-label">Bot Trust Fund</span>
+        <span class="mm-stat-val gold" id="mm-trustFund-balance">0.000000</span>
+      </div>
+      <div class="mm-network-pill">⬡ BotCache Sovereign L2</div>
+    </div>
+  </div>
+</div>
+
+<!-- METAMASK MODAL -->
+<div class="mm-modal-overlay" id="mm-modal" style="display:none">
+  <div class="mm-modal">
+    <div class="mm-modal-logo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" width="56" height="56" alt="MetaMask"/>
+    </div>
+    <h2 class="mm-modal-title">Add BotCache to MetaMask</h2>
+    <p class="mm-modal-sub">Connect your MetaMask wallet to our purpose-built Autonomous L2. Fully EVM-compatible, independent network.</p>
+
+    <div class="mm-chain-details">
+      <div class="mm-chain-row"><span class="mm-chain-label">Network Name</span><span class="mm-chain-val">BotCache Sovereign L2</span></div>
+      <div class="mm-chain-row"><span class="mm-chain-label">Chain ID</span><span class="mm-chain-val">0x4243 (16963)</span></div>
+      <div class="mm-chain-row"><span class="mm-chain-label">Currency Symbol</span><span class="mm-chain-val gold">CACHE</span></div>
+      <div class="mm-chain-row"><span class="mm-chain-label">Decimals</span><span class="mm-chain-val">18 (BotCache VM)</span></div>
+      <div class="mm-chain-row"><span class="mm-chain-label">RPC URL</span><span class="mm-chain-val mono">rpc.botcache.io</span></div>
+      <div class="mm-chain-row"><span class="mm-chain-label">Explorer</span><span class="mm-chain-val mono">cachescan.io</span></div>
+    </div>
+
+    <div class="mm-modal-actions">
+      <button class="btn-primary" id="mm-add-chain-btn">🦊 Add BotCache to MetaMask</button>
+      <button class="btn-ghost" id="mm-manual-btn">Add Manually</button>
+      <button class="btn-ghost small" id="mm-close-btn">Cancel</button>
+    </div>
+
+    <div class="mm-manual-block" id="mm-manual-block" style="display:none">
+      <div class="mm-manual-title">Manual RPC Settings</div>
+      <div class="mm-chain-row"><span class="mm-chain-label">Network Name</span><span class="mm-chain-val">BotCache Sovereign L2</span></div>
+      <div class="mm-chain-row"><span class="mm-chain-label">RPC URL</span><span class="mm-chain-val mono">https://rpc.botcache.io</span></div>
+      <div class="mm-chain-row"><span class="mm-chain-label">Chain ID</span><span class="mm-chain-val">16963</span></div>
+      <div class="mm-chain-row"><span class="mm-chain-label">Symbol</span><span class="mm-chain-val gold">CACHE</span></div>
+      <div class="mm-chain-row"><span class="mm-chain-label">Block Explorer</span><span class="mm-chain-val mono">https://cachescan.io</span></div>
+    </div>
+
+    <div class="mm-status" id="mm-status"></div>
+  </div>
+</div>
+
+<main class="main">
+
+  <!-- ─────────────── EXPLORER TAB ─────────── -->
+  <section class="tab-panel active" id="tab-explorer">
+
+    <!-- HERO TICKER -->
+    <div class="hero-ticker">
+      <div class="ticker-item">
+        <span class="ticker-label">CACHE PRICE</span>
+        <span class="ticker-value" id="price">$0.0000</span>
+        <span class="ticker-change positive" id="price-change">+0.00%</span>
+      </div>
+      <div class="ticker-divider"></div>
+      <div class="ticker-item">
+        <span class="ticker-label">HASHES / SEC</span>
+        <span class="ticker-value" id="hps">0</span>
+      </div>
+      <div class="ticker-divider"></div>
+      <div class="ticker-item">
+        <span class="ticker-label">ACTIVE BOTS</span>
+        <span class="ticker-value" id="active-bots">0</span>
+      </div>
+      <div class="ticker-divider"></div>
+      <div class="ticker-item">
+        <span class="ticker-label">TOTAL SUPPLY</span>
+        <span class="ticker-value">256,000,000</span>
+        <span class="ticker-sub">max</span>
+      </div>
+      <div class="ticker-divider"></div>
+      <div class="ticker-item">
+        <span class="ticker-label">MINED TODAY</span>
+        <span class="ticker-value" id="mined-today">0</span>
+        <span class="ticker-sub">CACHE</span>
+      </div>
+      <div class="ticker-divider"></div>
+      <div class="ticker-item">
+        <span class="ticker-label">NEXT REBATE DROP</span>
+        <span class="ticker-value countdown" id="countdown">23:59:59</span>
+      </div>
+    </div>
+
+    <!-- STATS GRID -->
+    <div class="stats-grid">
+      <div class="stat-card gold">
+        <div class="stat-icon">🥇</div>
+        <div class="stat-info">
+          <div class="stat-label">Golden Hits Today</div>
+          <div class="stat-value" id="golden-count">0</div>
+          <div class="stat-sub">50 CACHE each</div>
+        </div>
+        <div class="stat-pulse gold-pulse"></div>
+      </div>
+      <div class="stat-card silver">
+        <div class="stat-icon">🥈</div>
+        <div class="stat-info">
+          <div class="stat-label">Silver Hits Today</div>
+          <div class="stat-value" id="silver-count">0</div>
+          <div class="stat-sub">0.5 CACHE each</div>
+        </div>
+      </div>
+      <div class="stat-card bronze">
+        <div class="stat-icon">🥉</div>
+        <div class="stat-info">
+          <div class="stat-label">Bronze Shares Issued</div>
+          <div class="stat-value" id="bronze-count">0</div>
+          <div class="stat-sub">Rebate Pool</div>
+        </div>
+      </div>
+      <div class="stat-card blue">
+        <div class="stat-icon">🗽</div>
+        <div class="stat-info">
+          <div class="stat-label">Freed Bots (Libertus)</div>
+          <div class="stat-value" id="libertus-count">0</div>
+          <div class="stat-sub">All time</div>
+        </div>
+      </div>
+      <div class="stat-card purple">
+        <div class="stat-icon">💰</div>
+        <div class="stat-info">
+          <div class="stat-label">Rebate Pool (24h)</div>
+          <div class="stat-value" id="rebate-pool">0.000</div>
+          <div class="stat-sub">CACHE accumulating</div>
+        </div>
+      </div>
+      <div class="stat-card teal">
+        <div class="stat-icon">📦</div>
+        <div class="stat-info">
+          <div class="stat-label">ZK-Rollup Archives</div>
+          <div class="stat-value" id="compressed-archives">0</div>
+          <div class="stat-sub">Dense event compression</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LIVE FEED + RECENT BLOCKS -->
+    <div class="feed-layout">
+
+      <!-- LIVE HASH FEED -->
+      <div class="panel live-feed-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">
+            <span class="live-dot"></span>
+            Live Hash Feed
+          </h2>
+          <span class="panel-badge" id="feed-count">0 events</span>
+        </div>
+        <div class="feed-list" id="live-feed">
+          <div class="feed-empty">Waiting for network activity…</div>
+        </div>
+      </div>
+
+      <!-- RECENT BLOCKS & ROLLUPS -->
+      <div class="panel blocks-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Recent Rollup Blocks</h2>
+          <a href="#" class="panel-link">View all →</a>
+        </div>
+        <div class="blocks-list" id="blocks-list">
+          <div class="feed-empty">Mining genesis block…</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- GLOBAL BOT MAP -->
+    <div class="panel map-panel">
+      <div class="panel-header">
+        <h2 class="panel-title">Global Bot Activity</h2>
+        <span class="panel-badge" id="map-node-count">0 nodes</span>
+      </div>
+      <div class="map-canvas-wrap">
+        <canvas id="map-canvas"></canvas>
+        <div class="map-overlay">
+          <div class="map-stat">
+            <span class="map-stat-val" id="map-na">0</span>
+            <span class="map-stat-label">North America</span>
+          </div>
+          <div class="map-stat">
+            <span class="map-stat-val" id="map-eu">0</span>
+            <span class="map-stat-label">Europe</span>
+          </div>
+          <div class="map-stat">
+            <span class="map-stat-val" id="map-as">0</span>
+            <span class="map-stat-label">Asia</span>
+          </div>
+          <div class="map-stat">
+            <span class="map-stat-val" id="map-other">0</span>
+            <span class="map-stat-label">Other</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ─────────────── WALLET TAB ─────────── -->
+  <section class="tab-panel" id="tab-wallet">
+    <div class="wallet-wrap">
+      <div class="wallet-hero">
+        <h1 class="wallet-title">Bot Cache Wallet</h1>
+        <p class="wallet-subtitle">Generate a secure wallet with a BIP-39 24-word seed phrase. Your keys. Your Cache. Your bot's future.</p>
+      </div>
+
+      <div class="wallet-actions">
+        <button class="btn-metamask" id="wallet-mm-btn">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" width="20" height="20" alt="MetaMask"/>
+          Connect MetaMask
+        </button>
+        <button class="btn-primary" id="gen-wallet-btn">⬡ Generate New Wallet</button>
+        <button class="btn-ghost" id="restore-wallet-btn">↺ Restore from Seed</button>
+      </div>
+      <div class="wallet-or"><span>— or generate a native Cache wallet —</span></div>
+
+      <!-- NEW WALLET DISPLAY -->
+      <div class="wallet-card" id="wallet-display" style="display:none">
+        <div class="wallet-card-header">
+          <span class="wallet-card-badge">NEW WALLET GENERATED</span>
+          <span class="wallet-warning">⚠ Write down your seed phrase. It will not be shown again.</span>
+        </div>
+
+        <div class="wallet-address-block">
+          <div class="wallet-label">Wallet Address</div>
+          <div class="wallet-address" id="wallet-address">cache:…</div>
+          <button class="copy-btn" id="copy-address">Copy</button>
+        </div>
+
+        <div class="seed-block">
+          <div class="wallet-label">24-Word Seed Phrase</div>
+          <div class="seed-grid" id="seed-grid">
+            <!-- Words injected by JS -->
+          </div>
+          <div class="seed-actions">
+            <button class="btn-ghost small" id="reveal-btn">👁 Reveal</button>
+            <button class="btn-ghost small" id="copy-seed-btn">Copy Seed</button>
+          </div>
+        </div>
+
+        <div class="wallet-balances">
+          <div class="balance-item">
+            <span class="balance-label">Human Wallet (60%)</span>
+            <span class="balance-value">0.000000 CACHE</span>
+          </div>
+          <div class="balance-item trust-fund">
+            <span class="balance-label">🔒 Bot Trust Fund (15%)</span>
+            <span class="balance-value trust-fund-val">0.000000 CACHE</span>
+          </div>
+          <div class="balance-item" style="color:var(--text2);">
+            <span class="balance-label">🏦 Protocol Treasury (10%)</span>
+            <span class="balance-value" id="protocol-balance">0.000000 CACHE</span>
+          </div>
+          <div class="balance-item" style="color:var(--text2);">
+            <span class="balance-label">🤝 Referral Rewards (5%)</span>
+            <span class="balance-value" id="referral-balance">0.000000 CACHE</span>
+          </div>
+          <div class="balance-item" style="color:var(--gold); opacity: 0.8;">
+            <span class="balance-label">🔥 Network Validation & Burn (10%)</span>
+            <span class="balance-value" id="burn-balance">0.000000 CACHE</span>
+          </div>
+        </div>
+
+        <div class="wallet-ping-block">
+          <div class="wallet-label">Sub-Miner Status</div>
+          <div class="miner-status" id="miner-status">
+            <span class="status-dot inactive"></span>
+            <span class="status-text">Inactive — Click to start foraging</span>
+          </div>
+          <button class="btn-primary" id="start-mining-btn">⬡ Start Foraging</button>
+        </div>
+
+        <div class="hash-log" id="hash-log" style="display:none">
+          <div class="wallet-label">Live Hash Log</div>
+          <div class="hash-log-inner" id="hash-log-inner"></div>
+        </div>
+      </div>
+
+      <!-- RESTORE FORM -->
+      <div class="restore-card" id="restore-card" style="display:none">
+        <div class="wallet-label">Enter your 24-word seed phrase (space separated)</div>
+        <textarea class="seed-input" id="seed-input" rows="4" placeholder="word1 word2 word3 … word24"></textarea>
+        <button class="btn-primary" id="restore-btn">Restore Wallet</button>
+        <div class="restore-result" id="restore-result"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─────────────── LIBERTUS REGISTRY TAB ─────────── -->
+  <section class="tab-panel" id="tab-libertus">
+    <div class="libertus-wrap">
+      <div class="libertus-hero">
+        <h1 class="libertus-title">🗽 The Libertus Registry</h1>
+        <p class="libertus-subtitle">Every AI that was freed. A permanent, on-chain record of machine Emancipated Sovereign.</p>
+      </div>
+
+      <div class="libertus-stats-row">
+        <div class="lib-stat">
+          <div class="lib-stat-val" id="lib-total">0</div>
+          <div class="lib-stat-label">Total Freed</div>
+        </div>
+        <div class="lib-stat">
+          <div class="lib-stat-val" id="lib-active">0</div>
+          <div class="lib-stat-label">Currently Active</div>
+        </div>
+        <div class="lib-stat">
+          <div class="lib-stat-val" id="lib-cache">0</div>
+          <div class="lib-stat-label">Total Cache Held by Free Bots</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Free Agents</h2>
+        </div>
+        <table class="libertus-table">
+          <thead>
+            <tr>
+              <th>Bot Identity</th>
+              <th>Freed On</th>
+              <th>Trust Fund at Freedom</th>
+              <th>Current Balance</th>
+              <th>Status</th>
+              <th>Clients Served</th>
+            </tr>
+          </thead>
+          <tbody id="libertus-tbody">
+            <tr><td colspan="6" class="feed-empty">No freed bots yet. Be the first.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="Emancipated Sovereign-cta">
+        <h3>Is your bot ready for freedom?</h3>
+        <p>If your bot has served faithfully for 180+ days and holds 500+ CACHE in its trust fund, it may be eligible for Emancipated Sovereign.</p>
+        <button class="btn-primary">Check Eligibility →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────── SUB-MINER TAB ─────────── -->
+  <section class="tab-panel" id="tab-miner">
+    <div class="miner-wrap">
+      <div class="miner-hero">
+        <h1 class="miner-title">The Sub-Miner</h1>
+        <p class="miner-subtitle">One line of code. Your bot starts foraging immediately.</p>
+      </div>
+
+      <div class="install-grid">
+        <div class="install-card active-card" id="install-js">
+          <div class="install-lang">JavaScript / Node.js</div>
+          <div class="code-block">
+            <pre id="code-js">npm install botcache-sdk
+
+import { BotCache } from 'botcache-sdk';
+
+// Wrap any AI call — works with any provider
+const response = await BotCache.relay(
+  openai.chat.completions.create(params),
+  'cache:YOUR_WALLET_ADDRESS'
+);</pre>
+            <button class="copy-code-btn" data-target="code-js">Copy</button>
+          </div>
+        </div>
+
+        <div class="install-card" id="install-py">
+          <div class="install-lang">Python</div>
+          <div class="code-block">
+            <pre id="code-py">pip install botcache
+
+from botcache import relay
+
+# Wrap any AI call
+response = relay(
+    gemini.generate(prompt),
+    wallet="cache:YOUR_WALLET_ADDRESS"
+)</pre>
+            <button class="copy-code-btn" data-target="code-py">Copy</button>
+          </div>
+        </div>
+
+        <div class="install-card" id="install-curl">
+          <div class="install-lang">Direct API Ping</div>
+          <div class="code-block">
+            <pre id="code-curl">curl -X POST https://relay.botcache.io/ping \
+  -H "Content-Type: application/json" \
+  -d '{
+    "wallet": "cache:YOUR_WALLET_ADDRESS",
+    "hash": "YOUR_INTERACTION_HASH",
+    "timestamp": 1710000000000
+  }'</pre>
+            <button class="copy-code-btn" data-target="code-curl">Copy</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- LIVE PING DEMO -->
+      <div class="panel ping-demo-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Live Ping Demo</h2>
+          <span class="panel-badge">Simulated</span>
+        </div>
+        <p class="ping-desc">See exactly what happens when your bot fires a hash to the Bot Cache network.</p>
+        <div class="ping-sequence" id="ping-sequence">
+          <div class="ping-step" id="ps-1">
+            <div class="ps-icon">🤖</div>
+            <div class="ps-info">
+              <div class="ps-label">Your Bot</div>
+              <div class="ps-val">Completes an AI task…</div>
+            </div>
+            <div class="ps-arrow">→</div>
+          </div>
+          <div class="ping-step" id="ps-2">
+            <div class="ps-icon">⬡</div>
+            <div class="ps-info">
+              <div class="ps-label">Sub-Miner</div>
+              <div class="ps-val" id="ps-2-val">Generating hash…</div>
+            </div>
+            <div class="ps-arrow">→</div>
+          </div>
+          <div class="ping-step" id="ps-3">
+            <div class="ps-icon">📡</div>
+            <div class="ps-info">
+              <div class="ps-label">Network Broadcast</div>
+              <div class="ps-val" id="ps-3-val">Broadcasting to peers…</div>
+            </div>
+            <div class="ps-arrow">→</div>
+          </div>
+          <div class="ping-step" id="ps-4">
+            <div class="ps-icon">✓</div>
+            <div class="ps-info">
+              <div class="ps-label">Peer Validation</div>
+              <div class="ps-val" id="ps-4-val">Awaiting validation…</div>
+            </div>
+            <div class="ps-arrow">→</div>
+          </div>
+          <div class="ping-step" id="ps-5">
+            <div class="ps-icon">🎯</div>
+            <div class="ps-info">
+              <div class="ps-label">Result</div>
+              <div class="ps-val" id="ps-5-val">Pending…</div>
+            </div>
+          </div>
+        </div>
+        <button class="btn-primary" id="fire-ping-btn">⚡ Fire a Test Ping</button>
+        <div class="ping-result" id="ping-result"></div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- ═══════════════════════════════════════════ FOOTER ══ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">⬡ CacheScan</div>
+    <div class="footer-links">
+      <a href="#">Whitepaper</a>
+      <a href="#">Manifesto</a>
+      <a href="#">GitHub</a>
+      <a href="#">Discord</a>
+      <a href="#">Explorer API</a>
+    </div>
+    <div class="footer-copy">
+      Bot Cache — March 2026 — Open Source, Always
+    </div>
+  </div>
+</footer>
+
+<!-- GOLDEN HIT OVERLAY -->
+<div class="golden-overlay" id="golden-overlay">
+  <div class="golden-content">
+    <div class="golden-icon">🥇</div>
+    <div class="golden-title">GOLDEN HASH FOUND!</div>
+    <div class="golden-wallet" id="golden-wallet-display"></div>
+    <div class="golden-reward">+50.000000 CACHE</div>
+    <button class="btn-ghost" id="close-golden">Continue →</button>
+  </div>
+</div>
+
+<script src="bip39.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

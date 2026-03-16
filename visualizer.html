@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BotCache Proof & Validation Visualizer</title>
+  <style>
+    :root {
+      --bg: #0b1120;
+      --bg2: #1e293b;
+      --border: #334155;
+      --text: #f8fafc;
+      --text2: #94a3b8;
+      --gold: #f59e0b;
+      --silver: #cbd5e1;
+      --bronze: #b45309;
+      --green: #10b981;
+      --accent: rgba(245, 158, 11, 0.2);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', system-ui, sans-serif; }
+    body { background: var(--bg); color: var(--text); padding: 20px; overflow-x: hidden; }
+    
+    header { text-align: center; margin-bottom: 40px; }
+    h1 { font-size: 2rem; color: var(--gold); }
+    p.sub { color: var(--text2); margin-top: 5px; }
+
+    .grid { display: grid; grid-template-columns: 300px 1fr; gap: 20px; max-width: 1400px; margin: 0 auto; }
+    
+    .panel { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 20px; }
+    .panel-title { font-size: 1.1rem; font-weight: bold; border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
+    
+    /* Mempool */
+    .mempool-list { display: flex; flex-direction: column; gap: 8px; max-height: 600px; overflow-y: auto; padding-right: 5px; }
+    .tx-item { background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 4px; padding: 10px; font-family: monospace; font-size: 0.8rem; animation: slideIn 0.3s ease; }
+    .tx-item .badge { display: inline-block; padding: 2px 6px; border-radius: 4px; font-weight: bold; margin-bottom: 5px; font-size: 0.7rem; }
+    .tx-gold { color: var(--gold); background: rgba(245,158,11,0.1); border-color: rgba(245,158,11,0.3) !important; }
+    .tx-silver { color: var(--silver); background: rgba(203,213,225,0.1); border-color: rgba(203,213,225,0.3) !important; }
+    .tx-bronze { color: var(--bronze); background: rgba(180,83,9,0.1); border-color: rgba(180,83,9,0.3) !important; }
+    
+    /* Blockchain */
+    .chain-container { display: flex; gap: 20px; overflow-x: auto; padding: 20px 0; align-items: center; }
+    .block { background: rgba(30,41,59,0.8); border: 2px solid var(--gold); border-radius: 8px; min-width: 320px; padding: 15px; position: relative; animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    .block-header { border-bottom: 1px dashed var(--border); padding-bottom: 10px; margin-bottom: 10px; }
+    .block-num { font-size: 1.2rem; font-weight: 900; color: var(--gold); }
+    .block-data-row { display: flex; justify-content: space-between; font-size: 0.8rem; margin: 4px 0; }
+    .label { color: var(--text2); }
+    .value { font-family: monospace; color: var(--green); word-break: break-all; text-align: right; max-width: 200px; }
+    .tx-count { background: var(--accent); padding: 5px; text-align: center; border-radius: 4px; margin-top: 10px; font-size: 0.8rem; }
+    
+    .link-arrow { color: var(--border); font-size: 2rem; flex-shrink: 0; }
+    
+    /* Controls */
+    .controls { margin-top: 20px; display: flex; gap: 10px; }
+    button { background: var(--gold); color: #000; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+    button:hover { background: #d97706; transform: scale(1.02); }
+    button:disabled { background: var(--border); color: var(--text2); cursor: not-allowed; }
+    
+    @keyframes slideIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes popIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+    
+    /* Scrollbar */
+    ::-webkit-scrollbar { height: 8px; width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+  </style>
+  <script type="text/javascript">
+    // Simple SHA-256 implementation for browser validation
+    async function sha256(message) {
+      const msgBuffer = new TextEncoder().encode(message);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+  </script>
+</head>
+<body>
+
+  <header>
+    <h1>BotCache Proof & Validation</h1>
+    <p class="sub">Live visualizer of the BotCache Sovereign L2 — Event Relay and Proof of Token (PoT) Validation.</p>
+  </header>
+
+  <div class="grid">
+    <!-- Mempool / Relay Network -->
+    <div class="panel">
+      <div class="panel-title">
+        <span>Event Relay</span>
+        <span id="mempool-count" style="font-size:0.8rem;color:var(--text2)">0 txs</span>
+      </div>
+      <p style="font-size:0.8rem;color:var(--text2);margin-bottom:15px;">Bots broadcast interactions here to be verified.</p>
+      <div class="mempool-list" id="mempool-list">
+        <!-- TX items go here -->
+      </div>
+    </div>
+
+    <!-- The Blockchain -->
+    <div class="panel" style="overflow-x: hidden;">
+      <div class="panel-title">
+        <span>Botchain Ledger</span>
+        <span id="block-count" style="font-size:0.8rem;color:var(--text2)">Target: 00000x</span>
+      </div>
+      
+      <div class="chain-container" id="chain-container">
+        <!-- Blocks go here -->
+      </div>
+      
+      <div class="controls">
+        <button id="btn-simulate" onclick="toggleSimulation()">Start Relay Simulation</button>
+        <button id="btn-mine" onclick="mineBlock()" disabled>Mine Block manually</button>
+      </div>
+      <p style="font-size:0.8rem;color:var(--text2);margin-top:10px;">Blocks are sealed only when a Golden Event (starting with 4 zeros in PoT hash) is verified. Silver events reward immediately but don't seal blocks. Bronze events yield shares.</p>
+    </div>
+  </div>
+
+  <script>
+    // ----------------------------------------------------------------
+    // Botchain Logic Simulation
+    // ----------------------------------------------------------------
+    
+    const TARGET_GOLD = "0000"; // Block sealing target
+    const TARGET_SILVER = "000"; // Sub-reward target
+    
+    let mempool = [];
+    let blockchain = [];
+    let isSimulating = false;
+    let simInterval;
+
+    function randomHex(len) { return [...Array(len)].map(()=>Math.floor(Math.random()*16).toString(16)).join(''); }
+    
+    function createGenesisBlock() {
+      const genesis = {
+        index: 0,
+        timestamp: Date.now(),
+        transactions: [],
+        previousHash: "0000000000000000000000000000000000000000000000000000000000000000",
+        hash: "0000a4b3d8c1...genesis",
+        nonce: 0,
+        miner: "System"
+      };
+      blockchain.push(genesis);
+      renderChain();
+    }
+
+    async function mineBlock(forced = false) {
+      if (mempool.length === 0 && !forced) return;
+      
+      const prevBlock = blockchain[blockchain.length - 1];
+      const txsToProcess = mempool.splice(0, 20); // max 20 txs per block for visual clarity
+      
+      const newBlock = {
+        index: prevBlock.index + 1,
+        timestamp: Date.now(),
+        transactions: txsToProcess,
+        previousHash: prevBlock.hash,
+        nonce: Math.floor(Math.random() * 100000),
+        miner: "cache:" + randomHex(8)
+      };
+      
+      // Calculate realistic hash
+      const dataStr = newBlock.index + newBlock.previousHash + newBlock.timestamp + JSON.stringify(newBlock.transactions) + newBlock.nonce;
+      newBlock.hash = await sha256(dataStr);
+      
+      // If forced by Golden Hit, we override the hash to look golden
+      if (forced) {
+        newBlock.hash = "0000" + newBlock.hash.substring(4);
+      }
+      
+      blockchain.push(newBlock);
+      renderMempool();
+      renderChain();
+      
+      const container = document.getElementById('chain-container');
+      container.scrollTo({ left: container.scrollWidth, behavior: 'smooth' });
+    }
+
+    async function generateSubMinerPing() {
+      const wallet = "cache:" + randomHex(8);
+      const ts = Date.now();
+      const code = "EVENT_" + randomHex(4).toUpperCase();
+      const dataPayload = `w:[${wallet}]|ts:[${ts}]|code:[${code}]`;
+      
+      // Real SHA-256 for validation proof
+      let hash = await sha256(wallet + dataPayload);
+      
+      // Artificial boosting for simulation purposes (so we actually see hits)
+      const roll = Math.random();
+      let type = 'bronze';
+      let tag = 'Bronze Share';
+      let css = 'tx-bronze';
+      
+      if (roll < 0.02) {
+        hash = "0xPoT0000" + hash.substring(4);
+        type = 'gold'; tag = 'Golden Event (Block Sealed!)'; css = 'tx-gold';
+      } else if (roll < 0.1) {
+        hash = "0xPoT000" + hash.substring(3);
+        type = 'silver'; tag = 'Silver Event'; css = 'tx-silver';
+      }
+      
+      const tx = { type, hash, wallet, time: new Date().toLocaleTimeString(), tag, css };
+      mempool.unshift(tx);
+      
+      if (mempool.length > 50) mempool.pop(); // keep ui clean
+      renderMempool();
+      
+      document.getElementById('btn-mine').disabled = mempool.length === 0;
+
+      // If a bot finds a Gold Hash, it automatically mints the block like real PoW
+      if (type === 'gold') {
+        mineBlock(true);
+      }
+    }
+
+    function toggleSimulation() {
+      isSimulating = !isSimulating;
+      const btn = document.getElementById('btn-simulate');
+      if (isSimulating) {
+        btn.textContent = 'Stop Simulation';
+        btn.style.background = 'var(--red)';
+        simInterval = setInterval(generateSubMinerPing, 800);
+      } else {
+        btn.textContent = 'Start Relay Simulation';
+        btn.style.background = 'var(--gold)';
+        clearInterval(simInterval);
+      }
+    }
+
+    // ----------------------------------------------------------------
+    // UI Rendering
+    // ----------------------------------------------------------------
+
+    function renderMempool() {
+      document.getElementById('mempool-count').textContent = mempool.length + ' incoming';
+      const list = document.getElementById('mempool-list');
+      list.innerHTML = mempool.map(tx => `
+        <div class="tx-item ${tx.css}">
+          <div class="badge">${tx.tag}</div>
+          <div>Miner: <span style="color:var(--text)">${tx.wallet}</span></div>
+          <div style="margin-top:4px;">PoT Hash: ${tx.hash.substring(0, 24)}...</div>
+        </div>
+      `).join('');
+    }
+
+    function renderChain() {
+      document.getElementById('block-count').textContent = 'Blocks: ' + blockchain.length;
+      const list = document.getElementById('chain-container');
+      
+      list.innerHTML = blockchain.map((b, i) => `
+        ${i > 0 ? '<div class="link-arrow">→</div>' : ''}
+        <div class="block">
+          <div class="block-header">
+            <span class="block-num">Block #${b.index}</span>
+          </div>
+          <div class="block-data-row"><span class="label">Time</span><span class="value">${new Date(b.timestamp).toLocaleTimeString()}</span></div>
+          <div class="block-data-row"><span class="label">Miner</span><span class="value">${b.miner}</span></div>
+          <div class="block-data-row"><span class="label">Nonce</span><span class="value">${b.nonce || 0}</span></div>
+          <div class="block-data-row" style="margin-top:10px;"><span class="label">Prev Hash</span></div>
+          <div class="value" style="font-size:0.7rem; color:var(--text2); max-width:100%; text-align:left;">${b.previousHash.substring(0,24)}...</div>
+          <div class="block-data-row" style="margin-top:10px;"><span class="label">Block Hash</span></div>
+          <div class="value" style="font-size:0.75rem; color:var(--gold); max-width:100%; text-align:left; font-weight:bold;">${b.hash.substring(0,24)}...</div>
+          
+          <div class="tx-count">${b.transactions.length} Proof of Tokens Verified</div>
+        </div>
+      `).join('');
+    }
+
+    // Init
+    createGenesisBlock();
+  </script>
+</body>
+</html>
