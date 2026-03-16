@@ -877,3 +877,55 @@ async function checkMMOnLoad() {
 
 setTimeout(checkMMOnLoad, 500);
 
+// ──────────────────────── WHITEPAPER TOC & PROGRESS ────────────────────────
+(function initWhitepaperNav() {
+  // TOC smooth scroll
+  document.querySelectorAll('.wp-toc-link').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const targetId = link.getAttribute('data-section');
+      const target = document.getElementById(targetId);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Scroll spy for TOC active state + progress bar
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      // Only run if whitepaper tab is active
+      const wpTab = document.getElementById('tab-whitepaper');
+      if (!wpTab || !wpTab.classList.contains('active')) { ticking = false; return; }
+
+      // Progress bar
+      const progressBar = document.getElementById('wp-progress-bar');
+      if (progressBar) {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = Math.min((scrollTop / docHeight) * 100, 100);
+        progressBar.style.width = progress + '%';
+      }
+
+      // TOC active section
+      const sections = document.querySelectorAll('.wp-section[id]');
+      let currentSection = '';
+      sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= 120) {
+          currentSection = section.id;
+        }
+      });
+      if (currentSection) {
+        document.querySelectorAll('.wp-toc-link').forEach(link => {
+          link.classList.toggle('active', link.getAttribute('data-section') === currentSection);
+        });
+      }
+      ticking = false;
+    });
+  });
+})();
+

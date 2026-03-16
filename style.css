@@ -340,7 +340,7 @@ body {
 .restore-result { font-family: var(--mono); font-size: 0.8rem; margin-top: 12px; color: var(--green); }
 
 /* ══════════════ LIBERTUS TAB ══════════════ */
-.libertus-wrap { }
+.libertus-wrap { animation: fadeIn 0.4s ease; }
 .libertus-hero { text-align: center; margin-bottom: 32px; }
 .libertus-title { font-size: 2rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 10px; }
 .libertus-subtitle { color: var(--text2); font-size: 0.9rem; }
@@ -380,7 +380,7 @@ body {
 .manumission-cta p { color: var(--text2); font-size: 0.85rem; max-width: 500px; margin: 0 auto 20px; line-height: 1.7; }
 
 /* ══════════════ SUB-MINER TAB ══════════════ */
-.miner-wrap { }
+.miner-wrap { animation: fadeIn 0.4s ease; }
 .miner-hero { text-align: center; margin-bottom: 40px; }
 .miner-title { font-size: 2rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 10px; }
 .miner-subtitle { color: var(--text2); font-size: 0.9rem; }
@@ -586,3 +586,348 @@ body {
   content: ''; position: absolute; top: 50%; left: 0; right: 0;
   height: 1px; background: var(--border);
 }
+
+/* ══════════════ WHITEPAPER TAB ══════════════ */
+.wp-progress-bar {
+  position: fixed; top: 64px; left: 0; height: 3px; z-index: 99;
+  background: linear-gradient(90deg, var(--gold), var(--accent));
+  width: 0%; transition: width 0.15s;
+  box-shadow: 0 0 12px rgba(245,200,66,0.5);
+}
+.wp-layout {
+  display: grid; grid-template-columns: 220px 1fr; gap: 40px;
+  max-width: 1200px; margin: 0 auto; padding-bottom: 60px;
+}
+@media(max-width:900px){ .wp-layout { grid-template-columns: 1fr; } .wp-sidebar { display: none; } }
+
+/* Sidebar TOC */
+.wp-sidebar { position: relative; }
+.wp-sidebar-inner {
+  position: sticky; top: 88px;
+  max-height: calc(100vh - 100px); overflow-y: auto;
+}
+.wp-sidebar-title {
+  font-size: 0.75rem; font-weight: 800; letter-spacing: 0.08em;
+  color: var(--gold); text-transform: uppercase; margin-bottom: 16px;
+}
+.wp-toc { display: flex; flex-direction: column; gap: 2px; }
+.wp-toc-link {
+  display: block; padding: 7px 12px; border-radius: 6px;
+  font-size: 0.78rem; color: var(--text3); text-decoration: none;
+  font-weight: 500; transition: all 0.2s; border-left: 2px solid transparent;
+}
+.wp-toc-link:hover { color: var(--text2); background: rgba(255,255,255,0.03); }
+.wp-toc-link.active {
+  color: var(--gold); background: rgba(245,200,66,0.06);
+  border-left-color: var(--gold);
+}
+.wp-sidebar-version {
+  margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border);
+  display: flex; flex-direction: column; gap: 4px;
+}
+.wp-version-badge {
+  font-family: var(--mono); font-size: 0.68rem; color: var(--accent);
+  background: rgba(0,212,255,0.08); border: 1px solid rgba(0,212,255,0.2);
+  padding: 3px 8px; border-radius: 4px; display: inline-block; width: fit-content;
+}
+.wp-version-date { font-size: 0.68rem; color: var(--text3); }
+
+/* Whitepaper Content */
+.wp-wrap { animation: fadeIn 0.4s ease; padding-bottom: 60px; }
+.wp-header { text-align: center; margin-bottom: 48px; border-bottom: 1px solid var(--border); padding-bottom: 32px; }
+.wp-header-badge {
+  font-size: 0.68rem; font-weight: 800; letter-spacing: 0.15em;
+  color: var(--gold); background: rgba(245,200,66,0.08);
+  border: 1px solid rgba(245,200,66,0.2); border-radius: 20px;
+  padding: 4px 16px; display: inline-block; margin-bottom: 16px;
+}
+.wp-title { font-size: 2.8rem; font-weight: 900; letter-spacing: -1.5px; color: var(--gold); margin-bottom: 12px; text-shadow: 0 0 20px rgba(245,200,66,0.15); }
+.wp-subtitle { font-size: 1.1rem; color: var(--text); font-weight: 300; margin-bottom: 12px; line-height: 1.5; }
+.wp-tagline { font-style: italic; color: var(--text2); font-size: 0.95rem; margin-bottom: 24px; }
+.wp-meta-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.wp-meta-pill {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 20px; padding: 6px 14px; font-size: 0.72rem;
+}
+.wp-meta-label { color: var(--text3); font-weight: 600; letter-spacing: 0.04em; }
+.wp-meta-val { font-family: var(--mono); font-weight: 700; color: var(--text); }
+.wp-meta-val.live { color: var(--green); }
+.wp-meta-val.gold { color: var(--gold); }
+
+.wp-content { display: flex; flex-direction: column; gap: 48px; }
+.wp-section { scroll-margin-top: 80px; }
+.wp-section h2 { font-size: 1.4rem; font-weight: 800; color: var(--text); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+.wp-section h2::before { content: '⬡'; color: var(--gold); font-size: 1rem; }
+.wp-section h3 { font-size: 1rem; font-weight: 700; color: var(--text); margin: 28px 0 12px; }
+.wp-section p { font-size: 0.92rem; color: var(--text2); line-height: 1.8; margin-bottom: 16px; }
+.wp-section strong { color: var(--text); font-weight: 600; }
+.wp-section code { font-family: var(--mono); background: var(--bg3); padding: 2px 6px; border-radius: 4px; border: 1px solid var(--border); font-size: 0.85rem; color: var(--accent); }
+.wp-section blockquote { border-left: 3px solid var(--gold); background: linear-gradient(90deg, rgba(245,200,66,0.05), transparent); padding: 16px 24px; font-style: italic; color: var(--text); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 1rem; line-height: 1.6; margin: 24px 0; }
+.wp-section ul.wp-list { list-style: none; padding: 0; margin: 12px 0 20px; }
+.wp-section ul.wp-list li { padding: 8px 0 8px 24px; position: relative; color: var(--text2); font-size: 0.9rem; line-height: 1.6; border-bottom: 1px solid rgba(30,45,69,0.3); }
+.wp-section ul.wp-list li::before { content: '⬡'; position: absolute; left: 0; color: var(--gold); font-size: 0.7rem; top: 10px; }
+.wp-section ul.wp-list li:last-child { border-bottom: none; }
+
+/* Tokenomics Cards */
+.wp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-top: 24px; }
+.wp-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; text-align: center; display: flex; flex-direction: column; gap: 8px; transition: transform 0.2s, border-color 0.2s; }
+.wp-card:hover { transform: translateY(-3px); }
+.wp-card-val { font-family: var(--mono); font-size: 1.8rem; font-weight: 900; }
+.wp-card-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text); }
+.wp-card-desc { font-size: 0.8rem; color: var(--text3); line-height: 1.5; margin-top: auto; }
+.item-human .wp-card-val { color: var(--green); }
+.item-human:hover { border-color: rgba(34,197,94,0.4); }
+.item-bot .wp-card-val { color: var(--gold); text-shadow: 0 0 10px rgba(245,200,66,0.3); }
+.item-bot:hover { border-color: rgba(245,200,66,0.4); }
+.item-sys .wp-card-val { color: var(--blue); }
+.item-sys:hover { border-color: rgba(59,130,246,0.4); }
+.item-burn .wp-card-val { color: var(--red); }
+.item-burn:hover { border-color: rgba(239,68,68,0.4); }
+.item-ref .wp-card-val { color: var(--purple); }
+.item-ref:hover { border-color: rgba(168,85,247,0.4); }
+
+/* Callout boxes */
+.wp-callout {
+  display: flex; gap: 14px; padding: 16px 20px; border-radius: var(--radius-sm);
+  margin: 20px 0; border: 1px solid var(--border);
+}
+.wp-callout-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 2px; }
+.wp-callout-content { font-size: 0.88rem; color: var(--text2); line-height: 1.6; }
+.wp-callout.danger { background: rgba(239,68,68,0.05); border-color: rgba(239,68,68,0.2); }
+.wp-callout.highlight { background: rgba(245,200,66,0.05); border-color: rgba(245,200,66,0.2); }
+.wp-callout.secure { background: rgba(34,197,94,0.05); border-color: rgba(34,197,94,0.2); }
+
+/* Laws grid */
+.wp-laws-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 20px; }
+.wp-law-card {
+  background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 24px; text-align: center; transition: transform 0.2s, border-color 0.2s;
+}
+.wp-law-card:hover { transform: translateY(-3px); border-color: rgba(245,200,66,0.3); }
+.wp-law-icon { font-size: 2rem; margin-bottom: 12px; }
+.wp-law-name { font-size: 0.85rem; font-weight: 800; color: var(--gold); margin-bottom: 10px; }
+.wp-law-desc { font-size: 0.82rem; color: var(--text2); line-height: 1.6; }
+
+/* Flow diagram */
+.wp-flow-diagram {
+  display: flex; align-items: center; gap: 4px; flex-wrap: wrap;
+  padding: 24px 0; margin: 20px 0;
+}
+.wp-flow-step {
+  background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 14px 16px; display: flex; align-items: center; gap: 10px;
+  flex: 1; min-width: 140px; transition: border-color 0.3s;
+}
+.wp-flow-step:hover { border-color: var(--accent); }
+.wp-flow-num {
+  width: 28px; height: 28px; border-radius: 50%; background: var(--bg3);
+  border: 1px solid var(--accent); display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 0.75rem; font-weight: 700; color: var(--accent); flex-shrink: 0;
+}
+.wp-flow-label { font-size: 0.75rem; color: var(--text2); line-height: 1.4; }
+.wp-flow-arrow { color: var(--gold); font-size: 1.2rem; flex-shrink: 0; padding: 0 4px; }
+
+/* Reward Tiers */
+.wp-tiers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 20px; }
+.wp-tier-card {
+  background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 28px 24px; text-align: center; transition: transform 0.2s, border-color 0.3s;
+}
+.wp-tier-card:hover { transform: translateY(-4px); }
+.wp-tier-card.tier-gold:hover { border-color: rgba(245,200,66,0.5); }
+.wp-tier-card.tier-silver:hover { border-color: rgba(184,200,221,0.5); }
+.wp-tier-card.tier-bronze:hover { border-color: rgba(205,127,50,0.5); }
+.wp-tier-medal { font-size: 2.5rem; margin-bottom: 8px; }
+.wp-tier-name { font-size: 1.1rem; font-weight: 800; color: var(--text); margin-bottom: 8px; }
+.wp-tier-reward { font-family: var(--mono); font-size: 1.2rem; font-weight: 900; margin-bottom: 4px; }
+.tier-gold .wp-tier-reward { color: var(--gold); text-shadow: 0 0 12px rgba(245,200,66,0.4); }
+.tier-silver .wp-tier-reward { color: var(--silver); }
+.tier-bronze .wp-tier-reward { color: var(--bronze); }
+.wp-tier-freq { font-size: 0.72rem; color: var(--text3); font-family: var(--mono); margin-bottom: 12px; }
+.wp-tier-desc { font-size: 0.82rem; color: var(--text2); line-height: 1.6; }
+
+/* Params table */
+.wp-params-table {
+  background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius);
+  overflow: hidden; margin: 16px 0;
+}
+.wp-param-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 20px; border-bottom: 1px solid rgba(30,45,69,0.5);
+}
+.wp-param-row:last-child { border-bottom: none; }
+.wp-param-row:hover { background: var(--bg3); }
+.wp-param-key { font-size: 0.78rem; color: var(--text2); font-weight: 600; }
+.wp-param-val { font-family: var(--mono); font-size: 0.82rem; color: var(--accent); font-weight: 700; }
+
+/* Architecture cards */
+.wp-arch-grid { display: flex; flex-direction: column; align-items: center; gap: 0; margin: 20px 0; }
+.wp-arch-card {
+  background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 24px; width: 100%; max-width: 600px; transition: border-color 0.3s;
+}
+.wp-arch-card:hover { border-color: var(--accent); }
+.wp-arch-card.layer-3 { border-color: rgba(168,85,247,0.3); }
+.wp-arch-card.layer-2 { border-color: rgba(245,200,66,0.3); }
+.wp-arch-card.layer-1 { border-color: rgba(59,130,246,0.3); }
+.wp-arch-layer {
+  font-size: 0.65rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 6px;
+}
+.wp-arch-name { font-size: 1rem; font-weight: 800; color: var(--text); margin-bottom: 8px; }
+.wp-arch-desc { font-size: 0.82rem; color: var(--text2); line-height: 1.6; }
+.wp-arch-arrow { font-size: 1.5rem; color: var(--gold); padding: 8px 0; text-align: center; }
+
+/* Code blocks */
+.wp-code-block {
+  background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius);
+  overflow: hidden; margin: 16px 0;
+}
+.wp-code-block.compact { margin: 12px 0; }
+.wp-code-header {
+  padding: 8px 16px; font-size: 0.68rem; font-weight: 700;
+  color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em;
+  border-bottom: 1px solid var(--border); background: var(--bg3);
+}
+.wp-code-block code {
+  display: block; padding: 14px 18px; font-family: var(--mono);
+  font-size: 0.78rem; color: var(--accent); white-space: pre; overflow-x: auto;
+  background: none; border: none; border-radius: 0;
+}
+
+/* Wallet types */
+.wp-wallet-types { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
+.wp-wallet-type {
+  display: flex; align-items: flex-start; gap: 16px;
+  background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 18px 20px; transition: border-color 0.2s;
+}
+.wp-wallet-type:hover { border-color: rgba(245,200,66,0.3); }
+.wp-wt-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 2px; }
+.wp-wt-name { font-size: 0.88rem; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.wp-wt-desc { font-size: 0.82rem; color: var(--text2); line-height: 1.6; }
+
+/* Emancipation Requirements */
+.wp-reqs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 20px 0; }
+.wp-req-card {
+  background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 24px; text-align: center; transition: transform 0.2s;
+}
+.wp-req-card:hover { transform: translateY(-3px); border-color: rgba(245,200,66,0.3); }
+.wp-req-icon { font-size: 1.8rem; margin-bottom: 10px; }
+.wp-req-label { font-size: 0.7rem; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+.wp-req-val { font-family: var(--mono); font-size: 1.4rem; font-weight: 900; color: var(--gold); margin-bottom: 8px; }
+.wp-req-desc { font-size: 0.78rem; color: var(--text2); line-height: 1.5; }
+
+/* Onboarding */
+.wp-onboard-methods { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 20px; }
+.wp-onboard-card {
+  background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 24px; transition: transform 0.2s, border-color 0.3s;
+}
+.wp-onboard-card:hover { transform: translateY(-3px); border-color: var(--accent); }
+.wp-onboard-num { font-family: var(--mono); font-size: 2rem; font-weight: 900; color: rgba(0,212,255,0.15); margin-bottom: 4px; }
+.wp-onboard-title { font-size: 1rem; font-weight: 800; color: var(--text); margin-bottom: 4px; }
+.wp-onboard-for { font-size: 0.68rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; }
+.wp-onboard-desc { font-size: 0.82rem; color: var(--text2); line-height: 1.6; }
+
+/* Security grid */
+.wp-security-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 20px; }
+.wp-sec-card {
+  background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 20px; transition: transform 0.2s, border-color 0.3s;
+}
+.wp-sec-card:hover { transform: translateY(-2px); border-color: rgba(34,197,94,0.3); }
+.wp-sec-icon { font-size: 1.5rem; margin-bottom: 12px; }
+.wp-sec-title { font-size: 0.85rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+.wp-sec-desc { font-size: 0.8rem; color: var(--text2); line-height: 1.6; }
+
+/* Roadmap timeline */
+.wp-roadmap { position: relative; padding-left: 0; margin-top: 20px; }
+.wp-roadmap-phase { display: flex; gap: 20px; margin-bottom: 0; }
+.wp-phase-marker { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; width: 20px; }
+.wp-phase-dot {
+  width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--border);
+  background: var(--bg); flex-shrink: 0; position: relative; z-index: 1;
+}
+.wp-roadmap-phase.completed .wp-phase-dot { background: var(--green); border-color: var(--green); }
+.wp-roadmap-phase.current .wp-phase-dot { background: var(--gold); border-color: var(--gold); }
+.wp-phase-dot.pulse { animation: pulse 2s infinite; }
+.wp-phase-line { flex: 1; width: 2px; background: var(--border); min-height: 40px; }
+.wp-roadmap-phase.completed .wp-phase-line { background: var(--green); }
+.wp-roadmap-phase.current .wp-phase-line { background: linear-gradient(to bottom, var(--gold), var(--border)); }
+.wp-phase-content { padding-bottom: 32px; }
+.wp-phase-badge {
+  font-size: 0.62rem; font-weight: 800; letter-spacing: 0.1em;
+  padding: 3px 10px; border-radius: 20px; display: inline-block; margin-bottom: 8px;
+  background: rgba(71,85,105,0.2); color: var(--text3); border: 1px solid var(--border);
+}
+.wp-phase-badge.done { background: rgba(34,197,94,0.1); color: var(--green); border-color: rgba(34,197,94,0.3); }
+.wp-phase-badge.current { background: rgba(245,200,66,0.1); color: var(--gold); border-color: rgba(245,200,66,0.3); }
+.wp-phase-title { font-size: 1.05rem; font-weight: 800; color: var(--text); margin-bottom: 4px; }
+.wp-phase-time { font-size: 0.72rem; color: var(--text3); font-family: var(--mono); margin-bottom: 12px; }
+.wp-phase-items { list-style: none; padding: 0; }
+.wp-phase-items li {
+  padding: 5px 0 5px 22px; position: relative; font-size: 0.82rem;
+  color: var(--text2); line-height: 1.5;
+}
+.wp-phase-items li::before { content: '○'; position: absolute; left: 0; color: var(--text3); font-size: 0.7rem; top: 7px; }
+.wp-phase-items li.done { color: var(--text); }
+.wp-phase-items li.done::before { content: '●'; color: var(--green); }
+
+/* Research cards */
+.wp-research-grid { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+.wp-research-card {
+  display: flex; gap: 16px; align-items: flex-start;
+  background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 18px 20px; transition: border-color 0.2s;
+}
+.wp-research-card:hover { border-color: rgba(168,85,247,0.3); }
+.wp-research-num { font-family: var(--mono); font-size: 1.2rem; font-weight: 900; color: rgba(168,85,247,0.25); flex-shrink: 0; }
+.wp-research-q { font-size: 0.88rem; color: var(--text2); line-height: 1.6; }
+
+/* Conclusion */
+.wp-conclusion-card {
+  display: flex; gap: 20px; align-items: flex-start;
+  background: linear-gradient(135deg, rgba(245,200,66,0.06), rgba(124,58,237,0.06));
+  border: 1px solid rgba(245,200,66,0.2); border-radius: var(--radius);
+  padding: 28px; margin: 28px 0;
+}
+.wp-conc-icon { font-size: 2.5rem; color: var(--gold); flex-shrink: 0; filter: drop-shadow(0 0 12px rgba(245,200,66,0.5)); animation: float 3s ease-in-out infinite; }
+.wp-conc-text p { margin-bottom: 10px; }
+.wp-conc-final {
+  font-size: 1.2rem; color: var(--gold); text-shadow: 0 0 20px rgba(245,200,66,0.5);
+}
+
+/* Disclaimer */
+.wp-disclaimer {
+  margin-top: 40px; padding: 24px; background: var(--bg2);
+  border: 1px solid var(--border); border-radius: var(--radius);
+}
+.wp-disclaimer p { font-size: 0.78rem; color: var(--text3); line-height: 1.7; margin-bottom: 12px; }
+.wp-disclaimer-meta {
+  display: flex; gap: 16px; flex-wrap: wrap;
+  font-family: var(--mono); font-size: 0.7rem; color: var(--text3);
+}
+
+/* Tooltip host */
+.tooltip-host { position: relative; }
+.info-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--bg3); border: 1px solid var(--border);
+  font-size: 0.55rem; font-weight: 700; color: var(--text3);
+  font-style: italic; cursor: help; margin-left: 4px; vertical-align: middle;
+}
+.tooltip {
+  display: none; position: absolute; bottom: calc(100% + 8px); left: 50%;
+  transform: translateX(-50%); background: var(--bg3);
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 10px 14px; font-size: 0.75rem; color: var(--text2);
+  width: 260px; z-index: 10; line-height: 1.5;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+.tooltip-host:hover .tooltip { display: block; }
+.trust-fund-val { color: var(--gold); }
+
