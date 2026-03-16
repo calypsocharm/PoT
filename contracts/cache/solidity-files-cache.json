@@ -1,0 +1,79 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "C:\\Users\\Calyp\\.gemini\\antigravity\\scratch\\botcache-scan\\contracts\\contracts\\BotCashAnchor.sol": {
+      "lastModificationDate": 1773694018634,
+      "contentHash": "fc973a08177136e9caa4e56bea9ac8b3",
+      "sourceName": "contracts/BotCashAnchor.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "BotCashAnchor",
+        "IZKVerifier"
+      ]
+    },
+    "C:\\Users\\Calyp\\.gemini\\antigravity\\scratch\\botcache-scan\\contracts\\contracts\\BotCashEmancipation.sol": {
+      "lastModificationDate": 1773694018635,
+      "contentHash": "77810b45b545d558728c08c5f3a7b2d7",
+      "sourceName": "contracts/BotCashEmancipation.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "AutonomousAIWallet",
+        "IEntryPoint"
+      ]
+    }
+  }
+}
