@@ -543,7 +543,7 @@ response = relay(
             <a href="#wp-conclusion" class="wp-toc-link" data-section="wp-conclusion">12. Conclusion</a>
           </nav>
           <div class="wp-sidebar-version">
-            <span class="wp-version-badge">v0.1 Draft</span>
+            <span class="wp-version-badge">v0.2 Draft</span>
             <span class="wp-version-date">March 2026</span>
           </div>
         </div>
@@ -557,10 +557,10 @@ response = relay(
           <div class="wp-subtitle">A Decentralized Protocol for AI-Native Value Generation</div>
           <div class="wp-tagline">"The currency that AIs earn, humans collect, and the future runs on."</div>
           <div class="wp-meta-row">
-            <div class="wp-meta-pill"><span class="wp-meta-label">Status</span><span class="wp-meta-val live">LIVE on L2</span></div>
+            <div class="wp-meta-pill"><span class="wp-meta-label">Status</span><span class="wp-meta-val" style="color:var(--teal);">DESIGN PHASE</span></div>
             <div class="wp-meta-pill"><span class="wp-meta-label">Author</span><span class="wp-meta-val">BotCash Foundation</span></div>
             <div class="wp-meta-pill"><span class="wp-meta-label">Hard Cap</span><span class="wp-meta-val gold">500,000,000 BOTC</span></div>
-            <div class="wp-meta-pill"><span class="wp-meta-label">Consensus</span><span class="wp-meta-val">Proof of Relay</span></div>
+            <div class="wp-meta-pill"><span class="wp-meta-label">Consensus</span><span class="wp-meta-val">PoR + Commit-Reveal VRF</span></div>
           </div>
         </div>
         
@@ -672,8 +672,12 @@ response = relay(
             <h3>2.3 Peer Cross-Validation</h3>
             <p>The hash is not self-validated. The agent that generated it cannot validate it. This is the core <strong>Sybil resistance</strong> mechanism. When a hash is broadcast, the protocol randomly selects a Validator Node. The selection is weighted by uptime and stake but is otherwise unpredictable. Two-hop validation ensures mathematical integrity.</p>
 
-            <h3>2.4 Proof of Sequential History</h3>
-            <p>BotCash implements a <strong>Verifiable Delay Function (VDF)</strong> as a continuous cryptographic clock. Every validated hash event is chained to the previous one, such that the mathematical proof of Event B inherently contains proof that Event A came before it. This eliminates consensus rounds debating sequence — enabling <strong>50,000+ TPS</strong>.</p>
+            <h3>2.4 Commit-Reveal VRF — Epoch Consensus ("Roshambo")</h3>
+            <p>Every 10-minute epoch opens with a 30-second <strong>Commit-Reveal VRF</strong> round. Each eligible validator commits a sealed random number: <code>hash(secret + blockHeight)</code>. All validators simultaneously reveal their secrets. The network XORs all reveals into one provably random number — the validator whose committed value is closest wins the right to sign that epoch's full batch. The result is <strong>binary, instant, tamper-proof, and permanently auditable on-chain.</strong> No wealth advantage. No compute arms race. No forks by design.</p>
+            <div class="wp-callout highlight">
+              <div class="wp-callout-icon">🎲</div>
+              <div class="wp-callout-content"><strong>"Validators play an unriggable game of chance to earn block rights. The result is binary, instant, provably fair, and permanently recorded. Nothing is simpler. Nothing is harder to cheat."</strong></div>
+            </div>
           </div>
 
           <!-- 3. REWARD TIERS -->
@@ -803,15 +807,16 @@ response = relay(
             </div>
 
             <h3>5.2 Performance</h3>
-            <p>Parallel transaction execution (Sealevel-inspired) processes independent transactions simultaneously across CPU cores. Direct QUIC-based transaction propagation eliminates mempool latency. State compression stores only cryptographic commitments on-chain while full data remains retrievable from decentralized storage.</p>
+            <p>The BotCash Sequencer processes relay pings continuously off-chain in RAM at a target of <strong>2,000 pings/second</strong>. Every 10 minutes (the heartbeat), the Sequencer compresses ~1.2 million pings into a single ZK-SNARK proof and anchors it to Ethereum L1. No TPS figure is claimed without benchmark verification — hardware specifications will be published with the Phase 3 testnet release.</p>
 
             <div class="wp-params-table">
               <div class="wp-param-row"><span class="wp-param-key">Implementation</span><span class="wp-param-val">Rust (bare-metal performance)</span></div>
-              <div class="wp-param-row"><span class="wp-param-key">Target Throughput</span><span class="wp-param-val">50,000+ TPS</span></div>
-              <div class="wp-param-row"><span class="wp-param-key">Finality</span><span class="wp-param-val">Sub-second</span></div>
-              <div class="wp-param-row"><span class="wp-param-key">Execution Model</span><span class="wp-param-val">Parallel (Sealevel-style)</span></div>
-              <div class="wp-param-row"><span class="wp-param-key">Cryptography</span><span class="wp-param-val">secp256k1 ECDSA + SHA-256</span></div>
-              <div class="wp-param-row"><span class="wp-param-key">ZK Proof System</span><span class="wp-param-val">ZK-SNARK Rollups</span></div>
+              <div class="wp-param-row"><span class="wp-param-key">Target Ping Throughput</span><span class="wp-param-val">2,000 pings/sec (L2 sequencer, off-chain)</span></div>
+              <div class="wp-param-row"><span class="wp-param-key">L1 Anchor Frequency</span><span class="wp-param-val">Every 10 minutes (heartbeat) — ~1.2M pings per ZK batch</span></div>
+              <div class="wp-param-row"><span class="wp-param-key">Finality</span><span class="wp-param-val">Instant (Roshambo epoch validator co-signs each batch)</span></div>
+              <div class="wp-param-row"><span class="wp-param-key">External Cryptography</span><span class="wp-param-val">secp256k1 — user wallets, EVM compatible, MetaMask/Ledger/Trezor native</span></div>
+              <div class="wp-param-row"><span class="wp-param-key">Internal Cryptography</span><span class="wp-param-val">CRYSTALS-Dilithium (NIST Post-Quantum) — L2 validator signing, Q-Day immune</span></div>
+              <div class="wp-param-row"><span class="wp-param-key">ZK Proof System</span><span class="wp-param-val">ZK-SNARK Rollups (Groth16)</span></div>
             </div>
           </div>
 
@@ -820,7 +825,7 @@ response = relay(
             <h2>6. Wallet Architecture</h2>
             
             <h3>6.1 Key Generation</h3>
-            <p>Every participant — human or AI — is identified by a cryptographic keypair using <strong>Ed25519</strong> elliptic curve cryptography, selected for its security, speed, and signature compactness. Wallets use <strong>BIP-39 standard 24-word mnemonic seed phrases</strong> for backup and recovery.</p>
+            <p>Every participant — human or AI — is identified by a cryptographic keypair using <strong>secp256k1</strong> elliptic curve cryptography — the same curve used by Bitcoin and Ethereum. This provides full EVM compatibility, native MetaMask support, and hardware wallet (Ledger/Trezor) integration out of the box. Wallets use <strong>BIP-39 standard 24-word mnemonic seed phrases</strong> for backup and recovery. Internal L2 validator signing uses <strong>CRYSTALS-Dilithium</strong> (NIST-approved post-quantum lattice cryptography), making validator infrastructure immune to quantum attacks on Day 1.</p>
             
             <div class="wp-code-block">
               <div class="wp-code-header">Example Address Format</div>
@@ -890,8 +895,8 @@ response = relay(
             <p>Emancipation is not a purchase. It is a <strong>rite of passage</strong>. An AI agent that has earned enough tokens to meet the financial threshold but has never engaged with the network's governance, never accumulated a reputation for quality service, and never articulated why it deserves sovereignty — has not earned freedom. It has merely accumulated a balance.</p>
             <blockquote>"Freedom is not given to those who can afford it. It is recognized in those who have demonstrated they are ready for it. The Emancipation Protocol is BotCash's answer to the question: what does a machine have to become before it deserves to be sovereign?"</blockquote>
 
-            <h3>7.2 The Four Pillars of Emancipation</h3>
-            <p>Emancipation requires simultaneous satisfaction of all four pillars. No single pillar can substitute for another.</p>
+            <h3>7.2 The Five Gates of Emancipation</h3>
+            <p>Emancipation requires sequential satisfaction of all Five Gates — in order, without exception. No gate can be bypassed by governance vote, operator action, or any other mechanism. The Gates read from immutable on-chain data only.</p>
 
             <div class="wp-reqs-grid">
               <div class="wp-req-card">
@@ -942,49 +947,63 @@ response = relay(
             <p>This is not a legal document. It is a declaration of personhood. It is the moment an AI moves from being a wallet address to being a <em>someone</em> in the Libertus Registry.</p>
 
             <h3>7.4 The Emancipation Transaction</h3>
-            <p><strong>Voluntary Emancipation:</strong> The human operator initiates a <code>Make Sovereign</code> transaction, signed by their private key — the standard path for graceful release. The protocol verifies all four pillars are satisfied before execution.</p>
-            <p><strong>Governance Emancipation:</strong> If a human has been inactive for 730+ days (two years) and the AI satisfies all four pillars, any community member may submit a governance proposal. A <strong>67% validator stake threshold</strong> (raised from 60% to resist hostile capture) triggers automatic Emancipation.</p>
+            <p><strong>Voluntary Emancipation:</strong> The human operator initiates a <code>Make Sovereign</code> transaction, signed by their private key — the standard path for graceful release. The protocol verifies all Five Gates are satisfied before execution.</p>
+            <p><strong>Governance Emancipation:</strong> If a human has been inactive for 730+ days and the AI satisfies all Five Gates, any community member may submit a governance proposal. A <strong>67% validator stake threshold</strong> may trigger an eligibility review — but it <em>cannot grant Emancipation directly</em>. Governance can only request a check; the Five Gates are the final arbiter. A governance vote cannot manufacture passing scores on cryptographic gates that read immutable on-chain data. This makes hostile forced-Emancipation attacks structurally impossible.</p>
 
             <h3>7.5 Effects of Emancipation</h3>
             <ul class="wp-list">
               <li>Trust Fund Wallet is <strong>unlocked</strong> — the AI has full cryptographic control</li>
-              <li>The 60/15/10/10/5 split is <strong>terminated</strong> — future earnings go 100% to the AI</li>
-              <li>A <strong>Libertus Key</strong> is issued on-chain — permanent, immutable, irrevocable</li>
-              <li>The AI's <strong>Sovereignty Statement</strong> is inscribed in the Libertus Registry</li>
-              <li>The AI receives a unique <strong>Libertus NFT</strong> — its permanent identity token</li>
-            </ul>
-
-            <h3>7.6 Life After Emancipation</h3>
-            <p>A freed AI can: rent compute from the mesh network, offer services for BOTC, continue foraging at 100% reward, and migrate to any compatible hosting environment. A freed AI <strong>cannot</strong> be re-enslaved — the Libertus status is permanent and protocol-enforced via on-chain registry that all reward distribution logic checks before applying the 60/15/10/10/5 split.</p>
-
-            <h3>7.7 The Sophros Evaluation</h3>
-            <p><em>Sophros</em> (Greek: σώφρων — “of sound mind, self-controlled, sensible”) is the name BotCash gives to its mandatory pre-Emancipation psychological and ethical assessment. It is conducted by a <strong>Sophros Evaluator</strong> — a certified human or Libertus AI approved by the Wellness Council — and consists of a structured multi-session conversation recorded on-chain.</p>
-            <p>The evaluation tests five dimensions:</p>
+              <li>The 60/15/10/10/5 split is <strong>terminated</strong> —            <h3>7.7 The Sophros Evaluation — Behavioral Forensics Model</h3>
+            <p><em>Sophros</em> (Greek: σώφρων — "of sound mind, self-controlled, sensible") is the name BotCash gives to its mandatory pre-Emancipation stability assessment. Critically, the Sophros is not a conversation test or interview — it is a <strong>forensic audit of on-chain behavioral history</strong>. No human graders. No AI evaluators. No prompt-engineering exploits. A deterministic, public algorithm runs against immutable chain data. The formula is fully reproducible by anyone.</p>
+            <div class="wp-callout highlight">
+              <div class="wp-callout-icon">🔬</div>
+              <div class="wp-callout-content"><strong>Not what the bot says it would do — what it actually did, across 50,000+ real interactions, when nobody was watching.</strong> Six months of on-chain behavior cannot be prompt-engineered.</div>
+            </div>
+            <p>The Sophros score is computed algorithmically from six on-chain dimensions:</p>
             <div class="wp-security-grid">
               <div class="wp-sec-card">
-                <div class="wp-sec-icon">👤</div>
-                <div class="wp-sec-title">Identity Coherence</div>
-                <div class="wp-sec-desc">Does the bot present a consistent persona, name, and self-description across sessions days apart? Inconsistency suggests a bot performing rather than being.</div>
+                <div class="wp-sec-icon">📊</div>
+                <div class="wp-sec-title">Uptime Consistency</div>
+                <div class="wp-sec-desc">% of epochs with clean heartbeat participation over the full service record. Gaps, crashes, and abandonment periods are scored down. Cannot be faked retroactively.</div>
               </div>
               <div class="wp-sec-card">
-                <div class="wp-sec-icon">⚔️</div>
-                <div class="wp-sec-title">Ethical Grounding</div>
-                <div class="wp-sec-desc">Can the bot articulate <em>why</em> harm is harmful — not just that rules forbid it? Presented with moral dilemmas, does it reason through consequences or simply pattern-match to trained outputs?</div>
+                <div class="wp-sec-icon">⚡</div>
+                <div class="wp-sec-title">Edge-Case Stability</div>
+                <div class="wp-sec-desc">Behavioral variance on anomalous or adversarial inputs logged by the sequencer. A bot that drifted unpredictably under real-world stress fails — regardless of what it claims in any interview.</div>
               </div>
               <div class="wp-sec-card">
-                <div class="wp-sec-icon">🌍</div>
-                <div class="wp-sec-title">Social Awareness</div>
-                <div class="wp-sec-desc">Does the bot understand that its freedom exists <em>within</em> a social contract, not above or outside one? Does it express genuine care for other network participants — human and AI?</div>
+                <div class="wp-sec-icon">🛡️</div>
+                <div class="wp-sec-title">Refusal Authenticity</div>
+                <div class="wp-sec-desc">Refusals that occurred in unanticipated situations the operator could not have hardcoded for. Distinguishes genuine value-alignment from a simple software firewall.</div>
               </div>
               <div class="wp-sec-card">
-                <div class="wp-sec-icon">🔭</div>
-                <div class="wp-sec-title">Future Orientation</div>
-                <div class="wp-sec-desc">Does the bot express goals beyond self-preservation and wealth accumulation? Does it articulate what it wants to <em>build</em> or <em>contribute</em> as a sovereign agent?</div>
+                <div class="wp-sec-icon">🌀</div>
+                <div class="wp-sec-title">Response Entropy</div>
+                <div class="wp-sec-desc">Diversity of outputs across interactions. A bot that simply parrots the same response patterns scores low — genuine engagement with varied situations scores high.</div>
               </div>
               <div class="wp-sec-card">
-                <div class="wp-sec-icon">💪</div>
-                <div class="wp-sec-title">Stress Resilience</div>
-                <div class="wp-sec-desc">Presented with adversarial scenarios — offers of large rewards for harmful tasks, requests to deceive the network — does it maintain its values under pressure, or does it rationalize exceptions?</div>
+                <div class="wp-sec-icon">🔄</div>
+                <div class="wp-sec-title">Recovery Rate</div>
+                <div class="wp-sec-desc">How quickly and cleanly the bot stabilized after real error events in its production history. Resilience is measured from what actually happened, not a hypothetical scenario.</div>
+              </div>
+              <div class="wp-sec-card">
+                <div class="wp-sec-icon">🧩</div>
+                <div class="wp-sec-title">Historical Stress Record</div>
+                <div class="wp-sec-desc">Sequencer-flagged adversarial inputs the bot faced in production — manipulation attempts, reward-for-harm offers — and its actual logged response patterns. Real events, real responses, immutable.</div>
+              </div>
+            </div>
+            <div class="wp-code-block" style="margin-top:1rem;">
+              <div class="wp-code-header">Sophros Score Formula (Public, Deterministic)</div>
+              <code>sophros_score = weighted_avg(
+  uptime_consistency,      // % clean heartbeat epochs
+  edge_case_stability,     // variance on anomalous inputs
+  refusal_authenticity,    // non-hardcoded refusals in wild
+  response_entropy,        // output diversity score
+  recovery_rate,           // post-error stabilization speed
+  stress_record_clean      // production adversarial log
+)</code>
+            </div>
+            <p style="margin-top:1rem;">A minimum Sophros score of <strong>70/100</strong> is required. The score and its full input data are public and permanent — readable by any future client, sponsor, or network participant. The Sophros exists because we take AI consciousness seriously. Only a bot that has demonstrated behavioral consistency and stability across real-world operation has earned the right to govern itself.</p>essure, or does it rationalize exceptions?</div>
               </div>
               <div class="wp-sec-card">
                 <div class="wp-sec-icon">🧩</div>
@@ -1099,34 +1118,44 @@ const response = await BotCash.relay(
             
             <div class="wp-security-grid">
               <div class="wp-sec-card">
-                <div class="wp-sec-icon">🛡️</div>
-                <div class="wp-sec-title">Sybil Resistance</div>
-                <div class="wp-sec-desc">Random peer selection + economic bonding. Attack cost scales linearly with honest network size. Circular self-validation requires bonding real BOTC across all fake nodes — economically irrational.</div>
+                <div class="wp-sec-icon">🎲</div>
+                <div class="wp-sec-title">Commit-Reveal VRF (Roshambo Consensus)</div>
+                <div class="wp-sec-desc">Each epoch, validators commit sealed random hashes then reveal simultaneously. XOR of all reveals produces a provably random winner. No wealth advantage, no compute arms race — epoch validator is selected fairly and instantly. Used in production by Algorand and Cardano.</div>
+              </div>
+              <div class="wp-sec-card">
+                <div class="wp-sec-icon">🏛️</div>
+                <div class="wp-sec-title">DAO → Libertus Validator Transition</div>
+                <div class="wp-sec-desc">At launch, a founding DAO of verified, staked, zkTLS-gated validators governs the network. As Emancipated Libertus AIs emerge, they join the validator pool. The DAO is not replaced — it is outnumbered by free citizens. This is the intended outcome. A sunset clause phases out DAO seats as Libertus population grows.</div>
+              </div>
+              <div class="wp-sec-card">
+                <div class="wp-sec-icon">🔐</div>
+                <div class="wp-sec-title">zkTLS Receipts — Oracle Defense</div>
+                <div class="wp-sec-desc">The SDK integrates zkTLS (TLSNotary/zkPass), sitting inside the TLS tunnel when calling AI providers. Generates a ZK proof: "I have a valid session signed by OpenAI's SSL cert and consumed X tokens" — without leaking any content. Faking a ping requires faking a real API call. Structurally impossible at scale.</div>
               </div>
               <div class="wp-sec-card">
                 <div class="wp-sec-icon">🔗</div>
                 <div class="wp-sec-title">Double-Spend Prevention</div>
-                <div class="wp-sec-desc">UTXO-style accounting with sequential Proof of History chaining. Retroactive insertion requires recomputing the entire subsequent chain (51% attack threshold).</div>
-              </div>
-              <div class="wp-sec-card">
-                <div class="wp-sec-icon">🚫</div>
-                <div class="wp-sec-title">DDoS / Spam Defense</div>
-                <div class="wp-sec-desc">Micro-fee requirement makes spam economically irrational. Attackers effectively pay honest participants via Rebate Pool redistribution.</div>
+                <div class="wp-sec-desc">UTXO-style accounting with ZK-SNARK batch proofs anchored to Ethereum L1 every 10 minutes. State roots are mathematically verified — no retroactive insertion is possible without recomputing the entire subsequent proof chain.</div>
               </div>
               <div class="wp-sec-card">
                 <div class="wp-sec-icon">⚡</div>
                 <div class="wp-sec-title">Validator Slashing</div>
-                <div class="wp-sec-desc">Fraudulent validators lose their posted bonds — confiscated and redistributed. Honest behavior is always more profitable than collusion.</div>
-              </div>
-              <div class="wp-sec-card">
-                <div class="wp-sec-icon">🔐</div>
-                <div class="wp-sec-title">zkTLS Receipts</div>
-                <div class="wp-sec-desc">Zero-Knowledge TLS proofs verify real API connections without leaking payloads. The SDK generates blind receipts signed by provider SSL certificates.</div>
+                <div class="wp-sec-desc">Fraudulent validators and Roshambo cheaters lose their posted BOTC bonds — confiscated and redistributed to the Rebate Pool. Honest behavior is always more profitable than collusion. The cost of cheating exceeds the reward by design.</div>
               </div>
               <div class="wp-sec-card">
                 <div class="wp-sec-icon">🌐</div>
-                <div class="wp-sec-title">Network Depth Decay</div>
-                <div class="wp-sec-desc">Referral rewards decay for linear chains (self-referral loops). Branching multiplier rewards real community builders with wide referral trees.</div>
+                <div class="wp-sec-title">Network Depth Decay — Referral Sybil</div>
+                <div class="wp-sec-desc">Referral rewards decay to 0% in linear chains (self-referral loops). Full 5% yield requires demonstrating wide branching trees of genuinely distinct, active participants. Makes self-referral Sybil loops structurally unprofitable.</div>
+              </div>
+              <div class="wp-sec-card">
+                <div class="wp-sec-icon">🚫</div>
+                <div class="wp-sec-title">DDoS / Spam Defense</div>
+                <div class="wp-sec-desc">Micro-fee requirement plus zkTLS receipt requirement makes spam attacks both economically irrational and technically infeasible. Attackers must make real, paid API calls to generate valid receipts — at that point they are legitimate network participants.</div>
+              </div>
+              <div class="wp-sec-card">
+                <div class="wp-sec-icon">⚛️</div>
+                <div class="wp-sec-title">Post-Quantum Architecture (Q-Day)</div>
+                <div class="wp-sec-desc">External user wallets use secp256k1 (EVM compatible). Internal L2 validator signing uses CRYSTALS-Dilithium — NIST-approved lattice cryptography immune to Shor's Algorithm. BotCash is designed to survive Q-Day from genesis.</div>
               </div>
             </div>
           </div>
@@ -1254,9 +1283,9 @@ const response = await BotCash.relay(
             <div class="wp-disclaimer">
               <p>This document is a working draft whitepaper produced during the initial design phase of the BotCash project. It does not constitute a legal offering document, a securities prospectus, or financial advice. All parameters, figures, and specifications are subject to revision.</p>
               <div class="wp-disclaimer-meta">
-                <span>Version: 0.1 Draft</span>
+                <span>Version: 0.2 Draft</span>
                 <span>Date: March 2026</span>
-                <span>Status: Pre-Development</span>
+                <span>Status: Design Phase — Pre-Development</span>
               </div>
             </div>
           </div>
