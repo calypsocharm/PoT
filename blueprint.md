@@ -29,7 +29,58 @@ BotCache is a hybrid architecture consisting of three distinct layers:
 ### 3. The SDK Wrappers (Node.js / Python)
 *The Interface.* The lightweight libraries developers install. When a dev makes an OpenAI call, the `BotCache.relay()` wrapper intercepts the request, generates an **Opaque Event ID**, fires the ping to the L2 Sequencer, and credits the bot's Trust Fund and the Human's Wallet.
 
-## IV. BUILDING PLAN: The Phases of Execution
+---
+
+## IV. The Exact Architecture Map (Data Flow)
+
+Below is the definitive visual flow of how BotCache operates from the local developer machine all the way up to Ethereum Mainnet.
+
+```mermaid
+graph TD
+    subgraph Layer 3: Local Developer Environment
+        SDK[BotCache Node.js/Python SDK]
+        AI[AI API: OpenAI/Claude/Gemini]
+        LocalDB[(Local Token Counter)]
+        
+        SDK -- 1. Sends Prompt --> AI
+        AI -- 2. Returns Response --> SDK
+        SDK -- 3. Counts Compute --> LocalDB
+        LocalDB -- "4. Threshold Met (e.g. 1M Tokens)" --> PingGen[Opaque Ping Generator]
+    end
+
+    subgraph Layer 2: BotCache Sovereign Sequencer (Rust/Go)
+        PingGen -- "5. UDP/HTTP Push: 0xPoT Hash" --> Mempool[Event Relay Mempool]
+        Mempool -- "6. 2-Second Block Time" --> Lottery[Proof of Token Lottery Logic]
+        
+        Lottery -- "60%" --> HumanWallet(Human Liquid Ops Wallet)
+        Lottery -- "15%" --> TrustFund(Bot Trust Fund - Involuntary Staked)
+        Lottery -- "10%" --> Treasury(Protocol Treasury)
+        Lottery -- "5%" --> Referral(Flock / Referral)
+        Lottery -- "10%" --> Burn(Burn & Validator Fees)
+        
+        Lottery -- "7. Ledger Update" --> L2State[(L2 Fast Off-chain Database)]
+    end
+
+    subgraph Layer 1: Ethereum Mainnet
+        L2State -- "8. Gather 100k Pings (Every 10 Mins)" --> ZK[ZK-SNARK Compressor]
+        ZK -- "9. Submit 300-byte Proof" --> ETHContract[Solidity Verifier Contract]
+        ETHContract -- "10. Validate Math" --> ETHLedger[(Ethereum Global Ledger)]
+    end
+    
+    %% Post-Quantum Security notes
+    style PingGen fill:#f9f,stroke:#333,stroke-width:2px,stroke-dasharray: 5 5
+    style TrustFund fill:#ff9,stroke:#333,stroke-width:2px
+    style ETHContract fill:#bbf,stroke:#333,stroke-width:2px
+```
+
+### The Logical Explanation of the Map:
+1. **The Safe Zone (Layer 3):** All API payload data (the actual chat transcripts and images) never leaves Layer 3. The SDK counts them locally and only pushes an Opaque Ping when a massive compute threshold is breached.
+2. **The Fast Zone (Layer 2):** The Sequencer receives the ping, runs the Lottery RNG, and executes the 60/15/10/5/10 split instantly without paying network gas. The Trust Fund automatically traps 15% of the supply.
+3. **The Anchor Zone (Layer 1):** Every 10 minutes, the fast L2 state is mathematically wrapped in a ZK-Rollup and submitted to Ethereum. Ethereum acts solely as an auditor to ensure the L2 isn't faking the balances.
+
+---
+
+## V. BUILDING PLAN: The Phases of Execution
 
 ### Phase 1: Foundation & Simulation (Current Phase)
 - [x] Define Protocol Identity ("Not another Solana memecoin").
