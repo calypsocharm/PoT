@@ -387,7 +387,7 @@ function renderWallet(walletData, words) {
   document.getElementById('wallet-display').style.display = 'block';
   document.getElementById('restore-card').style.display = 'none';
   document.getElementById('miner-status').innerHTML =
-    '<span class="status-dot inactive"></span><span class="status-text">Inactive — Click to start foraging</span>';
+    '<span class="status-dot inactive"></span><span class="status-text">Inactive — Connect a bot to start Proof of Relay</span>';
   document.getElementById('hash-log').style.display = 'none';
   document.getElementById('hash-log-inner').innerHTML = '';
   state.hashLogLines = [];
@@ -538,9 +538,9 @@ document.getElementById('start-mining-btn').addEventListener('click', () => {
   const logInner = document.getElementById('hash-log-inner');
 
   if (state.isMining) {
-    btn.textContent = '⏹ Stop Foraging';
+    btn.textContent = '⏹ Disconnect Sub-Miner';
     dot.className = 'status-dot active';
-    txt.textContent = 'Active — Foraging Cache via Sequencer…';
+    txt.textContent = 'Active — AI Sub-Miner connected to Sequencer…';
     log.style.display = 'block';
 
     const wallet = state.walletAddress;
@@ -595,9 +595,9 @@ document.getElementById('start-mining-btn').addEventListener('click', () => {
 
   } else {
     clearInterval(miningInterval);
-    btn.textContent = '⬡ Start Foraging';
+    btn.textContent = '⬡ Start Sub-Miner (Proof of Relay)';
     dot.className = 'status-dot inactive';
-    txt.textContent = 'Inactive — Click to start foraging';
+    txt.textContent = 'Inactive — Disconnected from Sequencer';
   }
 });
 
