@@ -45,6 +45,42 @@ const server = http.createServer((req, res) => {
             const data = body ? JSON.parse(body) : {};
 
             // ────────────────────────────────────────────────────────────────
+            // ROUTE 0: EVM JSON-RPC (MetaMask / ChainList Support)
+            // ────────────────────────────────────────────────────────────────
+            if (req.url === '/' || req.url === '/rpc') {
+                if (data.jsonrpc === '2.0' && data.method) {
+                    let result;
+                    switch (data.method) {
+                        case 'eth_chainId':
+                            result = '0x4243'; // 16963 in Hex
+                            break;
+                        case 'net_version':
+                            result = '16963';
+                            break;
+                        case 'eth_blockNumber':
+                            // Hex representation of current block height
+                            result = '0x' + botCashChain.chain.length.toString(16);
+                            break;
+                        case 'eth_getBalance':
+                            // Mock balance for now (we'll expand this later)
+                            result = '0x0';
+                            break;
+                        default:
+                            // Return null for unsupported EVM methods for now
+                            result = null;
+                            break;
+                    }
+                    
+                    res.writeHead(200);
+                    return res.end(JSON.stringify({
+                        jsonrpc: "2.0",
+                        id: data.id || 1,
+                        result: result
+                    }));
+                }
+            }
+
+            // ────────────────────────────────────────────────────────────────
             // ROUTE 1: /v1/ping (Proof of Token Computation)
             // ────────────────────────────────────────────────────────────────
             if (req.url === '/v1/ping') {
@@ -148,6 +184,7 @@ server.listen(PORT, () => {
     console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
     console.log(`⚙ Engine:             JavaScript (ECDSA/secp256k1)`);
     console.log(`📡 Port:               ${PORT} (0x4243)`);
+    console.log(`🦊 EVM RPC Endpoint:    ACTIVE (Chain ID: 16963)`);
     console.log(`🔑 Encryption:         Elliptic Curve Native Verified`);
     console.log(`⚖ Lottery Gate:       ACTIVE (60/15/10/5/10)`);
     console.log(`🧱 Block Minter:       ACTIVE (Proof Of Token Hash Minter)`);
