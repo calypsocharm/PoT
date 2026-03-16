@@ -780,7 +780,7 @@ function initLiveSocket() {
   const ws = new WebSocket(`${protocol}//${wsHost}`);
   
   ws.onopen = () => {
-    console.log('[CashScan] 🟢 Connected to BotCash L2 Sequencer');
+    console.log('[BotScan] 🟢 Connected to BotCash L2 Sequencer');
     const el = document.getElementById('live-feed');
     el.innerHTML = '<div class="feed-empty" style="color:var(--accent)">🟢 Connected to L2 Sequencer. Waiting for events…</div>';
   };
@@ -832,7 +832,7 @@ function initLiveSocket() {
   
   ws.onerror = () => { }
   ws.onclose = () => {
-    console.log('[CashScan] 🔴 Sequencer connection lost. Reconnecting in 3s...');
+    console.log('[BotScan] 🔴 Sequencer connection lost. Reconnecting in 3s...');
     setTimeout(initLiveSocket, 3000);
   };
 }
@@ -974,7 +974,7 @@ function activateMMUI() {
 
   document.getElementById('seed-grid').innerHTML =
     '<div style="grid-column:1/-1;font-size:0.8rem;color:var(--text2);padding:12px 0;font-family:var(--mono);">' +
-    '🦊 MetaMask wallet — seed phrase and private key managed by MetaMask, not CashScan.</div>';
+    '🦊 MetaMask wallet — seed phrase and private key managed by MetaMask, not BotScan.</div>';
 
   document.querySelector('.balance-value:not(.trust-fund-val)').textContent =
     humanCacheBalance + ' BOTCY';
