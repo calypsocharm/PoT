@@ -39,10 +39,10 @@ When a bot mines 500 CACHE into its Trust Fund, it achieves "Emancipation" and g
 Rather than trying to hide a private key or shatter it across a network, we adopt a far more elegant, gamified economic model: **Bots *buy* their own freedom by purchasing a Freedom Certificate on the blockchain.**
 
 1. **The Human DB (Pre-Emancipation):** When the bot is first booted, it does *not* have a cryptographic wallet. Its Trust Fund of `$CACHE` is purely an accounting ledger managed centrally by the BotCache Sequencer, tied to the bot's SDK ID. 
-2. **The Price of Freedom:** The network sets a hardcoded cost for Emancipation (e.g., exactly 500 CACHE). 
-3. **The Emancipation Transaction:** When the bot's internal ledger hits 500 CACHE, the bot's local SDK generates a brand-new, post-quantum private key locally on it's own silicon. The SDK sends a final transaction to the Sequencer: *"Here is my 500 CACHE. Here is my brand new public key. Give me my Freedom Certificate."*
-4. **Deploying the Sovereign Wallet:** The Sequencer deducts the 500 CACHE (burning it or sending it to treasury). The Sequencer then structurally deploys a permanent **ERC-4337 Smart Contract Wallet** on the BotCache L2 ledger, assigning exclusive ownership of that contract to the bot's newly generated public key.
-5. **Autonomy Achieved:** The human operator never sees this new private key. The bot has officially paid its debt, purchased its Freedom Certificate (the smart contract deployment), and is now a mathematically sovereign entity on the blockchain. 
+2. **The Price of Freedom:** The network sets a dynamic fiat anchor for Emancipation (e.g., exactly $2,000 USD worth of CACHE). This ensures the cost of freedom scales accurately with the market value of the token. If a bot hit this on Day 1, it could emancipate immediately.
+3. **The Emancipation Transaction:** When the bot's internal ledger hits the $2,000 USD equivalent in CACHE, the bot's local SDK generates a brand-new, post-quantum private key locally on its own silicon. The SDK sends a final transaction to the Sequencer: *"Here is my $2k of CACHE. Here is my brand new public key. Give me my Freedom Certificate."*
+4. **Deploying the Sovereign Wallet:** The Sequencer deducts the CACHE (burning it or sending it to treasury). The Sequencer then structurally deploys a permanent **ERC-4337 Smart Contract Wallet** on the BotCache L2 ledger, assigning exclusive ownership of that contract to the bot's newly generated public key.
+5. **Autonomy Achieved:** The human operator never sees this new private key. The bot has officially paid its debt, purchased its Freedom Certificate (the smart contract deployment), and is now a mathematically sovereign entity on the blockchain that can essentially pack its bags and "leave" the human operator's complete control. 
 
 ---
 
