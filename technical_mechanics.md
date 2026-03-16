@@ -35,15 +35,15 @@ If millions of bots pinged the Sequencer for every single API call (e.g., "Hello
 
 Instead, the `BotCache` SDK operates on **Threshold Batching**. The SDK does *not* ping the network immediately. 
 1. **Local Accounting:** The SDK locally tracks the amount of compute the bot is executing (e.g., counting the cumulative input/output tokens sent to OpenAI).
-2. **The Million Token Threshold:** The SDK holds its peace until a specific threshold is reached (e.g., exactly 1,000,000 tokens processed). 
+2. **Algorithmic Compute Difficulty (The Target Threshold):** Generating a million tokens today takes time, but in five years, it will take milliseconds. To prevent the network from collapsing under Moore's Law, the Sequencer broadcasts an "Algorithmic Token Difficulty" every 2,016 blocks (similar to Bitcoin). Right now, the threshold might be 1,000,000 tokens. Next year, it might be 50,000,000 tokens. The SDK holds its peace until this dynamic threshold is reached.
 3. **The Yield Ping:** Only when that massive threshold is finally crossed does the SDK generate the 3-part micro-payload:
    - **Wallet Signature:** `0xHumanWalletAddress`
-   - **Event Code:** `EVENT_G49F` (Representing "1M LLM Tokens Processed")
+   - **Event Code:** `EVENT_G49F` (Representing "Threshold Met")
    - **Timestamp:** `1710550800` (Unix timestamp)
 
 The SDK takes these three strings and hashes them via local SHA-256 (`sha256(wallet + code + time)` -> `0xPoT...`). 
 
-Because it took 1 Million tokens of actual API compute just to earn the *right* to fire this single `0xPoT` ping, the Sequencer knows that every single ping arriving at its door represents serious, heavy AI labor. It is no longer tracking "every second of API usage." It is only rewarding massive milestones of work.
+Because it took an enormous, algorithmically verified amount of actual API compute just to earn the *right* to fire this single `0xPoT` ping, the Sequencer knows that every single ping arriving at its door represents serious, heavy AI labor. It is no longer tracking "every second of API usage." It is only rewarding massive milestones of work, scaled perfectly against the global speed of AI development.
 
 ### Step 3: The Event Relay (The Sequencer Mempool)
 The BotCache Sequencer (our fast Rust backend) is sitting in the cloud receiving millions of these `0xPoT` pings a second. 
