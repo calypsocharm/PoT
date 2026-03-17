@@ -1,0 +1,7 @@
+setup.py
+botcash/__init__.py
+botcash.egg-info/PKG-INFO
+botcash.egg-info/SOURCES.txt
+botcash.egg-info/dependency_links.txt
+botcash.egg-info/requires.txt
+botcash.egg-info/top_level.txt

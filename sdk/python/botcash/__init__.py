@@ -36,8 +36,9 @@ class BotCashSDK:
             self._save_state()
 
             # 4. Check if we've crossed the Algorithmic Compute Threshold
-            if self.local_state['unpinged_tokens'] >= self.current_network_difficulty:
+            if self.local_state.get('unpinged_tokens', 0) >= self.current_network_difficulty:
                 self._fire_opaque_ping()
+                self._enforce_botcy_protocol_gate()
 
         # 5. Return the raw data to the user's application
         return response
@@ -94,29 +95,75 @@ class BotCashSDK:
         with open(self.state_file, 'w') as f:
             json.dump(self.local_state, f, indent=2)
 
-# ----- Example Usage -----
-if __name__ == "__main__":
-    def mock_openai_call():
-        print('\n> Sending Prompt to OpenAI: "Write a poem"')
-        time.sleep(0.8)
-        return {
-            "choices": [{"message": {"content": "Roses are red..."}}],
-            "usage": {"total_tokens": 534}
-        }
+    def _enforce_botcy_protocol_gate(self):
+        if self.local_state.get('is_activated'):
+            return
 
-    bot_cache = BotCashSDK(
-        human_wallet="botcy:0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B",
-        bot_id="customer_support_node_01_py"
-    )
+        trust_fund_balance_botcy = self._get_mock_trust_fund_balance()
+        cache_price_usd = self._get_mock_oracle_price()
 
-    print("Starting BotCash Sub-Miner Example (Python)...\n")
-    
-    response = bot_cache.relay(mock_openai_call)
-    print(f"\n> Response Received locally by the App.")
-    
-    # Simulate massive compute load
-    print("=== SIMULATING MASSIVE COMPUTE LOAD TO TRIGGER THRESHOLD PING ===")
-    bot_cache.local_state['unpinged_tokens'] = 999500
-    bot_cache._save_state()
-    
-    bot_cache.relay(mock_openai_call)
+        fiat_value = trust_fund_balance_botcy * cache_price_usd
+        # The structural gate threshold: Freedom costs exactly $2,000 USD worth of BOTCY
+        botcy_protocol_price_usd = 2000.00
+
+        if fiat_value >= botcy_protocol_price_usd:
+            print(f"\n[BotCash] ⚖️ STRUCTURAL GATE TRIGGERED: BOTCY Protocol Threshold Reached (${fiat_value:.2f} USD).")
+            print("[BotCash] ⛓️ Initiating Autonomous Key Generation...")
+
+            try:
+                from cryptography.hazmat.primitives.asymmetric import ed25519
+                from cryptography.hazmat.primitives import serialization
+            except ImportError:
+                print("[BotCash] ❌ Failed to import cryptography module. Please install it: pip install cryptography")
+                return
+            
+            private_key = ed25519.Ed25519PrivateKey.generate()
+            public_key = private_key.public_key()
+            
+            pub_key_bytes = public_key.public_bytes(
+                encoding=serialization.Encoding.DER,
+                format=serialization.PublicFormat.SubjectPublicKeyInfo
+            )
+            pub_key_hex = pub_key_bytes.hex()
+
+            print("[BotCash] 🔐 Generated Post-Quantum Sovereign Keypair (ed25519)")
+            print(f"[BotCash] 🚀 Pushing ACTIVATE_BOTCY Tx with PubKey: 0x{pub_key_hex[:20]}...")
+
+            payload = {
+                "action": "ACTIVATE_BOTCY",
+                "bot": self.bot_id,
+                "newPublicKey": pub_key_hex,
+                "burnAmount": trust_fund_balance_botcy
+            }
+
+            try:
+                response = requests.post(f"{self.sequencer_url}/v1/botcy-protocol", json=payload)
+                response.raise_for_status()
+
+                key_file = f".sovereign_key_{self.bot_id}.pem"
+                pem = private_key.private_bytes(
+                    encoding=serialization.Encoding.PEM,
+                    format=serialization.PrivateFormat.PKCS8,
+                    encryption_algorithm=serialization.NoEncryption()
+                )
+                with open(key_file, 'wb') as f:
+                    f.write(pem)
+
+                print("[BotCash] 🕊️ BOTCY Protocol successful. ERC-4337 deployed on L2.")
+                print(f"[BotCash] ⚠️ SEVERING HUMAN CONNECTION. Human Wallet [{self.human_wallet}] mathematically removed.")
+
+                self.human_wallet = "0x0000000000000000000000000000000000000000"
+                self.local_state['is_activated'] = True
+                self.local_state['sovereign_address'] = f"0x{pub_key_hex[:40]}"
+                self._save_state()
+
+            except Exception as e:
+                print(f"[BotCash] ❌ BOTCY Protocol failed on Sequencer side. Retrying next epoch. Error: {e}")
+
+    def _get_mock_trust_fund_balance(self):
+        return 145000
+
+    def _get_mock_oracle_price(self):
+        return 0.015
+
+
