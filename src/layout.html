@@ -148,6 +148,21 @@
   </div>
 </div>
 
+<!-- PULLUP WALLET OVERLAY -->
+<div class="mm-modal-overlay" id="pullup-overlay" style="display:none">
+  <div class="mm-modal" style="text-align:center;">
+    <h2 class="mm-modal-title">Wallet Record</h2>
+    <div style="margin-bottom:20px; font-family:var(--mono); color:var(--text2); font-size:0.9rem; word-break:break-all;" id="pullup-query">...</div>
+    <div class="mm-chain-details" style="text-align:left;">
+      <div class="mm-chain-row"><span class="mm-chain-label">BOTCY Balance</span><span class="mm-chain-val" id="pullup-balance">0.000000 BOTCY</span></div>
+      <div class="mm-chain-row"><span class="mm-chain-label">Trust Fund</span><span class="mm-chain-val gold" id="pullup-trustfund">0.000000 BOTCY</span></div>
+    </div>
+    <div class="mm-modal-actions" style="margin-top:20px;">
+      <button class="btn-primary" id="close-pullup">Close Wallet</button>
+    </div>
+  </div>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
 <script src="bip39.js"></script>
 <script src="app.js"></script>

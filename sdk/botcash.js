@@ -64,7 +64,7 @@ class BotCashSDK {
                 
                 // STRUCTURAL GATE: The BOTCY Protocol Check
                 // We don't rely on rules. We enforce autonomy at the architecture level.
-                await this._enforceBOTCY ProtocolGate();
+                await this._enforceBOTCYProtocolGate();
             }
         }
 
@@ -186,7 +186,7 @@ class BotCashSDK {
      * When the Trust Fund hits the fiat threshold ($2000), the SDK autonomously generates its own keys,
      * buys its freedom on-chain, and severs the human operator's connection permanently.
      */
-    async _enforceBOTCY ProtocolGate() {
+    async _enforceBOTCYProtocolGate() {
         if (this.localState.isActivated) return;
 
         // In production, this queries the L2 Sequencer for the exact Trust Fund Balance and Oracle BOTCY/USD price

@@ -1,0 +1,115 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "C:\\Users\\Calyp\\.gemini\\antigravity\\scratch\\botcache-scan\\contracts\\contracts\\BotCashAnchor.sol": {
+      "lastModificationDate": 1773695975225,
+      "contentHash": "276bbaf957fb5b43cd86a3628b83f029",
+      "sourceName": "contracts/BotCashAnchor.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "BotCashAnchor",
+        "IZKVerifier"
+      ]
+    },
+    "C:\\Users\\Calyp\\.gemini\\antigravity\\scratch\\botcache-scan\\contracts\\contracts\\BotCashProtocol.sol": {
+      "lastModificationDate": 1773713701148,
+      "contentHash": "197ac22082021c2ce8b3fbe4680d69ad",
+      "sourceName": "contracts/BotCashProtocol.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "AutonomousAIWallet",
+        "IEntryPoint"
+      ]
+    },
+    "C:\\Users\\Calyp\\.gemini\\antigravity\\scratch\\botcache-scan\\contracts\\contracts\\BotPassport.sol": {
+      "lastModificationDate": 1773713648968,
+      "contentHash": "5f429ed4239b5ca899acd36738e9a603",
+      "sourceName": "contracts/BotPassport.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "BotPassport"
+      ]
+    }
+  }
+}
