@@ -110,6 +110,42 @@
       "artifacts": [
         "BotPassport"
       ]
+    },
+    "C:\\Users\\Calyp\\.gemini\\antigravity\\scratch\\botcache-scan\\contracts\\contracts\\MockZKVerifier.sol": {
+      "lastModificationDate": 1773718637448,
+      "contentHash": "9299db8bb28a9d98bd97da3f586772a8",
+      "sourceName": "contracts/MockZKVerifier.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "MockZKVerifier"
+      ]
     }
   }
 }
