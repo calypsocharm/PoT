@@ -36,9 +36,6 @@ app.use((req, res, next) => {
     next();
 });
 
-// Serve frontend static files
-app.use(express.static(path.join(__dirname, '../')));
-
 app.get(['/', '/rpc'], (req, res) => {
     res.status(200).json({ status: "🟢 LIVE", message: "BotCash Sovereign L2 RPC Sequencer is running." });
 });
@@ -88,6 +85,9 @@ app.post(['/', '/rpc'], (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
+
+// Serve frontend static files
+app.use(express.static(path.join(__dirname, '../')));
 
 app.post('/v1/ping', (req, res) => {
     try {
