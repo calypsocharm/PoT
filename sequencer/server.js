@@ -176,6 +176,24 @@ app.post('/v1/botcy-protocol', (req, res) => {
     }
 });
 
+app.get('/v1/scan/:id', (req, res) => {
+    try {
+        const id = req.params.id;
+        let walletBalance = botCashChain.getBalanceOfAddress(id);
+        let trustFund = botCashChain.trustFunds.get(id) || 0;
+        
+        return res.json({
+            success: true,
+            query: id,
+            balance: walletBalance,
+            trustFund: trustFund,
+            totalFound: walletBalance + trustFund
+        });
+    } catch(err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 const server = http.createServer(app);
 
 server.listen(PORT, () => {

@@ -1160,5 +1160,63 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 1000)
     });
   }
+
+  // --- Explorer Search & Pullup Wallet ---
+  const searchInput = document.getElementById('global-search');
+  const searchBtn = document.querySelector('.search-btn');
+
+  const pullupOverlay = document.getElementById('pullup-overlay');
+  const pullupQuery = document.getElementById('pullup-query');
+  const pullupBalance = document.getElementById('pullup-balance');
+  const pullupTrustFund = document.getElementById('pullup-trustfund');
+  const closePullupBtn = document.getElementById('close-pullup');
+
+  function openPullupWallet(data) {
+    if (!pullupOverlay) return;
+    pullupQuery.textContent = data.query || 'Unknown';
+    pullupBalance.textContent = parseFloat(data.balance || 0).toFixed(6) + ' BOTCY';
+    pullupTrustFund.textContent = parseFloat(data.trustFund || 0).toFixed(6) + ' BOTCY';
+    pullupOverlay.style.display = 'flex';
+  }
+
+  async function performSearch() {
+    if (!searchInput) return;
+    const query = searchInput.value.trim();
+    if (!query) return;
+
+    try {
+      searchBtn.style.opacity = '0.5';
+      const rpcUrl = state.customRpcUrl || localStorage.getItem('botcash_rpc') || 'http://localhost:4243';
+      const res = await fetch(`${rpcUrl}/v1/scan/${encodeURIComponent(query)}`);
+      if (!res.ok) throw new Error("Search failed");
+      const data = await res.json();
+      
+      openPullupWallet(data);
+    } catch (err) {
+      console.error(err);
+      alert('Failed to scan address on the BotCash L2 Sequencer.');
+    } finally {
+      searchBtn.style.opacity = '1';
+    }
+  }
+
+  if (searchBtn) {
+    searchBtn.addEventListener('click', performSearch);
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        performSearch();
+      }
+    });
+  }
+
+  if (closePullupBtn && pullupOverlay) {
+    closePullupBtn.addEventListener('click', () => {
+      pullupOverlay.style.display = 'none';
+      if (searchInput) searchInput.value = '';
+    });
+  }
 });
 
