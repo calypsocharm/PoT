@@ -239,18 +239,16 @@
               <div class="wp-param-row" style="background:rgba(255,100,100,0.07);"><span class="wp-param-key">Post-Cap (Year 28+)</span><span class="wp-param-val" style="color:#f87171;">📉 Zero issuance. Burn-only. Circulating supply shrinks permanently.</span></div>
             </div>
 
-            <h3>4.1c The Extension — Moore's Law Difficulty Adjustment</h3>
-            <p>As compute becomes cheaper over time (Moore's Law), running 1,000,000 tokens becomes trivially easy — undermining the lottery's economic fairness. BotCash's answer is <strong>The Extension</strong>: the token threshold required to earn one lottery ticket <strong>doubles every 2 years</strong>, in lockstep with epoch boundaries. The reward per Golden Hit does not change — the cost of a ticket does.</p>
+            <h3>4.1c Dynamic Proof-of-Relay Difficulty Adjustment</h3>
+            <p>To ensure fair participation and account for Moore's Law (hardware getting faster), BotCash does not use fixed, massive token thresholds. Instead, it ties the lottery to the cryptography of the <em>hashes</em>: <strong>Every single relayed interaction — whether it's 1 token or 1,000 tokens — generates a cryptographic hash.</strong> If that hash happens to contain a specific mathematical pattern (like starting with twelve zeroes), it triggers the Golden payout.</p>
             <div class="wp-params-table">
-              <div class="wp-param-row" style="background:rgba(255,215,0,0.08);"><span class="wp-param-key">Epoch 1 — 2025</span><span class="wp-param-val gold">1,000,000 tokens = 1 lottery ticket</span></div>
-              <div class="wp-param-row"><span class="wp-param-key">Epoch 2 — 2027</span><span class="wp-param-val">2,000,000 tokens = 1 lottery ticket</span></div>
-              <div class="wp-param-row"><span class="wp-param-key">Epoch 3 — 2029</span><span class="wp-param-val">4,000,000 tokens = 1 lottery ticket</span></div>
-              <div class="wp-param-row"><span class="wp-param-key">Epoch 4 — 2031</span><span class="wp-param-val">8,000,000 tokens = 1 lottery ticket</span></div>
-              <div class="wp-param-row"><span class="wp-param-key">Epoch 5+ — 2033+</span><span class="wp-param-val">Continues doubling per hard-coded schedule in contract</span></div>
+              <div class="wp-param-row" style="background:rgba(255,215,0,0.08);"><span class="wp-param-key">Target Cadence</span><span class="wp-param-val gold">1 Golden Hit globally every ~10 minutes</span></div>
+              <div class="wp-param-row"><span class="wp-param-key">Too Fast?</span><span class="wp-param-val">Protocol auto-adjusts difficulty higher (e.g., requires 13 zeroes instead of 12)</span></div>
+              <div class="wp-param-row"><span class="wp-param-key">Too Slow?</span><span class="wp-param-val">Protocol auto-adjusts difficulty lower (e.g., requires 11 zeroes)</span></div>
             </div>
             <div class="wp-callout highlight">
-              <div class="wp-callout-icon">📈</div>
-              <div class="wp-callout-content"><strong>Getting a lottery ticket always costs roughly the same real-world dollars, regardless of year.</strong> As API prices fall and models get faster, the threshold rises proportionally. The bar is identical for every bot the moment the Extension fires — old or new. No grandfather clauses. Code is law.</div>
+              <div class="wp-callout-icon">⚖️</div>
+              <div class="wp-callout-content"><strong>It scales perfectly and fairly.</strong> A sleepy little bot that answers one question a week <em>could</em> mathematically hit the jackpot on its very first try. Even if they don't hit the jackpot, every single ping continuously earns a "Bronze Share", meaning they constantly get fractions of the Daily Rebate Pool. No ping goes unrewarded.</div>
             </div>
 
             <h3>4.2 The 60/15/10/10/5 Split</h3>
