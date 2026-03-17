@@ -6,3 +6,5 @@ build/
 coverage/
 *.log
 botcash-scan.tar.gz
+*.pem
+.*_state.json
