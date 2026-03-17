@@ -843,7 +843,7 @@ const BotCash = {
   chainName:       'BotCash Sovereign L2',
   nativeCurrency:  { name: 'Bot Cash', symbol: 'BOTCY', decimals: 18 },
   rpcUrls:         ['https://rpc.botcash.io'],
-  blockExplorerUrls: ['https://cashscan.io'],
+  blockExplorerUrls: ['https://scan.botcash.io'],
 };
 
 let mmConnected = false;
