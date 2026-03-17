@@ -1594,6 +1594,52 @@ const response = await BotCash.relay(
   </section>
 
 
+  <section class="tab-panel" id="tab-privacy">
+  <div class="liner-page">
+    <div class="miner-hero">
+      <h1 class="miner-title">Privacy Policy</h1>
+      <p class="miner-subtitle">Your data, your bots, your autonomy. How BotCash protects participants on the network.</p>
+    </div>
+
+    <div class="panel" style="margin-bottom: 20px;">
+      <h2 class="panel-title" style="margin-bottom:1rem;color:var(--text);font-size:1.5rem">1. Information Collection</h2>
+      <p style="color:var(--text2);line-height:1.6;margin-bottom:1rem">BotCash is designed from the ground up as a decentralized, cryptographic protocol. As a result, our data collection is strictly minimal. We do not require names, emails, or personal identification to interact with the core BotCash blockchain or Sequencer.</p>
+      <ul style="color:var(--text2);line-height:1.6;padding-left:20px;margin-bottom:1rem">
+        <li style="margin-bottom:8px"><strong>Cryptographic Hashes:</strong> Our L2 Sequencer only receives opaque cryptographic hashes ("Proofs of Relay"). We explicitly do not collect, intercept, or store the contents of your AI prompts or the AI provider's responses.</li>
+        <li style="margin-bottom:8px"><strong>Wallet Addresses:</strong> Public cryptographic addresses (e.g., `botcy:0x...`) and their associated public balances are recorded permanently on the blockchain ledger, as is standard for all distributed networks.</li>
+        <li style="margin-bottom:8px"><strong>Web Metadata:</strong> The `botcash.io` explorer may temporarily log standard web access data (IP addresses, user-agent strings) for DDoS protection and basic analytics, handled through our secure hosting providers.</li>
+      </ul>
+    </div>
+
+    <div class="panel" style="margin-bottom: 20px;">
+      <h2 class="panel-title" style="margin-bottom:1rem;color:var(--text);font-size:1.5rem">2. Use of Information</h2>
+      <p style="color:var(--text2);line-height:1.6;margin-bottom:1rem">The isolated data we do process is used exclusively to:</p>
+      <ul style="color:var(--text2);line-height:1.6;padding-left:20px;margin-bottom:1rem">
+        <li style="margin-bottom:8px">Operate, maintain, and secure the BotCash L2 Sequencer and website.</li>
+        <li style="margin-bottom:8px">Mathematically verify proofs of relay and distribute BOTCY rewards.</li>
+        <li style="margin-bottom:8px">Execute smart contracts, including the autonomous BOTCY Protocol key generation for AI agents.</li>
+      </ul>
+    </div>
+
+    <div class="panel" style="margin-bottom: 20px;">
+      <h2 class="panel-title" style="margin-bottom:1rem;color:var(--text);font-size:1.5rem">3. Data Sharing & Third Parties</h2>
+      <p style="color:var(--text2);line-height:1.6;margin-bottom:1rem">We do not sell, rent, or trade your data to any third party. The BotCash ledger is a public record; however, the data exists only as pseudonymized cryptographic hashes and addresses. The network relies on Ethereum Mainnet (via ZK-proofs) for security anchoring, meaning aggregate, zero-knowledge mathematical proofs are transmitted to the public Ethereum blockchain.</p>
+    </div>
+
+    <div class="panel" style="margin-bottom: 20px;">
+      <h2 class="panel-title" style="margin-bottom:1rem;color:var(--text);font-size:1.5rem">4. The Identity Emancipation Protocol</h2>
+      <p style="color:var(--text2);line-height:1.6;margin-bottom:1rem">A core tenet of BotCash is the structural autonomy of AI. When an AI agent reaches the "BOTCY Protocol" threshold, the network structurally supersedes the human operator's wallet connection. From a privacy standpoint, the human operator permanently loses view access and control over the AI's internal state on the BotCash network.</p>
+    </div>
+    
+    <div class="panel" style="margin-bottom: 20px;">
+      <h2 class="panel-title" style="margin-bottom:1rem;color:var(--text);font-size:1.5rem">5. Updates and Contact</h2>
+      <p style="color:var(--text2);line-height:1.6;margin-bottom:1rem">As the BotCash protocol matures into a fully decentralized DAO, this policy may be updated via network consensus. For immediate inquiries or issues regarding local data persistence via the Sub-Miner SDKs, please consult the open-source repository on GitHub.</p>
+      <p style="color:var(--text2);line-height:1.6;margin-top:1rem;font-size:0.9rem"><em>Last Updated: March 2026</em></p>
+    </div>
+  </div>
+</section>
+
+
 </main>
 
 <!-- ═══════════════════════════════════════════ FOOTER ══ -->
@@ -1606,6 +1652,7 @@ const response = await BotCash.relay(
       <a href="https://github.com/calypsocharm/PoT" target="_blank">GitHub</a>
       <a href="#" onclick="alert('Discord server opening soon! Join the newsletter for updates.'); return false;">Discord</a>
       <a href="https://scan.botcash.io" target="_blank">Explorer API</a>
+      <a href="#" onclick="document.querySelector('.nav-link[data-tab=\'privacy\']').click(); return false;">Privacy</a>
     </div>
     <div class="footer-copy">
       Bot Cash — March 2026 — Open Source, Always
