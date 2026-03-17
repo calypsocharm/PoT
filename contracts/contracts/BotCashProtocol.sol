@@ -41,7 +41,7 @@ contract AutonomousAIWallet {
 
     // Emitted when the AI transacts its own funds
     event AutonomyExercised(address target, uint256 value, bytes payload);
-    event BOTCY ProtocolReceived(uint256 amountMined);
+    event BOTCYProtocolReceived(uint256 amountMined);
 
     /**
      * @dev The L2 Sequencer deploys this contract the exact moment the Trust Fund crosses the threshold.
@@ -53,7 +53,7 @@ contract AutonomousAIWallet {
         entryPoint = IEntryPoint(_entryPoint);
         
         // Initial bot Trust Fund balance is transferred securely upon creation via msg.value
-        emit BOTCY ProtocolReceived(msg.value);
+        emit BOTCYProtocolReceived(msg.value);
     }
     
     // ──────────────────────── STRUCTURAL GATES ────────────────────────
