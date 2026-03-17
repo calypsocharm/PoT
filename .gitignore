@@ -8,3 +8,4 @@ coverage/
 botcash-scan.tar.gz
 *.pem
 .*_state.json
+jlist.json

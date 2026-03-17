@@ -1,14 +1,14 @@
 http:
   routers:
     botcash-io-http:
-      rule: "Host(`botcash.io`) || Host(`www.botcash.io`)"
+      rule: "Host(`botcash.io`) || Host(`www.botcash.io`) || Host(`scan.botcash.io`) || Host(`rpc.botcash.io`)"
       entryPoints:
         - web
       middlewares:
         - https-redirect
       service: botcash-io-service
     botcash-io-https:
-      rule: "Host(`botcash.io`) || Host(`www.botcash.io`)"
+      rule: "Host(`botcash.io`) || Host(`www.botcash.io`) || Host(`scan.botcash.io`) || Host(`rpc.botcash.io`)"
       entryPoints:
         - websecure
       service: botcash-io-service
