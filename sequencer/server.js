@@ -39,7 +39,11 @@ app.use((req, res, next) => {
 // Serve frontend static files
 app.use(express.static(path.join(__dirname, '../')));
 
-app.post('/rpc', (req, res) => {
+app.get(['/', '/rpc'], (req, res) => {
+    res.status(200).json({ status: "🟢 LIVE", message: "BotCash Sovereign L2 RPC Sequencer is running." });
+});
+
+app.post(['/', '/rpc'], (req, res) => {
     try {
         const data = req.body || {};
 
@@ -156,10 +160,10 @@ app.post('/v1/botcy-protocol', (req, res) => {
                 botCashChain.pendingTransactions.push(transferTx);
                 
                 // Seal into a block to finalize BOTCY Protocol 
-                const BOTCY ProtocolBlock = new (require('./core/Block'))(Date.now(), botCashChain.pendingTransactions, botCashChain.getLatestBlock().hash);
-                BOTCY ProtocolBlock.mineBlock(botCashChain.difficulty);
-                botCashChain.chain.push(BOTCY ProtocolBlock);
-                botCashChain.updateLedgerState(BOTCY ProtocolBlock.transactions);
+                const protocolBlock = new (require('./core/Block'))(Date.now(), botCashChain.pendingTransactions, botCashChain.getLatestBlock().hash);
+                protocolBlock.mineBlock(botCashChain.difficulty);
+                botCashChain.chain.push(protocolBlock);
+                botCashChain.updateLedgerState(protocolBlock.transactions);
                 botCashChain.pendingTransactions = [];
                 
         console.log(`[Sequencer] ⛓️  Burned ${verifiedBurn} BOTCY from Centralized Trust Fund.`);
